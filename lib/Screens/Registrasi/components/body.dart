@@ -6,6 +6,7 @@ import 'package:e_pkk/components/rounded_password_field.dart';
 import 'package:e_pkk/components/rounded_whatsapp_field.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Body extends StatefulWidget {
   final Widget child;
@@ -75,9 +76,38 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            RoundedInputField(
-              hintText: "Muhammad Kahfi",
-              onChanged: (String value) {},
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+              width: size.width * 0.9,
+              decoration: BoxDecoration(
+                color: grey100,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: grey300,
+                  width: 1.2,
+                ),
+              ),
+              child: TextFormField(
+                //controller: nama_anda,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'nama tidak boleh kosong';
+                  }
+                },
+                decoration: InputDecoration(
+                  hintText: "Muhammad Al-Kahfi",
+                  hintStyle: TextStyle(
+                    color: grey400,
+                    fontSize: 15,
+                  ),
+                  icon: Icon(
+                    Icons.person,
+                    color: ktextColor,
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
             ),
             Align(
               alignment: FractionalOffset.topLeft,
@@ -95,8 +125,50 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            RoundedWhatsAppField(
-              onChanged: (value) {},
+            // RoundedWhatsAppField(
+            //   onChanged: (value) {},
+            // ),
+            Align(
+              alignment: FractionalOffset.topCenter,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                width: size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: grey100,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: grey300,
+                    width: 1.2,
+                  ),
+                ),
+                child: TextFormField(
+                  //controller: no_whatsapp,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'No Whatsapp tidak boleh kosong';
+                    } else if (value.length < 12) {
+                      return 'minimal 12 digit nomor';
+                    }
+                  },
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  decoration: InputDecoration(
+                    hintText: "0821xxx",
+                    hintStyle: TextStyle(
+                      color: grey400,
+                      fontSize: 15,
+                    ),
+                    icon: Icon(
+                      Icons.tablet_android,
+                      color: ktextColor,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
             ),
             Align(
               alignment: FractionalOffset.topLeft,
@@ -114,9 +186,45 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            RoundedPasswordField(
-              hintText: "Masukkan password",
-              onChanged: (value) {},
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+              width: size.width * 0.9,
+              decoration: BoxDecoration(
+                color: grey100,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: grey300,
+                  width: 1.2,
+                ),
+              ),
+              child: TextFormField(
+                //controller: password,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'password tidak boleh kosong';
+                  } else if (value.length < 6) {
+                    return 'password minimal 6 karakter';
+                  }
+                },
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: "Masukkan password",
+                  hintStyle: TextStyle(
+                    color: grey400,
+                    fontSize: 15,
+                  ),
+                  icon: Icon(
+                    Icons.lock,
+                    color: ktextColor,
+                  ),
+                  suffixIcon: Icon(
+                    Icons.visibility_off,
+                    color: ktextColor,
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
             ),
             Align(
               alignment: FractionalOffset.topLeft,
@@ -134,10 +242,50 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            RoundedPasswordField(
-              hintText: "Konfirmasi password",
-              onChanged: (value) {},
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+              width: size.width * 0.9,
+              decoration: BoxDecoration(
+                color: grey100,
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: grey300,
+                  width: 1.2,
+                ),
+              ),
+              child: TextFormField(
+                //controller: password,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'password tidak boleh kosong';
+                  } else if (value.length < 6) {
+                    return 'password minimal 6 karakter';
+                  }
+                },
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: "Masukkan password",
+                  hintStyle: TextStyle(
+                    color: grey400,
+                    fontSize: 15,
+                  ),
+                  icon: Icon(
+                    Icons.lock,
+                    color: ktextColor,
+                  ),
+                  suffixIcon: Icon(
+                    Icons.visibility_off,
+                    color: ktextColor,
+                  ),
+                  border: InputBorder.none,
+                ),
+              ),
             ),
+            // RoundedPasswordField(
+            //   hintText: "Konfirmasi password",
+            //   onChanged: (value) {},
+            // ),
             SizedBox(height: size.height * 0.03),
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 5),

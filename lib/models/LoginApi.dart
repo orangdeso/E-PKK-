@@ -33,7 +33,7 @@ class LoginApi {
   }
 
   static Future<LoginApi> postData(String no_whatsapp, String password) async {
-    String apiURL = "http://192.168.1.13/vscode/api_rest_pkk/login.php";
+    String apiURL = "http://192.168.137.1/vscode/api_rest_pkk/login.php";
     Uri uri = Uri.parse(apiURL);
 
     var apiResult = await http

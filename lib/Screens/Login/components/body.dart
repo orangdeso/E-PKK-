@@ -156,6 +156,8 @@ class _BodyState extends State<Body> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'No Whatsapp tidak boleh kosong';
+                      } else if (value.length < 12) {
+                        return 'minimal 12 digit nomor';
                       }
                     },
                     keyboardType: TextInputType.number,
@@ -378,8 +380,8 @@ class _BodyState extends State<Body> {
           context,
           '/home',
         );
-        // simpanLogin().addUser(
-        //     la!.kode, la!.no_whatsapp.toString(), la!.nama_user.toString());
+        simpanLogin().addUser(
+            la!.kode, la!.no_whatsapp.toString(), la!.nama_user.toString());
       } else {
         debugPrint('akun tidak ditemukan');
       }

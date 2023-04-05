@@ -1,9 +1,11 @@
+import 'package:e_pkk/views/Login/components/LoginController.dart';
+import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
 import 'package:e_pkk/models/LoginApi.dart';
-import 'package:e_pkk/Screens/Login/components/background.dart';
-import 'package:e_pkk/Screens/Registrasi/components/atau_divider.dart';
-import 'package:e_pkk/Screens/Registrasi/registrasi_screen.dart';
-import 'package:e_pkk/Screens/Welcome/welcome_screen.dart';
-import 'package:e_pkk/components/rounded_password_field.dart';
+import 'package:e_pkk/views/Login/components/background.dart';
+import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
+import 'package:e_pkk/views/Registrasi/registrasi_screen.dart';
+import 'package:e_pkk/views/Welcome/welcome_screen.dart';
+import 'package:e_pkk/widget/rounded_password_field.dart';
 import 'package:e_pkk/simpan_login.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -19,48 +21,50 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController no_whatsapp = TextEditingController();
-  final TextEditingController password = TextEditingController();
+  final LoginController controller = new LoginController();
 
-  //Method untuk menyimpan teks yang dimasukkan pada form
-  @override
-  void dispose() {
-    super.dispose();
-    no_whatsapp.dispose();
-    password.dispose();
-  }
+  var _formKey = GlobalKey<FormState>();
+  TextEditingController tNo_whatsapp = TextEditingController();
+  TextEditingController tPassword = TextEditingController();
 
-  //Method untuk mengatur pesan toast
-  void show(String message) {
-    Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: whiteColor,
-      textColor: textColor2,
-    );
-  }
+  // //Method untuk menyimpan teks yang dimasukkan pada form
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   no_whatsapp.dispose();
+  //   password.dispose();
+  // }
 
-  //Method untuk navigasi button login
-  void navigate(BuildContext context) {
-    if (no_whatsapp.text == null && password.text == null) {
-      show("Berhasil Login");
-      // Navigator.of(context)
-      //     .push(MaterialPageRoute(builder: (context) => WelcomeScreen()));
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return WelcomeScreen();
-          },
-        ),
-      );
-    } else {
-      show("no_whatsapp atau password anda salah");
-    }
-  }
+  // //Method untuk mengatur pesan toast
+  // void show(String message) {
+  //   Fluttertoast.showToast(
+  //     msg: message,
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: whiteColor,
+  //     textColor: textColor2,
+  //   );
+  // }
+
+  // //Method untuk navigasi button login
+  // void navigate(BuildContext context) {
+  //   if (no_whatsapp.text == null && password.text == null) {
+  //     show("Berhasil Login");
+  //     Navigator.of(context)
+  //         .push(MaterialPageRoute(builder: (context) => WelcomeScreen()));
+  //     // Navigator.push(
+  //     //   context,
+  //     //   MaterialPageRoute(
+  //     //     builder: (context) {
+  //     //       return WelcomeScreen();
+  //     //     },
+  //     //   ),
+  //     // );
+  //   } else {
+  //     show("no_whatsapp atau password anda salah");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -152,18 +156,20 @@ class _BodyState extends State<Body> {
                     ),
                   ),
                   child: TextFormField(
-                    controller: no_whatsapp,
+                    controller: tNo_whatsapp,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'No Whatsapp tidak boleh kosong';
+                        return 'Masukkan nomor WhatsApp Anda';
                       } else if (value.length < 12) {
                         return 'minimal 12 digit nomor';
                       }
                     },
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(13),
                     ],
+                    cursorColor: ktextColor,
                     decoration: InputDecoration(
                       hintText: "0821xxx",
                       hintStyle: TextStyle(
@@ -172,7 +178,7 @@ class _BodyState extends State<Body> {
                       ),
                       icon: Icon(
                         Icons.tablet_android,
-                        color: ktextColor,
+                        //color: ktextColor,
                       ),
                       border: InputBorder.none,
                     ),
@@ -208,7 +214,7 @@ class _BodyState extends State<Body> {
                   ),
                 ),
                 child: TextFormField(
-                  controller: password,
+                  controller: tPassword,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'password tidak boleh kosong';
@@ -225,11 +231,17 @@ class _BodyState extends State<Body> {
                     ),
                     icon: Icon(
                       Icons.lock,
-                      color: ktextColor,
+                      //color: ktextColor,
                     ),
-                    suffixIcon: Icon(
-                      Icons.visibility_off,
-                      color: ktextColor,
+                    suffixIcon: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          controller.toglePass();
+                        });
+                      },
+                      child: controller.getObscure
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
                     ),
                     border: InputBorder.none,
                   ),
@@ -240,7 +252,17 @@ class _BodyState extends State<Body> {
                 child: Padding(
                   padding: EdgeInsets.only(right: 20, top: 10),
                   child: GestureDetector(
-                    onTap: () {}, //Logic
+                    onTap: () {
+                      //Logic
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return lupaPassword();
+                          },
+                        ),
+                      );
+                    },
                     child: Text(
                       "Lupa Password ?",
                       overflow: TextOverflow.ellipsis,
@@ -267,9 +289,11 @@ class _BodyState extends State<Body> {
                         backgroundColor: ktextColor,
                         elevation: 20,
                       ),
-                      onPressed: () async {
+                      onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          postLogin();
+                          controller.btLogin(
+                              context, tNo_whatsapp.text, tPassword.text);
+                          //postLogin();
                         }
                       },
                       child: Text(
@@ -363,30 +387,30 @@ class _BodyState extends State<Body> {
     );
   }
 
-  LoginApi? la;
-  SharedPreferences? sp;
+  // LoginApi? la;
+  // SharedPreferences? sp;
 
-  void postLogin() async {
-    LoginApi.postData(no_whatsapp.text, password.text).then((value) {
-      la = value;
-      checkLoginCondition();
-    });
-  }
+  // void postLogin() async {
+  //   LoginApi.postData(no_whatsapp.text, password.text).then((value) {
+  //     la = value;
+  //     checkLoginCondition();
+  //   });
+  // }
 
-  void checkLoginCondition() {
-    if (la != null) {
-      if (la!.kode == 1) {
-        Navigator.pushNamed(
-          context,
-          '/home',
-        );
-        simpanLogin().addUser(
-            la!.kode, la!.no_whatsapp.toString(), la!.nama_user.toString());
-      } else {
-        debugPrint('akun tidak ditemukan');
-      }
-    } else {
-      debugPrint('error');
-    }
-  }
+  // void checkLoginCondition() {
+  //   if (la != null) {
+  //     if (la!.kode == 1) {
+  //       Navigator.pushNamed(
+  //         context,
+  //         '/home',
+  //       );
+  //       simpanLogin().addUser(
+  //           la!.kode, la!.no_whatsapp.toString(), la!.nama_user.toString());
+  //     } else {
+  //       debugPrint('akun tidak ditemukan');
+  //     }
+  //   } else {
+  //     debugPrint('error');
+  //   }
+  // }
 }

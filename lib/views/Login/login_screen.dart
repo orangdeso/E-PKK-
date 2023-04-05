@@ -1,4 +1,4 @@
-import 'package:e_pkk/Screens/Login/components/body.dart';
+import 'package:e_pkk/views/Login/components/body.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {

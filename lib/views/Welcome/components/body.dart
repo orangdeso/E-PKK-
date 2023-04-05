@@ -1,5 +1,5 @@
-import 'package:e_pkk/Screens/Login/login_screen.dart';
-import 'package:e_pkk/Screens/Registrasi/registrasi_screen.dart';
+import 'package:e_pkk/views/Login/login_screen.dart';
+import 'package:e_pkk/views/Registrasi/registrasi_screen.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'background.dart';

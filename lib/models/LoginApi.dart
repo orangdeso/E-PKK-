@@ -1,45 +1,67 @@
 import 'dart:convert';
+import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
-  int kode;
-  String? message;
+  int? kode;
+  String? pesan;
+  DataPatient? data;
+
+  LoginApi({
+    this.kode,
+    this.pesan,
+    this.data,
+  });
+
+  // factory LoginApi.createLoginApi(Map<String, dynamic> object) {
+  //   return LoginApi(
+  //     kode: object['kode'],
+  //     pesan:
+  //     DataPatien object['message'],
+  //     no_whatsapp: object['no_whatsapp'],
+  //     nama_user: object['nama_user'],
+  //     tanggal_lahir: object['tanggal_lahir'],
+  //     alamat: object['alamat'],
+  //     password: object['password'],
+  //   );
+  // }
+
+  static Future<LoginApi> postData(String no_whatsapp, String password) async {
+    Uri url = Uri.parse(ApiHelper.url + 'login1.php');
+    var response = await http.post(url, body: {
+      'no_whatsapp': no_whatsapp,
+      'password': password,
+    });
+
+    var body = json.decode(response.body);
+    return LoginApi(
+      kode: body['kode'],
+      pesan: body['pesan'],
+      data: body['data'],
+    );
+    //String apiURL = "http://172.16.109.54/vscode/api_rest_pkk/login.php";
+    // Uri uri = Uri.parse(apiURL);
+
+    // var apiResult = await http
+    //     .post(uri, body: {"no_whatsapp": no_whatsapp, "password": password});
+    // var jsonObject = json.decode(apiResult.body);
+
+    // return LoginApi.createLoginApi(jsonObject);
+  }
+}
+
+class DataPatient {
   String? no_whatsapp;
   String? nama_user;
   String? tanggal_lahir;
   String? alamat;
   String? password;
 
-  LoginApi({
-    required this.kode,
-    this.message,
+  DataPatient({
     this.no_whatsapp,
     this.nama_user,
     this.tanggal_lahir,
     this.alamat,
     this.password,
   });
-
-  factory LoginApi.createLoginApi(Map<String, dynamic> object) {
-    return LoginApi(
-      kode: object['kode'],
-      message: object['message'],
-      no_whatsapp: object['no_whatsapp'],
-      nama_user: object['nama_user'],
-      tanggal_lahir: object['tanggal_lahir'],
-      alamat: object['alamat'],
-      password: object['password'],
-    );
-  }
-
-  static Future<LoginApi> postData(String no_whatsapp, String password) async {
-    String apiURL = "http://192.168.137.1/vscode/api_rest_pkk/login.php";
-    Uri uri = Uri.parse(apiURL);
-
-    var apiResult = await http
-        .post(uri, body: {"no_whatsapp": no_whatsapp, "password": password});
-    var jsonObject = json.decode(apiResult.body);
-
-    return LoginApi.createLoginApi(jsonObject);
-  }
 }

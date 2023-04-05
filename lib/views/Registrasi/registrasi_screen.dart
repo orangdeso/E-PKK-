@@ -1,4 +1,4 @@
-import 'package:e_pkk/Screens/Registrasi/components/body.dart';
+import 'package:e_pkk/views/Registrasi/components/body.dart';
 import 'package:flutter/material.dart';
 
 class RegistrasiScreen extends StatelessWidget {

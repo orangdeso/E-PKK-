@@ -1,9 +1,9 @@
-import 'package:e_pkk/Screens/Login/login_screen.dart';
-import 'package:e_pkk/Screens/Registrasi/components/atau_divider.dart';
-import 'package:e_pkk/Screens/Registrasi/components/background.dart';
-import 'package:e_pkk/components/rounded_input_field.dart';
-import 'package:e_pkk/components/rounded_password_field.dart';
-import 'package:e_pkk/components/rounded_whatsapp_field.dart';
+import 'package:e_pkk/views/Login/login_screen.dart';
+import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
+import 'package:e_pkk/views/Registrasi/components/background.dart';
+import 'package:e_pkk/widget/rounded_input_field.dart';
+import 'package:e_pkk/widget/rounded_password_field.dart';
+import 'package:e_pkk/widget/rounded_whatsapp_field.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

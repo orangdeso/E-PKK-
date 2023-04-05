@@ -1,4 +1,5 @@
-import 'package:e_pkk/Screens/Welcome/welcome_screen.dart';
+import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
+import 'package:e_pkk/views/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_pkk/utils/constants.dart';
 
@@ -16,7 +17,11 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-    home: WelcomeScreen(),
+      home: WelcomeScreen(),
+      // routes: {
+      //   'lupa_password_screen': (context) => const lupaPassword(),
+      //   'welcome_screen': (context) => const WelcomeScreen(),
+      // },
     );
   }
 }

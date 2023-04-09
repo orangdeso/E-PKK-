@@ -5,7 +5,7 @@ import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/registrasi_screen.dart';
 import 'package:e_pkk/views/Welcome/welcome_screen.dart';
-import 'package:e_pkk/widget/rounded_password_field.dart';
+import 'package:e_pkk/widgets/rounded_password_field.dart';
 import 'package:e_pkk/simpan_login.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +218,7 @@ class _BodyState extends State<Body> {
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'password tidak boleh kosong';
-                    } else if (value.length < 3) {
+                    } else if (value.length < 6) {
                       return 'password minimal 6 karakter';
                     }
                   },

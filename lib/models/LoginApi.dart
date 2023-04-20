@@ -48,19 +48,39 @@ class LoginApi {
 
     // return LoginApi.createLoginApi(jsonObject);
   }
+
+  static Future<LoginApi> registrasiPost(
+    String nama_kec,
+    String no_whatsapp,
+    String alamat,
+    String password,
+  ) async {
+    Uri url = Uri.parse(ApiHelper.url + 'registrasi1.php');
+    var response = await http.post(url, body: {
+      'nama_kec': nama_kec,
+      'no_whatsapp': no_whatsapp,
+      'alamat': alamat,
+      'password': password,
+    });
+
+    var body = json.decode(response.body);
+    return LoginApi(
+      kode: body['kode'],
+      pesan: body['pesan'],
+      data: body['data'],
+    );
+  }
 }
 
 class DataPatient {
+  String? nama_kec;
   String? no_whatsapp;
-  String? nama_user;
-  String? tanggal_lahir;
   String? alamat;
   String? password;
 
   DataPatient({
+    this.nama_kec,
     this.no_whatsapp,
-    this.nama_user,
-    this.tanggal_lahir,
     this.alamat,
     this.password,
   });

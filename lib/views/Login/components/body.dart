@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/views/Login/components/LoginController.dart';
 import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
 import 'package:e_pkk/models/LoginApi.dart';
@@ -222,7 +223,7 @@ class _BodyState extends State<Body> {
                       return 'password minimal 6 karakter';
                     }
                   },
-                  obscureText: true,
+                  obscureText: controller.getObscure,
                   decoration: InputDecoration(
                     hintText: "Masukkan password",
                     hintStyle: TextStyle(
@@ -282,30 +283,48 @@ class _BodyState extends State<Body> {
                   width: size.width * 0.9,
                   height: 47,
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: ClipRRect(
+                  child: AnimatedButton(
+                    text: "LOGIN",
+                    color: ktextColor,
                     borderRadius: BorderRadius.circular(8),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ktextColor,
-                        elevation: 20,
-                      ),
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          controller.btLogin(
-                              context, tNo_whatsapp.text, tPassword.text);
-                          //postLogin();
-                        }
-                      },
-                      child: Text(
-                        "LOGIN",
-                        style: TextStyle(
-                          color: whiteColor,
-                          fontSize: 18.0,
-                          fontWeight: bold,
-                        ),
-                      ),
+                    buttonTextStyle: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: whiteColor,
                     ),
+                    pressEvent: () {
+                      if (_formKey.currentState!.validate()) {
+                        controller.btLogin(
+                          context,
+                          tNo_whatsapp.text,
+                          tPassword.text,
+                        );
+                      }
+                    },
                   ),
+                  // child: ElevatedButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: ktextColor,
+                  //     elevation: 20,
+                  //   ),
+                  //   onPressed: () {
+                  //     if (_formKey.currentState!.validate()) {
+                  //       controller.btLogin(
+                  //         context,
+                  //         tNo_whatsapp.text,
+                  //         tPassword.text,
+                  //       );
+                  //     }
+                  //   },
+                  //   child: Text(
+                  //     "LOGIN",
+                  //     style: TextStyle(
+                  //       color: whiteColor,
+                  //       fontSize: 18.0,
+                  //       fontWeight: bold,
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ),
               OrDivider(),
@@ -387,6 +406,18 @@ class _BodyState extends State<Body> {
     );
   }
 
+  _showAlertSukses(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Berhasil",
+      desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {},
+    ).show();
+  }
   // LoginApi? la;
   // SharedPreferences? sp;
 

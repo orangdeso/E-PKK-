@@ -51,4 +51,6 @@ TextStyle formStyle = GoogleFonts.inter(
   color: form,
 );
 
+TextStyle inter = GoogleFonts.inter();
+
 FontWeight bold = FontWeight.bold;

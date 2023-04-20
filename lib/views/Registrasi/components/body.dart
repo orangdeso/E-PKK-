@@ -1,9 +1,7 @@
 import 'package:e_pkk/views/Login/login_screen.dart';
+import 'package:e_pkk/views/Registrasi/components/RegistrasiController.dart';
 import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/components/background.dart';
-import 'package:e_pkk/widgets/rounded_input_field.dart';
-import 'package:e_pkk/widgets/rounded_password_field.dart';
-import 'package:e_pkk/widgets/rounded_whatsapp_field.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,11 +16,22 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  final RegistrasiController controller = new RegistrasiController();
+  final dKecamatan = TextEditingController();
+
+  var _formkey = GlobalKey<FormState>();
+
+  TextEditingController tNamaKec = TextEditingController();
+  TextEditingController tWa = TextEditingController();
+  TextEditingController tAlamat = TextEditingController();
+  TextEditingController tPassword = TextEditingController();
+  TextEditingController tKonfirm = TextEditingController();
   //Body({super.key});
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
+      key: _formkey,
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +74,7 @@ class _BodyState extends State<Body> {
               child: Padding(
                 padding: EdgeInsets.only(left: 20, top: 30, bottom: 5),
                 child: Text(
-                  "Nama Anda",
+                  "Kecamatan",
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: TextStyle(
@@ -88,25 +97,74 @@ class _BodyState extends State<Body> {
                   width: 1.2,
                 ),
               ),
-              child: TextFormField(
-                //controller: nama_anda,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'nama tidak boleh kosong';
-                  }
+              child: Autocomplete(
+                optionsBuilder: (TextEditingValue textValue) {
+                  return cities.where(
+                    (String value) => value.toLowerCase().startsWith(
+                          textValue.text.toLowerCase(),
+                        ),
+                  );
                 },
-                decoration: InputDecoration(
-                  hintText: "Muhammad Al-Kahfi",
-                  hintStyle: TextStyle(
-                    color: grey400,
-                    fontSize: 15,
-                  ),
-                  icon: Icon(
-                    Icons.person,
-                    color: ktextColor,
-                  ),
-                  border: InputBorder.none,
-                ),
+                //Cek kondisi apakah sudah sesuai dengan value
+                onSelected: (option) {
+                  print(option);
+                },
+                fieldViewBuilder: (BuildContext context,
+                    TextEditingController textEditingController,
+                    FocusNode focusNode,
+                    VoidCallback onFieldSubmitted) {
+                  tNamaKec = textEditingController;
+                  return TextFormField(
+                    controller: tNamaKec,
+                    focusNode: focusNode,
+                    onChanged: (value) {},
+                    decoration: InputDecoration(
+                      hintText: "Pilih kecamatan",
+                      hintStyle: TextStyle(
+                        color: grey400,
+                        fontSize: 15,
+                      ),
+                      icon: Icon(
+                        Icons.location_city_outlined,
+                      ),
+                      border: InputBorder.none,
+                    ),
+                  );
+                },
+                // optionsViewBuilder: (BuildContext context,
+                //     void Function(String) onSelected,
+                //     Iterable<String> options) {
+                //   return Material(
+                //     child: SizedBox(
+                //       height: size.height * 0.9,
+                //       child: SingleChildScrollView(
+                //         child: Column(
+                //           children: options.map(
+                //             (opt) {
+                //               return InkWell(
+                //                 onTap: () {
+                //                   onSelected(opt);
+                //                 },
+                //                 child: Container(
+                //                   padding: EdgeInsets.only(right: 75),
+                //                   child: Card(
+                //                     color: grey100,
+                //                     elevation: 2,
+                //                     child: Container(
+                //                       width: double.infinity,
+                //                       padding: EdgeInsets.all(13),
+                //                       child: Text(opt),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               );
+                //             },
+                //           ).toList(),
+                //         ),
+                //       ),
+                //     ),
+                //   );
+                // },
               ),
             ),
             Align(
@@ -125,9 +183,6 @@ class _BodyState extends State<Body> {
                 ),
               ),
             ),
-            // RoundedWhatsAppField(
-            //   onChanged: (value) {},
-            // ),
             Align(
               alignment: FractionalOffset.topCenter,
               child: Container(
@@ -143,7 +198,7 @@ class _BodyState extends State<Body> {
                   ),
                 ),
                 child: TextFormField(
-                  //controller: no_whatsapp,
+                  controller: tWa,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'No Whatsapp tidak boleh kosong';
@@ -163,7 +218,59 @@ class _BodyState extends State<Body> {
                     ),
                     icon: Icon(
                       Icons.tablet_android,
-                      color: ktextColor,
+                      //color: ktextColor,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: FractionalOffset.topLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 20, top: 15, bottom: 5),
+                child: Text(
+                  "Alamat",
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(
+                    color: grey800,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: FractionalOffset.topCenter,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                width: size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: grey100,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: grey300,
+                    width: 1.2,
+                  ),
+                ),
+                child: TextFormField(
+                  controller: tAlamat,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Alamat tidak boleh kosong';
+                    }
+                  },
+                  decoration: InputDecoration(
+                    hintText: "Jl. Mayan",
+                    hintStyle: TextStyle(
+                      color: grey400,
+                      fontSize: 15,
+                    ),
+                    icon: Icon(
+                      Icons.location_on,
+                      //color: ktextColor,
                     ),
                     border: InputBorder.none,
                   ),
@@ -199,7 +306,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
               child: TextFormField(
-                //controller: password,
+                controller: tPassword,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'password tidak boleh kosong';
@@ -207,7 +314,7 @@ class _BodyState extends State<Body> {
                     return 'password minimal 6 karakter';
                   }
                 },
-                obscureText: true,
+                obscureText: controller.getObscure1,
                 decoration: InputDecoration(
                   hintText: "Masukkan password",
                   hintStyle: TextStyle(
@@ -216,11 +323,17 @@ class _BodyState extends State<Body> {
                   ),
                   icon: Icon(
                     Icons.lock,
-                    color: ktextColor,
+                    //color: ktextColor,
                   ),
-                  suffixIcon: Icon(
-                    Icons.visibility_off,
-                    color: ktextColor,
+                  suffixIcon: GestureDetector(
+                    child: controller.obscure1
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                    onTap: () {
+                      setState(() {
+                        controller.toglePass1();
+                      });
+                    },
                   ),
                   border: InputBorder.none,
                 ),
@@ -255,7 +368,7 @@ class _BodyState extends State<Body> {
                 ),
               ),
               child: TextFormField(
-                //controller: password,
+                controller: tKonfirm,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'password tidak boleh kosong';
@@ -263,7 +376,7 @@ class _BodyState extends State<Body> {
                     return 'password minimal 6 karakter';
                   }
                 },
-                obscureText: true,
+                obscureText: controller.getObscure2,
                 decoration: InputDecoration(
                   hintText: "Masukkan password",
                   hintStyle: TextStyle(
@@ -272,20 +385,22 @@ class _BodyState extends State<Body> {
                   ),
                   icon: Icon(
                     Icons.lock,
-                    color: ktextColor,
+                    //color: ktextColor,
                   ),
-                  suffixIcon: Icon(
-                    Icons.visibility_off,
-                    color: ktextColor,
+                  suffixIcon: GestureDetector(
+                    child: controller.obscure2
+                        ? const Icon(Icons.visibility_off)
+                        : const Icon(Icons.visibility),
+                    onTap: () {
+                      setState(() {
+                        controller.toglePass2();
+                      });
+                    },
                   ),
                   border: InputBorder.none,
                 ),
               ),
             ),
-            // RoundedPasswordField(
-            //   hintText: "Konfirmasi password",
-            //   onChanged: (value) {},
-            // ),
             SizedBox(height: size.height * 0.03),
             Padding(
               padding: EdgeInsets.only(top: 10, bottom: 5),
@@ -300,7 +415,21 @@ class _BodyState extends State<Body> {
                       backgroundColor: ktextColor,
                       elevation: 20,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      setState(() {
+                        if (_formkey.currentState!.validate()) {
+                          controller.btRegister(
+                            context,
+                            tNamaKec.text = "",
+                            tWa.text = "",
+                            tAlamat.text = "",
+                            tPassword.text = "",
+                            tKonfirm.text = "",
+                          );
+                          print("");
+                        }
+                      });
+                    },
                     child: Text(
                       "DAFTAR",
                       style: TextStyle(
@@ -391,3 +520,28 @@ class _BodyState extends State<Body> {
     );
   }
 }
+
+// String pilihKecamatan = "";
+
+const List<String> cities = <String>[
+  "Bagor",
+  "Baron",
+  "Berbek",
+  "Gondang",
+  "Jatikalen",
+  "Kertosono",
+  "Lengkong",
+  "Loceret",
+  "Nganjuk",
+  "Ngetos",
+  "Ngluyu",
+  "Ngronggot",
+  "Pace",
+  "Patianrowo",
+  "Prambon",
+  "Rejoso",
+  "Sawahan",
+  "Sukomoro",
+  "Tanjunganom",
+  "Wilangan",
+];

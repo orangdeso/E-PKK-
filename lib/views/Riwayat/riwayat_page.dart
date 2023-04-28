@@ -1,3 +1,4 @@
+import 'package:e_pkk/models/laporanModel.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +11,13 @@ class RiwayatPage extends StatefulWidget {
 }
 
 class _RiwayatPageState extends State<RiwayatPage> {
+  List<LaporanData> listLaporan = [];
+  Repository repository = Repository();
+
+  getData() async {
+    listLaporan = await repository.getRiwayat();
+  }
+
   List<Tab> myTab = [
     Tab(
       child: Text(
@@ -36,6 +44,12 @@ class _RiwayatPageState extends State<RiwayatPage> {
       ),
     ),
   ];
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,108 +88,118 @@ class _RiwayatPageState extends State<RiwayatPage> {
           resizeToAvoidBottomInset: true,
           body: TabBarView(
             children: [
-              ListView(
+              ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                children: [
-                  for (int i = 0; i < 10; i++)
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8),
-                          child: Container(
-                            // height: 170,
-                            // width: 300,
-                            decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: Container(
+                          // height: 170,
+                          // width: 300,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 10,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  onTap: () {},
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8),
+                                    child: Image.asset(
+                                      "assets/images/po.png",
+                                      height: 110,
+                                      width: 130,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 150,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Text(
+                                          (listLaporan[index].title_laporan ==
+                                                  null)
+                                              ? "P"
+                                              : "P : ${listLaporan[index].title_laporan}",
+                                          //listLaporan[index].title_laporan,
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              vertical: 5,
+                                              horizontal: 5,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.greenAccent
+                                                  .withOpacity(0.5),
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
+                                            child: Text(
+                                              (listLaporan[index].status ==
+                                                      null)
+                                                  ? "status"
+                                                  : "status : ${listLaporan[index].status}",
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 5),
+                                  child: Text(
+                                    "12-12-2023",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {},
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.asset(
-                                        "assets/images/po.png",
-                                        height: 110,
-                                        width: 130,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "Title Laporan Title Laporan Title Laporan",
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 10),
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 5,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: Colors.greenAccent
-                                                    .withOpacity(0.5),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                "status",
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5, top: 2),
-                                    child: Text(
-                                      "12-12-2023",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ),
                         ),
-                      ],
-                    ),
-                ],
+                      ),
+                    ],
+                  );
+                },
+                itemCount: listLaporan.length,
+                // children: [
+                //   //for (int i = 0; i < 10; i++)
+                // ],
               ),
               ListView(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),

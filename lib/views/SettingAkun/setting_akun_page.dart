@@ -1,5 +1,8 @@
 import 'package:e_pkk/utils/constants.dart';
-import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
+import 'package:e_pkk/views/SettingAkun/keamanan_page.dart';
+import 'package:e_pkk/views/SettingAkun/profil_page.dart';
+import 'package:e_pkk/views/SettingAkun/syarat.page.dart';
+import 'package:e_pkk/views/SettingAkun/tentang_page.dart';
 import 'package:flutter/material.dart';
 
 class SettingAkun extends StatefulWidget {
@@ -91,13 +94,17 @@ class _SettingAkunState extends State<SettingAkun> {
                         "Informasi akun pengguna",
                         style: TextStyle(
                           fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.left,
                       ),
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfilPage()));
+                    },
                     leading: Container(
                       width: 45,
                       height: 45,
@@ -133,6 +140,10 @@ class _SettingAkunState extends State<SettingAkun> {
                   ),
                   Divider(),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => KeamananAkunPage()));
+                    },
                     leading: Container(
                       width: 45,
                       height: 45,
@@ -192,13 +203,17 @@ class _SettingAkunState extends State<SettingAkun> {
                         "Informasi lainnya",
                         style: TextStyle(
                           fontSize: 17,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.left,
                       ),
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TentangKamiPage()));
+                    },
                     leading: Container(
                       width: 45,
                       height: 45,
@@ -234,6 +249,10 @@ class _SettingAkunState extends State<SettingAkun> {
                   ),
                   Divider(),
                   ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ProfilPage()));
+                    },
                     leading: Container(
                       width: 45,
                       height: 45,
@@ -271,7 +290,7 @@ class _SettingAkunState extends State<SettingAkun> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => lupaPassword()));
+                          builder: (context) => SyaratKetentuanPage()));
                     },
                     leading: Container(
                       width: 45,

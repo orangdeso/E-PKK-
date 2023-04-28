@@ -4,8 +4,10 @@ import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/navbar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController {
+  bool no_whatsapp = false;
   bool _obscure = true;
   get getObscure => this._obscure;
 
@@ -16,7 +18,13 @@ class LoginController {
   }
 
   void btLogin(BuildContext context, String no_whatsapp, String password) {
-    LoginApi.postData(no_whatsapp, password).then((value) {
+    LoginApi.postData(no_whatsapp, password).then((value) async {
+      //Shared Preferences
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool('no_whatsapp', true);
+      print(prefs.getBool('no_whatsapp'));
+
+      Future.delayed(Duration(seconds: 2), () {});
       if (value.kode == 1) {
         _showAlertSukses(context);
         //show("Berhasil Login");

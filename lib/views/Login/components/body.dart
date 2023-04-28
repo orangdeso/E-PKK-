@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  bool no_whatsapp = false;
   final LoginController controller = new LoginController();
 
   var _formKey = GlobalKey<FormState>();
@@ -66,6 +67,7 @@ class _BodyState extends State<Body> {
   //     show("no_whatsapp atau password anda salah");
   //   }
   // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -302,29 +304,6 @@ class _BodyState extends State<Body> {
                       }
                     },
                   ),
-                  // child: ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: ktextColor,
-                  //     elevation: 20,
-                  //   ),
-                  //   onPressed: () {
-                  //     if (_formKey.currentState!.validate()) {
-                  //       controller.btLogin(
-                  //         context,
-                  //         tNo_whatsapp.text,
-                  //         tPassword.text,
-                  //       );
-                  //     }
-                  //   },
-                  //   child: Text(
-                  //     "LOGIN",
-                  //     style: TextStyle(
-                  //       color: whiteColor,
-                  //       fontSize: 18.0,
-                  //       fontWeight: bold,
-                  //     ),
-                  //   ),
-                  // ),
                 ),
               ),
               OrDivider(),
@@ -406,18 +385,6 @@ class _BodyState extends State<Body> {
     );
   }
 
-  _showAlertSukses(context) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.success,
-      animType: AnimType.topSlide,
-      showCloseIcon: true,
-      title: "Berhasil",
-      desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
-      btnCancelOnPress: () {},
-      btnOkOnPress: () {},
-    ).show();
-  }
   // LoginApi? la;
   // SharedPreferences? sp;
 

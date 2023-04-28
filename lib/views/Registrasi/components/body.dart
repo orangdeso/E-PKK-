@@ -17,7 +17,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final RegistrasiController controller = new RegistrasiController();
-  final dKecamatan = TextEditingController();
+  //final dKecamatan = TextEditingController();
 
   var _formkey = GlobalKey<FormState>();
 

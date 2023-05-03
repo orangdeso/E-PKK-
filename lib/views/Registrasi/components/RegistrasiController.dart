@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/helpers/OkDialog.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/login_screen.dart';
@@ -26,24 +27,55 @@ class RegistrasiController {
 
   void btRegister(BuildContext context, String nama_kec, String no_whatsapp,
       String alamat, String password, String konfirm) {
+    //new OkDialog(context, 'bisa', 'test');
     final OkDialog okDialog;
+
     if (password != konfirm) {
-      okDialog = new OkDialog(context, 'Konfirmasi Kata Sandi',
-          'Konfirmasi kata sandi yang anda masukkan tidak sesuai.');
+      _alertGagalRegis(context);
+      // new OkDialog(context, 'Konfirmasi Kata Sandi',
+      //     'Konfirmasi kata sandi yang anda masukkan tidak sesuai.');
       // } else if (_isChecked == false) {
       //   okDialog = new OkDialog(context, 'Centang Persetujuan',
       //       'Klik jika anda menyetujui peraturan pada aplikasi ini.');
-      // } else {
+    } else {
       LoginApi.registrasiPost(nama_kec, no_whatsapp, alamat, password)
           .then((value) {
         if (value.kode == 1) {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+          _AlertBerhasilRegis(context);
+          // new OkDialog(context, 'bisa', value.kode.toString());
         } else {
-          OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
+          new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
           print(value);
         }
       });
     }
+  }
+
+  _alertGagalRegis(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Gagal",
+      desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
+      btnOkOnPress: () {},
+    ).show();
+  }
+
+  _AlertBerhasilRegis(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Berhasil Daftar Akun",
+      desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
+      //btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+      },
+    ).show();
   }
 }

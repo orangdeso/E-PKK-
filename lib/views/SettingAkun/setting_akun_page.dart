@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/SettingAkun/keamanan_page.dart';
 import 'package:e_pkk/views/SettingAkun/profil_page.dart';
@@ -327,6 +328,44 @@ class _SettingAkunState extends State<SettingAkun> {
                   ),
                   Divider(),
                   ListTile(
+                    onTap: () {
+                      print("Wis diklik bro");
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Konfirmasi"),
+                            content: Text(
+                              "Apakah Anda ingin keluar dari aplikasi ?",
+                            ),
+                            actions: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 15),
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                    "Tidak",
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                              AnimatedButton(
+                                pressEvent: () {},
+                                text: "Ya",
+                                width: 70,
+                                color: ktextColor,
+                                borderRadius: BorderRadius.circular(5),
+                                buttonTextStyle: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     leading: Container(
                       width: 45,
                       height: 45,

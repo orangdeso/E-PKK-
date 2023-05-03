@@ -26,7 +26,7 @@ class _ProfilPageState extends State<ProfilPage> {
       backgroundColor: grey100,
       body: ListView(
         physics: BouncingScrollPhysics(),
-        children: <Widget> [
+        children: <Widget>[
           
         ],
       ),

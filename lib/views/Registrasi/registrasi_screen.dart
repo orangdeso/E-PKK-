@@ -19,6 +19,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
 
   var _formkey = GlobalKey<FormState>();
 
+  TextEditingController tNama = TextEditingController();
   TextEditingController tNamaKec = TextEditingController();
   TextEditingController tWa = TextEditingController();
   TextEditingController tAlamat = TextEditingController();
@@ -73,6 +74,58 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                   alignment: FractionalOffset.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(left: 20, top: 30, bottom: 5),
+                    child: Text(
+                      "Nama",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: grey800,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: FractionalOffset.topCenter,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
+                    width: size.width * 0.9,
+                    decoration: BoxDecoration(
+                      color: grey100,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        color: grey300,
+                        width: 1.2,
+                      ),
+                    ),
+                    child: TextFormField(
+                      controller: tNama,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Nama tidak boleh kosong';
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: "Masukkan nama",
+                        hintStyle: TextStyle(
+                          color: grey400,
+                          fontSize: 15,
+                        ),
+                        icon: Icon(
+                          Icons.person,
+                          //color: ktextColor,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ),
+                Align(
+                  alignment: FractionalOffset.topLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 20, top: 15, bottom: 5),
                     child: Text(
                       "Kecamatan",
                       overflow: TextOverflow.ellipsis,
@@ -427,6 +480,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                             if (_formkey.currentState!.validate()) {
                               controller.btRegister(
                                 context,
+                                tNama.text,
                                 tNamaKec.text,
                                 tWa.text,
                                 tAlamat.text,

@@ -50,6 +50,7 @@ class LoginApi {
   }
 
   static Future<LoginApi> registrasiPost(
+    String nama_pengguna,
     String nama_kec,
     String no_whatsapp,
     String alamat,
@@ -57,6 +58,7 @@ class LoginApi {
   ) async {
     Uri url = Uri.parse(ApiHelper.url + 'registrasi1.php');
     var response = await http.post(url, body: {
+      'nama_pengguna': nama_pengguna,
       'nama_kec': nama_kec,
       'no_whatsapp': no_whatsapp,
       'alamat': alamat,
@@ -73,12 +75,14 @@ class LoginApi {
 }
 
 class DataPatient {
+  String? nama_pengguna;
   String? nama_kec;
   String? no_whatsapp;
   String? alamat;
   String? password;
 
   DataPatient({
+    this.nama_pengguna,
     this.nama_kec,
     this.no_whatsapp,
     this.alamat,

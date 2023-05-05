@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: Text(
-          "Home",
+          "Coming soon",
           style: TextStyle(fontSize: 50),
         ),
       ),

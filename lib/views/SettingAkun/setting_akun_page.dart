@@ -50,7 +50,7 @@ class _SettingAkunState extends State<SettingAkun> {
                 ),
                 child: ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage("assets/icons/user64.png"),
+                    backgroundImage: AssetImage("assets/icons/user512.png"),
                   ),
                   title: Padding(
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),

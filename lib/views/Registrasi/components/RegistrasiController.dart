@@ -25,10 +25,10 @@ class RegistrasiController {
     obscure2 = !obscure2;
   }
 
-  void btRegister(BuildContext context, String nama_kec, String no_whatsapp,
-      String alamat, String password, String konfirm) {
+  void btRegister(BuildContext context, String nama_pengguna, String nama_kec,
+      String no_whatsapp, String alamat, String password, String konfirm) {
     //new OkDialog(context, 'bisa', 'test');
-    final OkDialog okDialog;
+    //final OkDialog okDialog;
 
     if (password != konfirm) {
       _alertGagalRegis(context);
@@ -38,7 +38,8 @@ class RegistrasiController {
       //   okDialog = new OkDialog(context, 'Centang Persetujuan',
       //       'Klik jika anda menyetujui peraturan pada aplikasi ini.');
     } else {
-      LoginApi.registrasiPost(nama_kec, no_whatsapp, alamat, password)
+      LoginApi.registrasiPost(
+              nama_pengguna, nama_kec, no_whatsapp, alamat, password)
           .then((value) {
         if (value.kode == 1) {
           _AlertBerhasilRegis(context);

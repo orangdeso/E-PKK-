@@ -57,7 +57,6 @@ class LoginController {
       showCloseIcon: true,
       title: "Berhasil",
       desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
-      btnCancelOnPress: () {},
       btnOkOnPress: () {
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => navbarView()));

@@ -1,3 +1,3 @@
 class ApiHelper {
-  static final String url = 'http://172.17.202.105ipcon/vscode/api_rest_pkk/';
+  static final String url = 'http://192.168.0.113/vscode/API-REST-E-PKK/';
 }

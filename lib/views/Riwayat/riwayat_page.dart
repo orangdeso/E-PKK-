@@ -1,7 +1,12 @@
+import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/models/LoginApi.dart';
+import 'package:e_pkk/models/Riwayat.dart';
 import 'package:e_pkk/models/laporanModel.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class RiwayatPage extends StatefulWidget {
   const RiwayatPage({super.key});
@@ -11,12 +16,29 @@ class RiwayatPage extends StatefulWidget {
 }
 
 class _RiwayatPageState extends State<RiwayatPage> {
-  List<LaporanData> listLaporan = [];
-  Repository repository = Repository();
+  int _current = 0;
+  List<Data> listLaporan = [];
+  List<dynamic> _data = [];
 
-  getData() async {
-    listLaporan = await repository.getRiwayat();
+  //Repository repository = Repository();
+  Future<void> fetchData() async {
+    final response =
+        await http.get(Uri.parse(ApiHelper.url + "getRiwayat.php"));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _data = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
   }
+
+  // getData() async {
+  //   listLaporan = await repository.getRiwayat();
+  // }
 
   List<Tab> myTab = [
     Tab(
@@ -47,7 +69,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
   @override
   void initState() {
-    getData();
+    fetchData();
     super.initState();
   }
 
@@ -88,8 +110,21 @@ class _RiwayatPageState extends State<RiwayatPage> {
           resizeToAvoidBottomInset: true,
           body: TabBarView(
             children: [
+              // ListView.builder(
+              //   itemCount: _data.length,
+              //   itemBuilder: (context, index) {
+              //     return ListTile(
+              //       title: Text(_data[index]['title_laporan']),
+              //       subtitle: Text(_data[index]['tanggal']),
+              //       leading: CircleAvatar(
+              //         backgroundImage: NetworkImage(_data[index]['image']),
+              //       ),
+              //     );
+              //   },
+              // ),
               ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _data.length,
                 itemBuilder: (context, index) {
                   return Column(
                     children: [
@@ -120,12 +155,19 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                   onTap: () {},
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      "assets/images/po.png",
-                                      height: 110,
-                                      width: 130,
-                                      fit: BoxFit.cover,
-                                    ),
+                                    child: _data[index]['image'].isNotEmpty
+                                        ? Image.asset(
+                                            _data[index]['image'],
+                                            height: 110,
+                                            width: 130,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            "assets/images/po.png",
+                                            height: 110,
+                                            width: 130,
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
                                 ),
                                 Container(
@@ -139,11 +181,15 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                           MainAxisAlignment.spaceAround,
                                       children: [
                                         Text(
-                                          (listLaporan[index].title_laporan ==
-                                                  null)
-                                              ? "P"
-                                              : "P : ${listLaporan[index].title_laporan}",
-                                          //listLaporan[index].title_laporan,
+                                          // (listLaporan[index].titleLaporan ==
+                                          //         null)
+                                          //     ? "P"
+                                          //     : "P : ${listLaporan[index].titleLaporan}",
+                                          // listLaporan[index]
+                                          //     .titleLaporan
+                                          //     .toString(),
+                                          _data[index]['title_laporan'] ??
+                                              'Not Title',
                                           style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w500,
@@ -163,10 +209,15 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                                   BorderRadius.circular(8),
                                             ),
                                             child: Text(
-                                              (listLaporan[index].status ==
-                                                      null)
-                                                  ? "status"
-                                                  : "status : ${listLaporan[index].status}",
+                                              _data[index]['status'] ??
+                                                  'Not Title',
+                                              // listLaporan[index]
+                                              //     .status
+                                              //     .toString(),
+                                              // (listLaporan[index].status ==
+                                              //         null)
+                                              //     ? "status"
+                                              //     : "status : ${listLaporan[index].status}",
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w400,
@@ -181,7 +232,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                 Padding(
                                   padding: EdgeInsets.only(left: 5),
                                   child: Text(
-                                    "12-12-2023",
+                                    _data[index]['tanggal'] ?? 'Not Title',
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.w400,
@@ -196,10 +247,6 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     ],
                   );
                 },
-                itemCount: listLaporan.length,
-                // children: [
-                //   //for (int i = 0; i < 10; i++)
-                // ],
               ),
               ListView(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),

@@ -1,3 +1,4 @@
+import 'package:e_pkk/views/Laporan/Upload_Laporan/MenuLaporan.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(onPressed: (){}, child: Text("Upload Laporan"))
+        child: ElevatedButton(onPressed: (){Navigator.pushNamed(context, PageLaporanMenu.route.toString());}, child: Text("Upload Laporan 2"))
       ),
     );
   }

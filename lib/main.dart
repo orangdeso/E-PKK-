@@ -1,3 +1,6 @@
+import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKelestarianHidup.dart';
+import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKesehatan.dart';
+import 'package:e_pkk/views/Laporan/Upload_Laporan/MenuLaporan.dart';
 import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
 import 'package:e_pkk/views/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +21,13 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: WelcomeScreen(),
-      // routes: {
-      //   'lupa_password_screen': (context) => const lupaPassword(),
-      //   'welcome_screen': (context) => const WelcomeScreen(),
-      // },
+      routes: {
+        'lupa_password_screen': (context) => const lupaPassword(),
+        'welcome_screen': (context) => const WelcomeScreen(),
+        PageLaporanMenu.route.toString():(context) => PageLaporanMenu(),
+        PageBidangKesehatan.route.toString():(context) => PageBidangKesehatan(),
+        PageLingkunganHidup.route.toString():(context) => PageLingkunganHidup()
+      },
     );
   }
 }

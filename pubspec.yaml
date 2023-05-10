@@ -17,6 +17,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   awesome_dialog: ^3.0.2
   searchfield: ^0.7.5
+  carousel_slider: ^4.2.1
   # dropdownfield: ^1.0.0
   simple_shadow: ^0.2.0
   # substring_highlight: ^1.0.33
@@ -29,6 +30,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Thin.ttf
+
   assets:
+    # - assets/fonts/
     - assets/icons/
     - assets/images/

@@ -27,23 +27,15 @@ class RegistrasiController {
 
   void btRegister(BuildContext context, String nama_pengguna, String nama_kec,
       String no_whatsapp, String alamat, String password, String konfirm) {
-    //new OkDialog(context, 'bisa', 'test');
-    //final OkDialog okDialog;
 
     if (password != konfirm) {
       _alertGagalRegis(context);
-      // new OkDialog(context, 'Konfirmasi Kata Sandi',
-      //     'Konfirmasi kata sandi yang anda masukkan tidak sesuai.');
-      // } else if (_isChecked == false) {
-      //   okDialog = new OkDialog(context, 'Centang Persetujuan',
-      //       'Klik jika anda menyetujui peraturan pada aplikasi ini.');
     } else {
       LoginApi.registrasiPost(
               nama_pengguna, nama_kec, no_whatsapp, alamat, password)
           .then((value) {
         if (value.kode == 1) {
           _AlertBerhasilRegis(context);
-          // new OkDialog(context, 'bisa', value.kode.toString());
         } else {
           new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
           print(value);

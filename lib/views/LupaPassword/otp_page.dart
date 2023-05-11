@@ -15,13 +15,19 @@ class _otpPageState extends State<otpPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
-        elevation: 0,
+        elevation: 5,
+        title: Text(
+          "Verifikasi",
+          style: TextStyle(color: grey900),
+        ),
         leading: BackButton(
           color: grey800,
         ),
+        centerTitle: true,
       ),
       body: Column(
         children: [
+          
           Padding(
             padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: Align(

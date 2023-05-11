@@ -25,8 +25,6 @@ class RegistrasiController {
     obscure2 = !obscure2;
   }
 
-  //void btRegister(BuildContext context, String text, String text2, String text3, String text4, String text5, String text6) {}
-
   // void btRegister(
   //     BuildContext context,
   //     String nama_pengguna,

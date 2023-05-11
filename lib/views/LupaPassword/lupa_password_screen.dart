@@ -12,6 +12,9 @@ class lupaPassword extends StatefulWidget {
 }
 
 class _lupaPasswordState extends State<lupaPassword> {
+  var _formkey = GlobalKey<FormState>();
+  TextEditingController tWane = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -22,6 +25,7 @@ class _lupaPasswordState extends State<lupaPassword> {
         backgroundColor: ktextColor,
       ),
       body: Form(
+        key: _formkey,
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +79,14 @@ class _lupaPasswordState extends State<lupaPassword> {
                   ),
                 ),
                 child: TextFormField(
-                  validator: (value) {},
+                  controller: tWane,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Masukkan nomor WhatsApp Anda';
+                    } else if (value.length < 12) {
+                      return 'minimal 12 digit nomor';
+                    }
+                  },
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
@@ -108,14 +119,16 @@ class _lupaPasswordState extends State<lupaPassword> {
                         elevation: 20,
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return otpPage();
-                            },
-                          ),
-                        );
+                        if (_formkey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return otpPage();
+                              },
+                            ),
+                          );
+                        }
                       },
                       child: Text(
                         "KIRIM",

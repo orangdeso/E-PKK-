@@ -2,14 +2,14 @@ import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class otpPage extends StatefulWidget {
-  const otpPage({super.key});
+class otpPageRegis extends StatefulWidget {
+  const otpPageRegis({super.key});
 
   @override
-  State<otpPage> createState() => _otpPageState();
+  State<otpPageRegis> createState() => _otpPageRegisState();
 }
 
-class _otpPageState extends State<otpPage> {
+class _otpPageRegisState extends State<otpPageRegis> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

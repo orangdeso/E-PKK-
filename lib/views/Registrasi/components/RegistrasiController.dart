@@ -25,50 +25,60 @@ class RegistrasiController {
     obscure2 = !obscure2;
   }
 
-  void btRegister(BuildContext context, String nama_pengguna, String nama_kec,
-      String no_whatsapp, String alamat, String password, String konfirm) {
+  //void btRegister(BuildContext context, String text, String text2, String text3, String text4, String text5, String text6) {}
 
-    if (password != konfirm) {
-      _alertGagalRegis(context);
-    } else {
-      LoginApi.registrasiPost(
-              nama_pengguna, nama_kec, no_whatsapp, alamat, password)
-          .then((value) {
-        if (value.kode == 1) {
-          _AlertBerhasilRegis(context);
-        } else {
-          new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
-          print(value);
-        }
-      });
-    }
-  }
+  // void btRegister(
+  //     BuildContext context,
+  //     String nama_pengguna,
+  //     String nama_kec,
+  //     String no_whatsapp,
+  //     String alamat,
+  //     String password,
+  //     String kode_otp,
+  //     String status,
+  //     String konfirm) {
+  //   if (password != konfirm) {
+  //     _alertGagalRegis(context);
+  //   } else {
+  //     LoginApi.registrasiPost(nama_pengguna, nama_kec, no_whatsapp, alamat,
+  //             password, kode_otp, status)
+  //         .then((value) {
+  //       if (value.kode == 1) {
+  //         kirimNotifikasi();
+  //         _AlertBerhasilRegis(context);
+  //       } else {
+  //         new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
+  //         print(value);
+  //       }
+  //     });
+  //   }
+  // }
 
-  _alertGagalRegis(context) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.error,
-      animType: AnimType.topSlide,
-      showCloseIcon: true,
-      title: "Gagal",
-      desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
-      btnOkOnPress: () {},
-    ).show();
-  }
+  // _alertGagalRegis(context) {
+  //   AwesomeDialog(
+  //     context: context,
+  //     dialogType: DialogType.error,
+  //     animType: AnimType.topSlide,
+  //     showCloseIcon: true,
+  //     title: "Gagal",
+  //     desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
+  //     btnOkOnPress: () {},
+  //   ).show();
+  // }
 
-  _AlertBerhasilRegis(context) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.success,
-      animType: AnimType.topSlide,
-      showCloseIcon: true,
-      title: "Berhasil Daftar Akun",
-      desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
-      //btnCancelOnPress: () {},
-      btnOkOnPress: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => LoginScreen()));
-      },
-    ).show();
-  }
+  // _AlertBerhasilRegis(context) {
+  //   AwesomeDialog(
+  //     context: context,
+  //     dialogType: DialogType.success,
+  //     animType: AnimType.topSlide,
+  //     showCloseIcon: true,
+  //     title: "Berhasil Daftar Akun",
+  //     desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
+  //     //btnCancelOnPress: () {},
+  //     btnOkOnPress: () {
+  //       Navigator.of(context)
+  //           .push(MaterialPageRoute(builder: (context) => LoginScreen()));
+  //     },
+  //   ).show();
+  // }
 }

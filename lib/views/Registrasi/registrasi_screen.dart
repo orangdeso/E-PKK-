@@ -1,10 +1,19 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:e_pkk/helpers/OkDialog.dart';
+import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/login_screen.dart';
+import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:e_pkk/views/Registrasi/components/RegistrasiController.dart';
 import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
+import 'package:e_pkk/views/Registrasi/otp_page_regis.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:math';
 
 class RegistrasiScreen extends StatefulWidget {
   const RegistrasiScreen({super.key});
@@ -25,6 +34,96 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
   TextEditingController tAlamat = TextEditingController();
   TextEditingController tPassword = TextEditingController();
   TextEditingController tKonfirm = TextEditingController();
+
+  void _kirimNotifikasi() async {
+    var url = Uri.parse(
+        'http://192.168.1.6/vscode/api_rest_pkk/otpWa.php'); // Ganti dengan URL endpoint API yang sesuai
+
+    var data = {
+      "kodeOtp": randomNumber.toString(),
+      "noHp": tWa.text,
+    };
+    var response = await http.post(url, body: data);
+    if (response.statusCode == 200) {
+      var responseData = json.decode(response.body);
+      print('Respon dari server: $responseData');
+    } else {
+      print('Gagal mengirim data. Kode status: ${response.statusCode}');
+    }
+  }
+
+  String status = 'Unverified';
+  int randomNumber = 100000;
+
+  void random() {
+    setState(() {
+      Random random = new Random();
+      randomNumber = random.nextInt(900000) + 100000;
+    });
+  }
+
+  void btRegister(
+      BuildContext context,
+      String nama_pengguna,
+      String nama_kec,
+      String no_whatsapp,
+      String alamat,
+      String password,
+      String konfirm,
+      String kode_otp,
+      String status) {
+    if (password != konfirm) {
+      _alertGagalRegis(context);
+    } else {
+      LoginApi.registrasiPost(nama_pengguna, nama_kec, no_whatsapp, alamat,
+              password, kode_otp, status)
+          .then((value) {
+        if (value.kode == 1) {
+          _kirimNotifikasi();
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => otpPageRegis()));
+          // _AlertBerhasilRegis(context);
+        } else {
+          new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
+          print(value);
+        }
+      });
+    }
+  }
+
+  _alertGagalRegis(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Gagal",
+      desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
+      btnOkOnPress: () {},
+    ).show();
+  }
+
+  _AlertBerhasilRegis(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Berhasil Daftar Akun",
+      desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
+      //btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => otpPage()));
+      },
+    ).show();
+  }
+
+  @override
+  void initState() {
+    random();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext contextp) {
@@ -478,7 +577,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                         onPressed: () {
                           setState(() {
                             if (_formkey.currentState!.validate()) {
-                              controller.btRegister(
+                              btRegister(
                                 context,
                                 tNama.text,
                                 tNamaKec.text,
@@ -486,12 +585,9 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                                 tAlamat.text,
                                 tPassword.text,
                                 tKonfirm.text,
+                                randomNumber.toString(),
+                                status,
                               );
-                              print(tNamaKec);
-                              print(tWa);
-                              print(tAlamat);
-                              print(tPassword);
-                              print(tKonfirm);
                             }
                           });
                         },

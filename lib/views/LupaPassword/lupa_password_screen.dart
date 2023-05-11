@@ -1,8 +1,8 @@
 import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
+import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class lupaPassword extends StatefulWidget {
   const lupaPassword({super.key});
@@ -107,7 +107,16 @@ class _lupaPasswordState extends State<lupaPassword> {
                         backgroundColor: ktextColor,
                         elevation: 20,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return otpPage();
+                            },
+                          ),
+                        );
+                      },
                       child: Text(
                         "KIRIM",
                         style: TextStyle(

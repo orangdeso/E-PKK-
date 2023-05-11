@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:http/http.dart' as http;
 
-// laporanModel laporanModelFromJson(String str) =>
-//     laporanModel.fromJson(json.decode(str));
+laporanModel laporanModelFromJson(String str) =>
+    laporanModel.fromJson(json.decode(str));
 
 class laporanModel {
   int? kode;

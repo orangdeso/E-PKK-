@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/models/Riwayat.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
@@ -25,6 +26,13 @@ class LoginApi {
   //     password: object['password'],
   //   );
   // }
+
+  static Future<Riwayat> getRiwayatSts() async {
+    Uri url = Uri.parse(ApiHelper.url + 'getRiwayat.php');
+    var response = await http.get(url);
+    var body = json.decode(response.body);
+    return Riwayat.fromJson(body);
+  }
 
   static Future<LoginApi> postData(String no_whatsapp, String password) async {
     Uri url = Uri.parse(ApiHelper.url + 'login1.php');

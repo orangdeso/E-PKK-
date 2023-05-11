@@ -63,6 +63,8 @@ class LoginApi {
     String no_whatsapp,
     String alamat,
     String password,
+    String kode_otp,
+    String status,
   ) async {
     Uri url = Uri.parse(ApiHelper.url + 'registrasi1.php');
     var response = await http.post(url, body: {
@@ -71,6 +73,8 @@ class LoginApi {
       'no_whatsapp': no_whatsapp,
       'alamat': alamat,
       'password': password,
+      'kode_otp': kode_otp,
+      'status': status,
     });
 
     var body = json.decode(response.body);
@@ -88,6 +92,8 @@ class DataPatient {
   String? no_whatsapp;
   String? alamat;
   String? password;
+  String? kode_otp;
+  String? status;
 
   DataPatient({
     this.nama_pengguna,
@@ -95,5 +101,7 @@ class DataPatient {
     this.no_whatsapp,
     this.alamat,
     this.password,
+    this.kode_otp,
+    this.status,
   });
 }

@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: lupaPassword(),
       // routes: {
       //   'lupa_password_screen': (context) => const lupaPassword(),
       //   'welcome_screen': (context) => const WelcomeScreen(),

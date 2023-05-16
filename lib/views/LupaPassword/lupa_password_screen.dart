@@ -1,9 +1,13 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lottie/lottie.dart';
+import 'package:http/http.dart' as http;
 
 class lupaPassword extends StatefulWidget {
   const lupaPassword({super.key});
@@ -15,6 +19,94 @@ class lupaPassword extends StatefulWidget {
 class _lupaPasswordState extends State<lupaPassword> {
   var _formkey = GlobalKey<FormState>();
   TextEditingController tWane = TextEditingController();
+
+  @override
+  void initState() {
+    random();
+    super.initState();
+  }
+
+  int randomNumber = 100000;
+  String noWa = '';
+
+  void random() {
+    setState(() {
+      Random random = new Random();
+      randomNumber = random.nextInt(900000) + 100000;
+    });
+  }
+
+  void _kirimOTP() async {
+    var url = Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/OtpWa.php');
+
+    var data = {
+      "kodeOtp": randomNumber.toString(),
+      "noHp": tWane.text,
+    };
+
+    var response = await http.post(url, body: data);
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      print('Respon dari server: $responseData');
+    } else {
+      print('gagal mengirim data. Kode status: ${response.statusCode}');
+    }
+  }
+
+  Future<bool> validasiWA(String noWa) async {
+    var postUrl =
+        Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
+    var postData = jsonEncode({
+      'no_whatsapp': noWa,
+    });
+    var postResponse = await http.post(
+      postUrl,
+      headers: {'Content-Type': 'application/json'},
+      body: postData,
+    );
+    if (postResponse.statusCode == 200) {
+      var postJsonResponse = jsonDecode(postResponse.body);
+      if (postJsonResponse['status'] == 'OK') {
+        var apiUrl = Uri.parse(
+            'http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
+        var response = await http.get(apiUrl);
+        if (response.statusCode == 200) {
+          var jsonResponse = jsonDecode(response.body);
+
+          if (jsonResponse['data'].isEmpty) {
+            print('Data is empty');
+            return false; // menambahkan return false
+          } else {
+            noWa = jsonResponse['data'][0]['no_whatsapp'];
+            return true; // menambahkan return true
+          }
+        } else {
+          print('Request failed with status: ${response.statusCode}.');
+        }
+      }
+    }
+    return false; // menambahkan return false
+  }
+
+  Future<bool> validasiWAA(String noWa) async {
+    var apiUrl =
+        Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
+    var response = await http.get(apiUrl);
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+
+      if (jsonResponse['data'].isEmpty) {
+        print('Data is empty');
+        return false; // menambahkan return false
+      } else {
+        noWa = jsonResponse['data'][0]['no_whatsapp'];
+        return true; // menambahkan return true
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return false; // menambahkan return false
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +169,18 @@ class _lupaPasswordState extends State<lupaPassword> {
                   ),
                 ),
                 child: TextFormField(
+                  onChanged: (value) async {
+                    bool isnumberValid = await validasiWA(value);
+                    if (isnumberValid) {
+                      setState(() {
+                        noWa = value.toString();
+                      });
+                    } else {
+                      setState(() {
+                        noWa = "";
+                      });
+                    }
+                  },
                   controller: tWane,
                   validator: (value) {
                     if (value == null || value.isEmpty) {

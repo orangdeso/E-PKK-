@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Home/notifikasi_page.dart';
 import 'package:e_pkk/views/Home/pengumuman_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -42,14 +46,36 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  // void _initCheck() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getBool('no_whatsapp') != null) {
-  //     setState(() {
-  //       no_whatsapp = prefs.getBool('no_whatsapp')!;
-  //     });
-  //   }
-  // }
+  //Pengumuman Data
+  List<dynamic> _pengumumanList = [];
+
+  Future<void> fetchData() async {
+    final response =
+        await http.get(Uri.parse(ApiHelper.url + "getPengumuman.php"));
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _pengumumanList = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  String nowa = '';
+
+  void _initCheck() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {});
+    nowa = prefs.getString('no_whatsapp') ?? '';
+    // if (prefs.getString('no_whatsapp') ?? '') {
+    //   setState(() {
+    //     no_whatsapp = prefs.getBool('no_whatsapp')!;
+    //   });
+    // }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -262,12 +288,16 @@ class _HomePageState extends State<HomePage> {
               child: ListTile(
                 leading: Text(
                   "10-11-2023",
+                  // _pengumumanList[index]['tanggalPengumuman'] ??
+                  //     'No Tanggal',
                   style: TextStyle(
                     fontSize: 15,
                   ),
                 ),
                 title: Text(
                   "Program Kesehatan Imunisasi per desa di Kantor Balai Desa",
+                  // _pengumumanList[index]['judulPengumuman'] ??
+                  //     'No Title',
                   style: TextStyle(
                     fontSize: 15,
                   ),

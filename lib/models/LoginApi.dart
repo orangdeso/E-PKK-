@@ -27,13 +27,6 @@ class LoginApi {
   //   );
   // }
 
-  static Future<Riwayat> getRiwayatSts() async {
-    Uri url = Uri.parse(ApiHelper.url + 'getRiwayat.php');
-    var response = await http.get(url);
-    var body = json.decode(response.body);
-    return Riwayat.fromJson(body);
-  }
-
   static Future<LoginApi> postData(String no_whatsapp, String password) async {
     Uri url = Uri.parse(ApiHelper.url + 'login1.php');
     var response = await http.post(url, body: {

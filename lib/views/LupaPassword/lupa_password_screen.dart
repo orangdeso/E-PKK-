@@ -3,6 +3,7 @@ import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lottie/lottie.dart';
 
 class lupaPassword extends StatefulWidget {
   const lupaPassword({super.key});
@@ -30,10 +31,7 @@ class _lupaPasswordState extends State<lupaPassword> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              //SizedBox(height: size.height * 0.15),
-              Positioned(
-                child: Image.asset("assets/images/gambar2.png"),
-              ),
+              Lottie.asset("assets/lottie/security.json"),
               Align(
                 alignment: FractionalOffset.topCenter,
                 child: Padding(

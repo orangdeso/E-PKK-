@@ -29,6 +29,20 @@ class _BodyState extends State<Body> {
   TextEditingController tNo_whatsapp = TextEditingController();
   TextEditingController tPassword = TextEditingController();
 
+  // final Future<SharedPreferences> _sp = SharedPreferences.getInstance();
+
+  // void addUser() async {
+  //   SharedPreferences sp = await SharedPreferences.getInstance();
+  //   // await sp.setInt('kode', kode);
+  //   await sp.setString('no_whatsapp', tNo_whatsapp.text);
+  //   // await sp.setString('nama_user', nama_user);
+  // }
+
+  // void _tes() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   pref.setString("nowa", tNo_whatsapp.toString());
+  // }
+
   // //Method untuk menyimpan teks yang dimasukkan pada form
   // @override
   // void dispose() {
@@ -67,7 +81,6 @@ class _BodyState extends State<Body> {
   //     show("no_whatsapp atau password anda salah");
   //   }
   // }
-
 
   @override
   Widget build(BuildContext context) {

@@ -14,9 +14,9 @@ class GetApi {
       String? jml_klp,
       String? jml_anggota,
       String? kartuFree,
+      String? userID,
       BuildContext? context}) async {
-    final url = Uri.parse(
-        ApiHelper.url+'insert_laporan_sehat.php');
+    final url = Uri.parse(ApiHelper.url + 'insert_laporan_sehat.php');
 
     final request = http.MultipartRequest('POST', url)
       ..fields['kategori'] = kategori.toString()
@@ -25,6 +25,7 @@ class GetApi {
       ..fields['jml_klp'] = jml_klp.toString()
       ..fields['jml_anggota'] = jml_anggota.toString()
       ..fields['jml_kartu'] = kartuFree.toString()
+      ..fields['id_user'] = userID.toString()
       ..files.add(http.MultipartFile.fromBytes(
         'file',
         fileBruh!.readAsBytesSync(),
@@ -47,11 +48,12 @@ class GetApi {
       String? spal,
       String? tps,
       String? mck,
+      String? IdUser,
       String? pdam,
       String? sumur,
+      BuildContext? context,
       String? danlainlain}) async {
-    final url = Uri.parse(
-         ApiHelper.url+'insert_kelestarian_pangan.php');
+    final url = Uri.parse(ApiHelper.url + 'insert_kelestarian_pangan.php');
 
     final request = http.MultipartRequest('POST', url)
       ..fields['jamban'] = jamban.toString()
@@ -61,6 +63,7 @@ class GetApi {
       ..fields['Pdam'] = pdam.toString()
       ..fields['Sumur'] = sumur.toString()
       ..fields['dll'] = danlainlain.toString()
+      ..fields['id_user'] = IdUser.toString()
       ..files.add(http.MultipartFile.fromBytes(
         'file',
         fileBruh!.readAsBytesSync(),
@@ -71,6 +74,7 @@ class GetApi {
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
+      CherryToast.success(title: Text("Berhasil")).show(context!);
     } else {
       print('Data gagal disimpan!');
     }

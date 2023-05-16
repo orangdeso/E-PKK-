@@ -42,6 +42,40 @@ class GetApi {
     }
   }
 
+  static Future<void> LaporanBidangPerencaanKesehatan(
+      {File? fileBruh,
+      String? PriaSubur,
+      String? WanitaSubur,
+      String? Kb_Pria,
+      String? Kb_Wanita,
+      String? Tabungan_Kk,
+      String? userID,
+      BuildContext? context}) async {
+    final url = Uri.parse(ApiHelper.url + 'insert_laporan_Psehat.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['J_Psubur'] = PriaSubur.toString()
+      ..fields['J_Wsubur'] = WanitaSubur.toString()
+      ..fields['Kb_p'] = Kb_Pria.toString()
+      ..fields['Kb_w'] = Kb_Wanita.toString()
+      ..fields['Kk_tbg'] = Tabungan_Kk.toString()
+      ..fields['id_user'] = userID.toString()
+      ..files.add(http.MultipartFile.fromBytes(
+        'file',
+        fileBruh!.readAsBytesSync(),
+        filename: fileBruh.path.split('/').last,
+      ));
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      // print('Data berhasil disimpan!');
+      CherryToast.success(title: Text("Berhasil")).show(context!);
+    } else {
+      print('Data gagal disimpan!');
+    }
+  }
+
   static Future<void> LaporanBidangLingkuhanHidup(
       {File? fileBruh,
       String? jamban,

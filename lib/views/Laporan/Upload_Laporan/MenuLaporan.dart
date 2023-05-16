@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'BidangKelestarianHidup.dart';
 import 'BidangKesehatan.dart';
+import 'BidangPerencananSehat.dart';
 // import 'package:insert_laporan/page_laporan_bidang_kesehatan.dart';
 // import 'package:insert_laporan/page_laporan_kelestarianLH.dart';
 // import 'package:insert_laporan/page_laporan_perencaanSehat.dart';
@@ -83,8 +84,14 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                         )
                       ],
                     ),
-                    Container(width: 150 , height: 150, child: Image(image: AssetImage("assets/images/puan_kun.png"),
-                    fit: BoxFit.cover,alignment: Alignment.center,))
+                    Container(
+                        width: 150,
+                        height: 150,
+                        child: Image(
+                          image: AssetImage("assets/images/puan_kun.png"),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ))
                   ],
                 ),
               ),
@@ -153,8 +160,8 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
             InkWell(
               onTap: () {
                 print("object");
-                // Navigator.pushNamed(
-                //     context, PagePerencaanSehat.route.toString());
+                Navigator.pushNamed(
+                    context, PagePerencaanSehat.route.toString());
               },
               highlightColor: Colors.blue.withOpacity(0.4),
               splashColor: Colors.white.withOpacity(0.5),

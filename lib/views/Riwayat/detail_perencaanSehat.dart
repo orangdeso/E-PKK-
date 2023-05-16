@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../../helpers/ApiHelper.dart';
 import '../navbar_view.dart';
 
-class PageDetailKlh extends StatefulWidget {
+class PageDetailPerencaanSehat extends StatefulWidget {
   @override
-  State<PageDetailKlh> createState() => _PageDetailKlhState();
+  State<PageDetailPerencaanSehat> createState() =>
+      _PageDetailPerencaanSehatState();
 }
 
-class _PageDetailKlhState extends State<PageDetailKlh> {
+class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
   Color WarnaButton({String? stts}) {
     if (stts == "Proses") {
       return Colors.blueAccent;
@@ -21,16 +22,15 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
   @override
   Widget build(BuildContext context) {
     getData = ModalRoute.of(context)?.settings.arguments as Map;
-    String jbn = getData?['jamban'];
-    String tgl = getData?['tanggal'];
-    String spl = getData?['spal'];
-    String tps = getData?['tps'];
-    String mck = getData?['mck'];
-    String pdam = getData?['pdam'];
-    String smr = getData?['sumur'];
-    String dll = getData?['dll'];
-    String gbr = getData?['gambar'];
-    String stss = getData?['stss'];
+    String PriaSubur = getData?['jps'];
+    String WanitaSubur = getData?['jws'];
+    String KbPria = getData?['kbp'];
+    String KbWanita = getData?['kbw'];
+    String TabunganKeluarga = getData?['kk_tbg'];
+    String tanggal = getData?['tgl'];
+    String gambar = getData?['gbr'];
+    String status = getData?['stss'];
+
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
@@ -71,7 +71,7 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           color: Color.fromARGB(255, 217, 217, 217),
                           image: DecorationImage(
                               image: NetworkImage(
-                                  "${ApiHelper.url}assets/Bidang_LingkunganHidup/${gbr}"),
+                                  "${ApiHelper.url}assets/Bidang_Perencaan_Sehat/${gambar}"),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.circular(20))),
                 ),
@@ -90,7 +90,7 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                         SizedBox(
                           width: 10,
                         ),
-                        Text("${tgl}"),
+                        Text("${tanggal}"),
                         SizedBox(
                           width: 10,
                         ),
@@ -100,12 +100,12 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                   Align(
                     alignment: Alignment.topRight,
                     child: Card(
-                      color: WarnaButton(stts: "${stss}"),
+                      color: WarnaButton(stts: "${status}"),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 10),
                         child: Text(
-                          "${stss}",
+                          "${status}",
                           style: TextStyle(color: Colors.white),
                         ),
                       ),
@@ -113,6 +113,20 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                   ),
                 ],
               ),
+              // Align(
+              //   alignment: Alignment.topRight,
+              //   child: Card(
+              //     color: WarnaButton(stts: "${status}"),
+              //     child: Padding(
+              //       padding: const EdgeInsets.symmetric(
+              //           horizontal: 40, vertical: 10),
+              //       child: Text(
+              //         "${status}",
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 20,
               ),
@@ -141,8 +155,8 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Jumlah rumah dengan jamban"),
-                              Text("${jbn}")
+                              Text("Jumlah Pria Usia Subur (PUS)"),
+                              Text("${PriaSubur}")
                             ],
                           ),
                           Divider(
@@ -156,8 +170,8 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Jumlah rumah dengan spal"),
-                              Text("${spl}")
+                              Text("Jumlah Pria Wanita Subur (WUS)"),
+                              Text("${WanitaSubur}")
                             ],
                           ),
                           Divider(
@@ -171,8 +185,8 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Jumlah rumah dengan tps"),
-                              Text("${tps}")
+                              Text("Aseptor KB Pria"),
+                              Text("${KbPria}")
                             ],
                           ),
                           Divider(
@@ -186,8 +200,8 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Jumlah rumah dengan mck"),
-                              Text("${mck}")
+                              Text("Aseptor KB Wanita"),
+                              Text("${KbWanita}")
                             ],
                           ),
                           Divider(
@@ -201,22 +215,8 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Jumlah rumah dengan pdam"),
-                              Text("${pdam}")
-                            ],
-                          ),
-                          Divider(
-                            thickness: 2,
-                          )
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Jumlah rumah dengan dll"),
-                              Text("${dll}")
+                              Text("KK yang memiliki tabungan keluarga"),
+                              Text("${TabunganKeluarga}")
                             ],
                           ),
                           Divider(

@@ -5,6 +5,7 @@ import 'package:e_pkk/models/laporanModel.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/detail_Psehat.dart';
 import 'package:e_pkk/views/Riwayat/detail_klh.dart';
+import 'package:e_pkk/views/Riwayat/detail_perencaanSehat.dart';
 import 'package:e_pkk/views/Riwayat/page_detail_riwayat.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +27,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
   // List<Data> listLaporan = [];
   List<dynamic> _dataKesehatan = [];
   List<dynamic> _dataKLH = [];
-  List<dynamic> _dataSelesai = [];
+  List<dynamic> _dataPSehat = [];
 
   //Repository repository = Repository();
   Future<void> fetchDataKesehatan({String? idUser}) async {
@@ -45,15 +46,16 @@ class _RiwayatPageState extends State<RiwayatPage> {
     }
   }
 
-  Future<void> fetchDataSelesai() async {
-    final response =
-        await http.get(Uri.parse(ApiHelper.url + "getRiwayatSelesai.php"));
+  Future<void> fetchDataPSehat({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "RiwayatPerencanaanSehat.php"),
+        body: {"id_user": idUser});
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
 
       setState(() {
-        _dataSelesai = jsonData['data'];
+        _dataPSehat = jsonData['data'];
       });
     } else {
       throw Exception('Failed to load data');
@@ -122,7 +124,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
   void initState() {
     fetchDataKesehatan(idUser: "5");
     fetchDataKLH(idUser: "5");
-    fetchDataSelesai();
+    fetchDataPSehat(idUser: "5");
     super.initState();
   }
 
@@ -334,392 +336,153 @@ class _RiwayatPageState extends State<RiwayatPage> {
               ),
               ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                itemCount: _dataSelesai.length,
+                itemCount: _dataPSehat.length,
                 itemBuilder: (context, index) {
-                  // return ListTile(
-                  //     leading: _dataSelesai[index]['image'].isNotEmpty
-                  //         ? Image.network(
-                  //             height: 130,
-                  //             width: 130,
-                  //             fit: BoxFit.cover,
-                  //             _dataSelesai[index]['image'].toString())
-                  //         : Image.asset(
-                  //             "assets/images/po.png",
-                  //             height: 130,
-                  //             width: 130,
-                  //             fit: BoxFit.cover,
-                  //           ),
-                  //     title: Text(
-                  //       "${_dataSelesai[index]['title_laporan']}",
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //     ),
-                  //     subtitle: Text(
-                  //       "${_dataSelesai[index]['status']}",
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w400,
-                  //       ),
-                  //     ),
-                  //     trailing: Padding(
-                  //       padding: EdgeInsets.only(left: 5, top: 2),
-                  //       child: Text(
-                  //         "${_dataSelesai[index]['tanggal']}",
-                  //         style: TextStyle(
-                  //           fontSize: 13,
-                  //           fontWeight: FontWeight.w400,
-                  //         ),
-                  //       ),
-                  //     ));
-
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: InkWell(
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 2.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(20),
+                        leading: Container(
+                          width: 80,
+                          height: 80,
+                          child: Image.network(
+                            "${ApiHelper.url}assets/Bidang_Perencaan_Sehat/${_dataPSehat[index]['gambar']}",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(
+                          "Data Perencanaan Sehat",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        subtitle: Text(
+                            "Pria Subur: ${_dataPSehat[index]['J_Psubur']}"),
+                        trailing: InkWell(
                           onTap: () {
-                            String title12 =
-                                _dataSelesai[index]['title_laporan'].toString();
-                            String tanggal12 =
-                                _dataSelesai[index]['tanggal'].toString();
-                            String deskripsi12 =
-                                _dataSelesai[index]['deskripsi'].toString();
-                            String image12 =
-                                _dataSelesai[index]['image'].toString();
-                            String statuss12 =
-                                _dataSelesai[index]['status'].toString();
-                            String idKategori12 =
-                                _dataSelesai[index]['id_kategori'].toString();
-                            String id_user12 =
-                                _dataSelesai[index]['id_user'].toString();
-                            print("title = ${title12}");
-                            print("tanggal = ${tanggal12}");
-                            print("deskripsi = ${deskripsi12}");
-                            print("sttaus = ${statuss12}");
-                            print("id_kategori = ${idKategori12}");
-                            // Navigator.of(context)
-                            //     .pushNamed("/detailRiwayatLaporan");
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => KeamananAkunPage()));
-
                             Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(
-                              MaterialPageRoute(
-                                settings: RouteSettings(arguments: {
-                                  "title": title12,
-                                  "tanggal": tanggal12,
-                                  "deskripsi": deskripsi12,
-                                  "status": statuss12,
-                                  "idKategori": idKategori12,
-                                  "idUser": id_user12,
-                                  "image": image12
-                                }),
-                                builder: (context) {
-                                  return PageDetailRiwayat();
-                                },
-                              ),
-                            );
+                                .pushReplacement(MaterialPageRoute(
+                                    builder: (context) {
+                                      return PageDetailPerencaanSehat();
+                                    },
+                                    settings: RouteSettings(arguments: {
+                                      "jps": _dataPSehat[index]['J_Psubur'],
+                                      "jws": _dataPSehat[index]['J_Wsubur'],
+                                      "kbp": _dataPSehat[index]['Kb_p'],
+                                      "kbw": _dataPSehat[index]['Kb_w'],
+                                      "kk_tbg": _dataPSehat[index]['Kk_tbg'],
+                                      "user": _dataPSehat[index]['id_user'],
+                                      "tgl": _dataPSehat[index]['tanggal'],
+                                      "gbr": _dataPSehat[index]['gambar'],
+                                      "stss": _dataPSehat[index]['status'],
+                                    })));
                           },
                           child: Container(
-                            // height: 170,
-                            // width: 300,
-                            decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {},
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: _dataSelesai[index]['image']
-                                              .isNotEmpty
-                                          ? Image.network(
-                                              height: 110,
-                                              width: 130,
-                                              fit: BoxFit.cover,
-                                              _dataSelesai[index]['image']
-                                                  .toString())
-                                          : Image.asset(
-                                              "assets/images/po.png",
-                                              height: 110,
-                                              width: 130,
-                                              fit: BoxFit.cover,
-                                            ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "${_dataSelesai[index]['title_laporan']}",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 10),
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 5,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: Colors.greenAccent
-                                                    .withOpacity(0.5),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                "${_dataSelesai[index]['status']}",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5, top: 2),
+                            width: 120,
+                            child: Card(
+                                color: WarnaButton(
+                                    stts: _dataPSehat[index]['status']),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 5),
+                                  child: Center(
                                     child: Text(
-                                      "${_dataSelesai[index]['tanggal']}",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      "${_dataPSehat[index]['status']}",
+                                      style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
+                                )),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
-              ListView.builder(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                itemCount: _dataSelesai.length,
-                itemBuilder: (context, index) {
-                  // return ListTile(
-                  //     leading: _dataSelesai[index]['image'].isNotEmpty
-                  //         ? Image.network(
-                  //             height: 130,
-                  //             width: 130,
-                  //             fit: BoxFit.cover,
-                  //             _dataSelesai[index]['image'].toString())
-                  //         : Image.asset(
-                  //             "assets/images/po.png",
-                  //             height: 130,
-                  //             width: 130,
-                  //             fit: BoxFit.cover,
-                  //           ),
-                  //     title: Text(
-                  //       "${_dataSelesai[index]['title_laporan']}",
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //     ),
-                  //     subtitle: Text(
-                  //       "${_dataSelesai[index]['status']}",
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w400,
-                  //       ),
-                  //     ),
-                  //     trailing: Padding(
-                  //       padding: EdgeInsets.only(left: 5, top: 2),
-                  //       child: Text(
-                  //         "${_dataSelesai[index]['tanggal']}",
-                  //         style: TextStyle(
-                  //           fontSize: 13,
-                  //           fontWeight: FontWeight.w400,
-                  //         ),
-                  //       ),
-                  //     ));
-
-                  return Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            String title12 =
-                                _dataSelesai[index]['title_laporan'].toString();
-                            String tanggal12 =
-                                _dataSelesai[index]['tanggal'].toString();
-                            String deskripsi12 =
-                                _dataSelesai[index]['deskripsi'].toString();
-                            String image12 =
-                                _dataSelesai[index]['image'].toString();
-                            String statuss12 =
-                                _dataSelesai[index]['status'].toString();
-                            String idKategori12 =
-                                _dataSelesai[index]['id_kategori'].toString();
-                            String id_user12 =
-                                _dataSelesai[index]['id_user'].toString();
-                            print("title = ${title12}");
-                            print("tanggal = ${tanggal12}");
-                            print("deskripsi = ${deskripsi12}");
-                            print("sttaus = ${statuss12}");
-                            print("id_kategori = ${idKategori12}");
-                            // Navigator.of(context)
-                            //     .pushNamed("/detailRiwayatLaporan");
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //     builder: (context) => KeamananAkunPage()));
-
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(
-                              MaterialPageRoute(
-                                settings: RouteSettings(arguments: {
-                                  "title": title12,
-                                  "tanggal": tanggal12,
-                                  "deskripsi": deskripsi12,
-                                  "status": statuss12,
-                                  "idKategori": idKategori12,
-                                  "idUser": id_user12,
-                                  "image": image12
-                                }),
-                                builder: (context) {
-                                  return PageDetailRiwayat();
-                                },
-                              ),
-                            );
-                          },
-                          child: Container(
-                            // height: 170,
-                            // width: 300,
-                            decoration: BoxDecoration(
-                              color: whiteColor,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 10,
-                                  offset: Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.all(10),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  InkWell(
-                                    onTap: () {},
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: _dataSelesai[index]['image']
-                                              .isNotEmpty
-                                          ? Image.network(
-                                              height: 110,
-                                              width: 130,
-                                              fit: BoxFit.cover,
-                                              _dataSelesai[index]['image']
-                                                  .toString())
-                                          : Image.asset(
-                                              "assets/images/po.png",
-                                              height: 110,
-                                              width: 130,
-                                              fit: BoxFit.cover,
-                                            ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 150,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(left: 10),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            "${_dataSelesai[index]['title_laporan']}",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 10),
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 5,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: Colors.greenAccent
-                                                    .withOpacity(0.5),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                              child: Text(
-                                                "${_dataSelesai[index]['status']}",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5, top: 2),
-                                    child: Text(
-                                      "${_dataSelesai[index]['tanggal']}",
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
+              // ListView.builder(
+              //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              //   itemCount: _dataPSehat.length,
+              //   itemBuilder: (context, index) {
+              //     return Padding(
+              //       padding: const EdgeInsets.symmetric(vertical: 10),
+              //       child: Container(
+              //         decoration: BoxDecoration(
+              //             color: Colors.grey.shade100,
+              //             boxShadow: [
+              //               BoxShadow(
+              //                 color: Colors.grey,
+              //                 offset: Offset(0.0, 1.0), //(x,y)
+              //                 blurRadius: 2.0,
+              //               ),
+              //             ],
+              //             borderRadius: BorderRadius.circular(10)),
+              //         child: ListTile(
+              //           contentPadding: EdgeInsets.all(20),
+              //           leading: Container(
+              //             width: 80,
+              //             height: 80,
+              //             child: Image.network(
+              //               "${ApiHelper.url}assets/Bidang_Perencaan_Sehat/${_dataPSehat[index]['gambar']}",
+              //               fit: BoxFit.cover,
+              //             ),
+              //           ),
+              //           title: Text(
+              //             "Data Perencanaan Sehat",
+              //             style: TextStyle(fontWeight: FontWeight.bold),
+              //           ),
+              //           subtitle: Text(
+              //               "Pria Subur: ${_dataPSehat[index]['J_Psubur']}"),
+              //           trailing: InkWell(
+              //             onTap: () {
+              //               // Navigator.of(context, rootNavigator: true)
+              //               //     .pushReplacement(MaterialPageRoute(
+              //               //         builder: (context) {
+              //               //           return PageDetailKlh();
+              //               //         },
+              //               //         settings: RouteSettings(arguments: {
+              //               //           "jps": _dataPSehat[index]['J_Psubur'],
+              //               //           "jws": _dataPSehat[index]['J_Wsubur'],
+              //               //           "kbp": _dataPSehat[index]['Kb_p'],
+              //               //           "kbw": _dataPSehat[index]['Kb_w'],
+              //               //           "kk_tbg": _dataPSehat[index]['Kk_tbg'],
+              //               //           "user": _dataPSehat[index]['id_user'],
+              //               //           "tgl": _dataPSehat[index]['tanggal'],
+              //               //           "gbr": _dataKLH[index]['gambar'],
+              //               //           "stss": _dataKLH[index]['status'],
+              //               //         })));
+              //             },
+              //             child: Container(
+              //               width: 120,
+              //               child: Card(
+              //                   color: WarnaButton(
+              //                       stts: _dataPSehat[index]['status']),
+              //                   child: Padding(
+              //                     padding: EdgeInsets.symmetric(
+              //                         horizontal: 30, vertical: 5),
+              //                     child: Center(
+              //                       child: Text(
+              //                         "${_dataPSehat[index]['status']}",
+              //                         style: TextStyle(color: Colors.white),
+              //                       ),
+              //                     ),
+              //                   )),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // ),
+              Text("Cooming Soon")
             ],
           ),
         ),

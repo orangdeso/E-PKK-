@@ -19,6 +19,7 @@ dependencies:
   searchfield: ^0.7.5
   carousel_slider: ^4.2.1
   lottie: ^2.3.2
+  pin_code_fields: ^7.4.0
   # dropdownfield: ^1.0.0
   simple_shadow: ^0.2.0
   # substring_highlight: ^1.0.33

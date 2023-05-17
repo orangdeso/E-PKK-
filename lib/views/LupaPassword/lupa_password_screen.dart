@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
+import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/LupaPassword/otp_page.dart';
@@ -37,7 +37,7 @@ class _lupaPasswordState extends State<lupaPassword> {
   }
 
   void _kirimOTP() async {
-    var url = Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/OtpWa.php');
+    var url = Uri.parse('http://172.16.110.130/vscode/api_rest_pkk/OtpWa.php');
 
     var data = {
       "kodeOtp": randomNumber.toString(),
@@ -53,59 +53,43 @@ class _lupaPasswordState extends State<lupaPassword> {
     }
   }
 
-  Future<bool> validasiWA(String noWa) async {
-    var postUrl =
-        Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
-    var postData = jsonEncode({
-      'no_whatsapp': noWa,
-    });
-    var postResponse = await http.post(
-      postUrl,
-      headers: {'Content-Type': 'application/json'},
-      body: postData,
-    );
-    if (postResponse.statusCode == 200) {
-      var postJsonResponse = jsonDecode(postResponse.body);
-      if (postJsonResponse['status'] == 'OK') {
-        var apiUrl = Uri.parse(
-            'http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
-        var response = await http.get(apiUrl);
-        if (response.statusCode == 200) {
-          var jsonResponse = jsonDecode(response.body);
-
-          if (jsonResponse['data'].isEmpty) {
-            print('Data is empty');
-            return false; // menambahkan return false
-          } else {
-            noWa = jsonResponse['data'][0]['no_whatsapp'];
-            return true; // menambahkan return true
-          }
-        } else {
-          print('Request failed with status: ${response.statusCode}.');
-        }
-      }
-    }
-    return false; // menambahkan return false
-  }
-
-  Future<bool> validasiWAA(String noWa) async {
-    var apiUrl =
-        Uri.parse('http://172.16.104.14/vscode/api_rest_pkk/getPengguna.php');
-    var response = await http.get(apiUrl);
-    if (response.statusCode == 200) {
-      var jsonResponse = jsonDecode(response.body);
-
-      if (jsonResponse['data'].isEmpty) {
-        print('Data is empty');
-        return false; // menambahkan return false
+  void btKirim(BuildContext context, String no_whatsapp) {
+    LoginApi.getPengguna(no_whatsapp).then((value) async {
+      Future.delayed(Duration(seconds: 2), () {});
+      if (value.kode == 1) {
+        print("Nomor Terdaftar");
+        _kirimOTP();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Nomor Terdaftar",
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return otpPage(
+                kodeOtp: randomNumber.toString(),
+                noHp: tWane.text,
+              );
+            },
+          ),
+        );
       } else {
-        noWa = jsonResponse['data'][0]['no_whatsapp'];
-        return true; // menambahkan return true
+        print("Nomor tidak terdaftar");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Nomor tidak terdaftar. Silahkan cek kembali !",
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-      return false; // menambahkan return false
-    }
+    });
   }
 
   @override
@@ -169,18 +153,18 @@ class _lupaPasswordState extends State<lupaPassword> {
                   ),
                 ),
                 child: TextFormField(
-                  onChanged: (value) async {
-                    bool isnumberValid = await validasiWA(value);
-                    if (isnumberValid) {
-                      setState(() {
-                        noWa = value.toString();
-                      });
-                    } else {
-                      setState(() {
-                        noWa = "";
-                      });
-                    }
-                  },
+                  // onChanged: (value) async {
+                  //   bool isnumberValid = await validasiWA(value);
+                  //   if (isnumberValid) {
+                  //     setState(() {
+                  //       noWa = value.toString();
+                  //     });
+                  //   } else {
+                  //     setState(() {
+                  //       noWa = "";
+                  //     });
+                  //   }
+                  // },
                   controller: tWane,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -222,13 +206,9 @@ class _lupaPasswordState extends State<lupaPassword> {
                       ),
                       onPressed: () {
                         if (_formkey.currentState!.validate()) {
-                          Navigator.push(
+                          btKirim(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return otpPage();
-                              },
-                            ),
+                            tWane.text,
                           );
                         }
                       },

@@ -37,7 +37,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
 
   void _kirimNotifikasi() async {
     var url = Uri.parse(
-        'http://192.168.137.1/vscode/api_rest_pkk/otpWa.php'); // Ganti dengan URL endpoint API yang sesuai
+        'http://172.16.104.14/vscode/api_rest_pkk/otpWa.php'); // Ganti dengan URL endpoint API yang sesuai
 
     var data = {
       "kodeOtp": randomNumber.toString(),
@@ -113,8 +113,8 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
       //btnCancelOnPress: () {},
       btnOkOnPress: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => otpPage()));
+        // Navigator.of(context)
+        //     .push(MaterialPageRoute(builder: (context) => otpPage()));
       },
     ).show();
   }

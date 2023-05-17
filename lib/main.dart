@@ -1,4 +1,4 @@
-import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
+import 'package:e_pkk/views/LupaPassword/reset_password.dart';
 import 'package:e_pkk/views/Welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: lupaPassword(),
+      home: WelcomeScreen(),
       // routes: {
       //   'lupa_password_screen': (context) => const lupaPassword(),
       //   'welcome_screen': (context) => const WelcomeScreen(),

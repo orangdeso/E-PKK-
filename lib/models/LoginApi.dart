@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:e_pkk/helpers/ApiHelper.dart';
-import 'package:e_pkk/models/Riwayat.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
@@ -14,18 +13,37 @@ class LoginApi {
     this.data,
   });
 
-  // factory LoginApi.createLoginApi(Map<String, dynamic> object) {
-  //   return LoginApi(
-  //     kode: object['kode'],
-  //     pesan:
-  //     DataPatien object['message'],
-  //     no_whatsapp: object['no_whatsapp'],
-  //     nama_user: object['nama_user'],
-  //     tanggal_lahir: object['tanggal_lahir'],
-  //     alamat: object['alamat'],
-  //     password: object['password'],
-  //   );
-  // }
+  static Future<LoginApi> updateSandi(
+    String no_whatsapp,
+    String password,
+  ) async {
+    Uri url = Uri.parse(ApiHelper.url + 'updateSandi.php');
+    var response = await http.post(url, body: {
+      'no_whatsapp': no_whatsapp,
+      'password': password,
+    });
+
+    var body = json.decode(response.body);
+    return LoginApi(
+      kode: body['kode'],
+      pesan: body['pesan'],
+      data: body['data'],
+    );
+  }
+
+  static Future<LoginApi> getPengguna(String no_whatsapp) async {
+    Uri url = Uri.parse(ApiHelper.url + 'getPengguna.php');
+    var response = await http.post(url, body: {
+      'no_whatsapp': no_whatsapp,
+    });
+
+    var body = json.decode(response.body);
+    return LoginApi(
+      kode: body['kode'],
+      pesan: body['pesan'],
+      data: body['data'],
+    );
+  }
 
   static Future<LoginApi> postData(String no_whatsapp, String password) async {
     Uri url = Uri.parse(ApiHelper.url + 'login1.php');

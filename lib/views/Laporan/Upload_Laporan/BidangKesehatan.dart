@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 
 import '../../../models/ApiLaporan.dart';
 
-
 class PageBidangKesehatan extends StatefulWidget {
   static String route = '/laporanBidangKesehatan';
   @override
@@ -471,6 +470,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                   posIterasi: JumlahPosyanduIterasi,
                                   jml_klp: JumlahKLP,
                                   context: context,
+                                  userID: "5",
                                   kartuFree: JumlahKartuGratis)
                               .then((value) => {print("awikwok"), Succes()});
                         }

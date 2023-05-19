@@ -1,4 +1,5 @@
 import 'package:e_pkk/login_view.dart';
+import 'package:e_pkk/views/Laporan/Upload_Gambar/UploadGaleri.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKelestarianHidup.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKesehatan.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/MenuLaporan.dart';
@@ -26,7 +27,7 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: LoginScreen(),
+      home: PageGaleri(),
       routes: {
         // 'lupa_password_screen': (context) => const lupaPassword(),
         // 'welcome_screen': (context) => const WelcomeScreen(),

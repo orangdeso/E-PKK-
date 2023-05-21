@@ -1,3 +1,4 @@
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class SyaratKetentuanPage extends StatelessWidget {
@@ -5,6 +6,12 @@ class SyaratKetentuanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Syarat dan Ketentuan"),
+        centerTitle: true,
+        backgroundColor: ktextColor,
+      ),
+    );
   }
 }

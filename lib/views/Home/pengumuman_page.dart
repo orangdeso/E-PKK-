@@ -1,9 +1,6 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/views/Home/detail_pengumuman.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/PengumumanModel.dart';
 
 class PengumumanPage extends StatefulWidget {
@@ -15,9 +12,7 @@ class PengumumanPage extends StatefulWidget {
 
 class _PengumumanPageState extends State<PengumumanPage> {
   int _current = 0;
-  List<Data> myData = [];
-  //List<Data> Data = [];
-  //List<dynamic> listPengumuman = [];
+  List<DataVB> myData = [];
 
   void tampilkanData() async {
     PengumumanModel.tampilPengumuman(context).then((value) {
@@ -25,20 +20,6 @@ class _PengumumanPageState extends State<PengumumanPage> {
       setState(() {});
     });
   }
-
-  // Future<void> fetchData() async {
-  //   final response =
-  //       await http.get(Uri.parse(ApiHelper.url + "getPengumuman.php"));
-
-  //   if (response.statusCode == 200) {
-  //     final jsonData = json.decode(response.body);
-  //     setState(() {
-  //       listPengumuman = jsonData['data'];
-  //     });
-  //   } else {
-  //     throw Exception('Failed to load data');
-  //   }
-  // }
 
   @override
   void initState() {
@@ -68,18 +49,31 @@ class _PengumumanPageState extends State<PengumumanPage> {
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: grey300,
+                      color: grey100,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey,
                           spreadRadius: 2,
-                          blurRadius: 10,
-                          offset: Offset(0, 5), // changes position of shadow
+                          blurRadius: 3.0,
+                          offset: Offset(0.0, 1.0),
                         ),
                       ],
                     ),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return DetailPengumumanPage(
+                                id: myData[index].id.toString(),
+                              );
+                            },
+                          ),
+                        );
+                        print(myData[index].id.toString());
+                      },
                       leading: Text(
                         '${myData[index].tanggalPengumuman}',
                         style: TextStyle(

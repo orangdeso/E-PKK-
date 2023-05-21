@@ -1,10 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
+import 'package:e_pkk/views/SettingAkun/hubungi_page.dart';
 import 'package:e_pkk/views/SettingAkun/keamanan_page.dart';
 import 'package:e_pkk/views/SettingAkun/profil_page.dart';
 import 'package:e_pkk/views/SettingAkun/syarat.page.dart';
 import 'package:e_pkk/views/SettingAkun/tentang_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../controller/ApiController.dart';
+import '../../models/DataAKun.dart';
 
 class SettingAkun extends StatefulWidget {
   const SettingAkun({super.key});
@@ -14,9 +19,28 @@ class SettingAkun extends StatefulWidget {
 }
 
 class _SettingAkunState extends State<SettingAkun> {
+  String idAkun = '';
+  late Future<DataAkun> futureAkun;
+  Future<void> getIdAkunFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ??
+        ''; // Menggunakan operator nullish coalescing untuk menetapkan nilai default jika kunci tidak ada
+    setState(() {
+      idAkun = idAkunValue;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getIdAkunFromSharedPreferences();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
+    futureAkun = API_CONTROLLER.fetchData(idAkun);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,27 +72,38 @@ class _SettingAkunState extends State<SettingAkun> {
                   bottom: 5,
                   right: 10,
                 ),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage("assets/icons/user512.png"),
-                  ),
-                  title: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Text(
-                      "Muhammad Kahfi",
-                      maxLines: 1,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  subtitle: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Text(
-                      "082142568403",
-                    ),
-                  ),
+                child: FutureBuilder<DataAkun>(
+                  future: futureAkun,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage("assets/icons/user64.png"),
+                        ),
+                        title: Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          child: Text(
+                            snapshot.data!.data!.namaPengguna.toString(),
+                            maxLines: 1,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            snapshot.data!.data!.noWhatsapp.toString(),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  },
                 ),
               ),
             ),
@@ -252,7 +287,7 @@ class _SettingAkunState extends State<SettingAkun> {
                   ListTile(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProfilPage()));
+                          builder: (context) => HubungiKamiPage()));
                     },
                     leading: Container(
                       width: 45,

@@ -1,17 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/views/Login/components/LoginController.dart';
 import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
-import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/registrasi_screen.dart';
-import 'package:e_pkk/views/Welcome/welcome_screen.dart';
-import 'package:e_pkk/widgets/rounded_password_field.dart';
-import 'package:e_pkk/simpan_login.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
@@ -28,6 +23,12 @@ class _BodyState extends State<Body> {
   var _formKey = GlobalKey<FormState>();
   TextEditingController tNo_whatsapp = TextEditingController();
   TextEditingController tPassword = TextEditingController();
+
+  void sendData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('no_whatsapp', tNo_whatsapp.text);
+    await prefs.setString('password', tPassword.text);
+  }
 
   // final Future<SharedPreferences> _sp = SharedPreferences.getInstance();
 

@@ -22,17 +22,14 @@ class LoginController {
       //Shared Preferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool('no_whatsapp', true);
+      prefs.setString("id_akun", value.id__akun.toString());
       print(prefs.getBool('no_whatsapp'));
 
       Future.delayed(Duration(seconds: 2), () {});
       if (value.kode == 1) {
         _showAlertSukses(context);
-        //show("Berhasil Login");
       } else {
         _showAlertGagal(context);
-        //show("No WhatsApp atau password Anda salah");
-        // final myDialog;
-        // myDialog = new OkDialog(context, 'Gagal Masuk', value.pesan.toString());
       }
     });
   }

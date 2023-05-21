@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:e_pkk/helpers/OkDialog.dart';
+import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/login_screen.dart';
-import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:e_pkk/views/Registrasi/components/RegistrasiController.dart';
 import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/components/background.dart';
@@ -24,7 +22,6 @@ class RegistrasiScreen extends StatefulWidget {
 
 class _RegistrasiScreenState extends State<RegistrasiScreen> {
   final RegistrasiController controller = new RegistrasiController();
-  //final dKecamatan = TextEditingController();
 
   var _formkey = GlobalKey<FormState>();
 
@@ -36,8 +33,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
   TextEditingController tKonfirm = TextEditingController();
 
   void _kirimNotifikasi() async {
-    var url = Uri.parse(
-        'http://172.16.104.14/vscode/api_rest_pkk/otpWa.php'); // Ganti dengan URL endpoint API yang sesuai
+    Uri url = Uri.parse(ApiHelper.url + 'otpWa.php');
 
     var data = {
       "kodeOtp": randomNumber.toString(),
@@ -73,25 +69,34 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       String kode_otp,
       String status) {
     if (password != konfirm) {
-      _alertGagalRegis(context);
+      _alertPassword(context);
     } else {
       LoginApi.registrasiPost(nama_pengguna, nama_kec, no_whatsapp, alamat,
               password, kode_otp, status)
-          .then((value) {
+          .then((value) async {
+        Future.delayed(Duration(seconds: 2), () {});
         if (value.kode == 1) {
           _kirimNotifikasi();
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => otpPageRegis()));
-          // _AlertBerhasilRegis(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return otpPageRegis(
+                  noHp: tWa.text,
+                  kodeOtp: randomNumber.toString(),
+                );
+              },
+            ),
+          );
         } else {
-          new OkDialog(context, 'Error', 'Gagal mendaftarkan akun.');
+          _alertGagal(context);
           print(value);
         }
       });
     }
   }
 
-  _alertGagalRegis(context) {
+  _alertPassword(context) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.error,
@@ -103,19 +108,28 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
     ).show();
   }
 
+  _alertGagal(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Gagal mendaftarkan akun",
+      desc:
+          "Nomor WhatsApp atau nama kecamatan sudah digunakan. Silahkan cek kembali !",
+      btnOkOnPress: () {},
+    ).show();
+  }
+
   _AlertBerhasilRegis(context) {
     AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
       animType: AnimType.topSlide,
       showCloseIcon: true,
-      title: "Berhasil Daftar Akun",
-      desc: "Silahkan login dengan nomor whatsaap yang sudah didaftarkan",
-      //btnCancelOnPress: () {},
-      btnOkOnPress: () {
-        // Navigator.of(context)
-        //     .push(MaterialPageRoute(builder: (context) => otpPage()));
-      },
+      title: "Kode Verifikasi Terkirim",
+      desc: "Silahkan klik OK untuk memasukkan kode verifikasi",
+      btnOkOnPress: () {},
     ).show();
   }
 
@@ -288,40 +302,6 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                         ),
                       );
                     },
-                    // optionsViewBuilder: (BuildContext context,
-                    //     void Function(String) onSelected,
-                    //     Iterable<String> options) {
-                    //   return Material(
-                    //     child: SizedBox(
-                    //       height: size.height * 0.9,
-                    //       child: SingleChildScrollView(
-                    //         child: Column(
-                    //           children: options.map(
-                    //             (opt) {
-                    //               return InkWell(
-                    //                 onTap: () {
-                    //                   onSelected(opt);
-                    //                 },
-                    //                 child: Container(
-                    //                   padding: EdgeInsets.only(right: 75),
-                    //                   child: Card(
-                    //                     color: grey100,
-                    //                     elevation: 2,
-                    //                     child: Container(
-                    //                       width: double.infinity,
-                    //                       padding: EdgeInsets.all(13),
-                    //                       child: Text(opt),
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               );
-                    //             },
-                    //           ).toList(),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   );
-                    // },
                   ),
                 ),
                 Align(
@@ -572,7 +552,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: ktextColor,
-                          elevation: 20,
+                          elevation: 10,
                         ),
                         onPressed: () {
                           setState(() {
@@ -588,6 +568,13 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                                 randomNumber.toString(),
                                 status,
                               );
+                              print(tNama);
+                              print(tNamaKec);
+                              print(tWa);
+                              print(tAlamat);
+                              print(tPassword);
+                              print(randomNumber.toString());
+                              print(status);
                             }
                           });
                         },
@@ -603,42 +590,42 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                     ),
                   ),
                 ),
-                OrDivider(),
-                Padding(
-                  padding: EdgeInsets.only(top: 5),
-                  child: Container(
-                    width: size.width * 0.9,
-                    height: 47,
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: grey100,
-                          side: BorderSide(color: grey300),
-                        ),
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/images/whatsapp5.png",
-                            ),
-                            SizedBox(width: 15),
-                            Text(
-                              "Daftar dengan WhatsApp",
-                              style: TextStyle(
-                                color: grey700,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // OrDivider(),
+                // Padding(
+                //   padding: EdgeInsets.only(top: 5),
+                //   child: Container(
+                //     width: size.width * 0.9,
+                //     height: 47,
+                //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                //     child: ClipRRect(
+                //       borderRadius: BorderRadius.circular(8),
+                //       child: ElevatedButton(
+                //         style: ElevatedButton.styleFrom(
+                //           backgroundColor: grey100,
+                //           side: BorderSide(color: grey300),
+                //         ),
+                //         onPressed: () {},
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.center,
+                //           children: [
+                //             Image.asset(
+                //               "assets/images/whatsapp5.png",
+                //             ),
+                //             SizedBox(width: 15),
+                //             Text(
+                //               "Daftar dengan WhatsApp",
+                //               style: TextStyle(
+                //                 color: grey700,
+                //                 fontSize: 16,
+                //                 fontWeight: FontWeight.w600,
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 20),
                   child: Row(

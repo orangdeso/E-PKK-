@@ -4,14 +4,14 @@ import 'package:e_pkk/views/Login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class BerhasilRegis extends StatefulWidget {
-  const BerhasilRegis({super.key});
+class SuccesVerification extends StatefulWidget {
+  const SuccesVerification({super.key});
 
   @override
-  State<BerhasilRegis> createState() => _BerhasilRegisState();
+  State<SuccesVerification> createState() => _SuccesVerificationState();
 }
 
-class _BerhasilRegisState extends State<BerhasilRegis> {
+class _SuccesVerificationState extends State<SuccesVerification> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,7 +44,7 @@ class _BerhasilRegisState extends State<BerhasilRegis> {
                 child: SizedBox(
                   height: 50,
                   child: Text(
-                    "Selamat daftar akun Anda berhasil. Silahkan klik OK untuk login kedalam aplikasi",
+                    "Selamat ubah password Anda berhasil. Silahkan klik OK untuk login kedalam aplikasi",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,

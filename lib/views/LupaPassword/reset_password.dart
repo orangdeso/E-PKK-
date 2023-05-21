@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/LupaPassword/bg_password.dart';
+import 'package:e_pkk/views/LupaPassword/succes_verification.dart';
 import 'package:e_pkk/views/Registrasi/components/RegistrasiController.dart';
 import 'package:flutter/material.dart';
 
@@ -38,15 +39,49 @@ class _ResetPasswordState extends State<ResetPassword> {
   ) {
     if (password != konfirm) {
       print("Password tidak sesuai");
+      _alertPassword(context);
     } else {
       LoginApi.updateSandi(no_whatsapp, password).then((value) async {
         if (value.kode == 1) {
           print("berhasil");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return SuccesVerification();
+              },
+            ),
+          );
         } else {
           print(value);
+          _alertGagal(context);
         }
       });
     }
+  }
+
+  _alertPassword(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Gagal",
+      desc: "Password yang Anda masukkan tidak sesuai",
+      btnOkOnPress: () {},
+    ).show();
+  }
+
+  _alertGagal(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Gagal",
+      desc: "Password yang Anda masukkan adalah password lama. Silahkan gunakan password baru !",
+      btnOkOnPress: () {},
+    ).show();
   }
 
   @override

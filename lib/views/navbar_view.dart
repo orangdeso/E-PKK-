@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class navbarView extends StatefulWidget {
+  static String route = '/navbarr';
+
   const navbarView({super.key});
 
   @override

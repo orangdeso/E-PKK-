@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/LoginApi.dart';
-import 'package:e_pkk/views/Login/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/LupaPassword/otp_page.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _lupaPasswordState extends State<lupaPassword> {
   }
 
   void _kirimOTP() async {
-    var url = Uri.parse('http://172.16.110.130/vscode/api_rest_pkk/OtpWa.php');
+    Uri url = Uri.parse(ApiHelper.url + 'otpWa.php');
 
     var data = {
       "kodeOtp": randomNumber.toString(),
@@ -153,18 +153,6 @@ class _lupaPasswordState extends State<lupaPassword> {
                   ),
                 ),
                 child: TextFormField(
-                  // onChanged: (value) async {
-                  //   bool isnumberValid = await validasiWA(value);
-                  //   if (isnumberValid) {
-                  //     setState(() {
-                  //       noWa = value.toString();
-                  //     });
-                  //   } else {
-                  //     setState(() {
-                  //       noWa = "";
-                  //     });
-                  //   }
-                  // },
                   controller: tWane,
                   validator: (value) {
                     if (value == null || value.isEmpty) {

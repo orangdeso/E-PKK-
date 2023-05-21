@@ -1,3 +1,4 @@
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class HubungiKamiPage extends StatefulWidget {
@@ -10,6 +11,12 @@ class HubungiKamiPage extends StatefulWidget {
 class _HubungiKamiPageState extends State<HubungiKamiPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Hubungi Kami"),
+        centerTitle: true,
+        backgroundColor: ktextColor,
+      ),
+    );
   }
 }

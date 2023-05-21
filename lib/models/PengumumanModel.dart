@@ -10,7 +10,7 @@ PengumumanModel pengumumanModelFromJson(String str) =>
 class PengumumanModel {
   int? kode;
   String? message;
-  List<Data>? data;
+  List<DataVB>? data;
 
   PengumumanModel({
     this.kode,
@@ -22,9 +22,9 @@ class PengumumanModel {
     kode = json['kode'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DataVB>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new DataVB.fromJson(v));
       });
     }
   }
@@ -37,6 +37,19 @@ class PengumumanModel {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
+  }
+
+  static Future<PengumumanModel> tampilDetail(String id) async {
+    try {
+      Uri url = Uri.parse(ApiHelper.url + 'detailPengumuman.php');
+      var response = await http.post(url, body: {
+        'id': id,
+      });
+      var body = json.decode(response.body);
+      return PengumumanModel.fromJson(body);
+    } catch (e) {
+      throw Exception('$e');
+    }
   }
 
   static Future<PengumumanModel> tampilPengumuman(BuildContext context) async {
@@ -54,7 +67,7 @@ class PengumumanModel {
       _alertGagal(context);
       throw Exception('$e');
     }
-  } 
+  }
 }
 
 _alertGagal(context) {
@@ -69,7 +82,7 @@ _alertGagal(context) {
   ).show();
 }
 
-class Data {
+class DataVB {
   String? id;
   String? judulPengumuman;
   String? deskripsiPengumuman;
@@ -78,7 +91,7 @@ class Data {
   String? updatedAt;
   String? createdAt;
 
-  Data(
+  DataVB(
       {this.id,
       this.judulPengumuman,
       this.deskripsiPengumuman,
@@ -87,7 +100,7 @@ class Data {
       this.updatedAt,
       this.createdAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataVB.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     judulPengumuman = json['judulPengumuman'];
     deskripsiPengumuman = json['deskripsiPengumuman'];

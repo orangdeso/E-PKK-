@@ -5,11 +5,13 @@ import 'package:http/http.dart' as http;
 class LoginApi {
   int? kode;
   String? pesan;
+  int? id__akun;
   DataPatient? data;
 
   LoginApi({
     this.kode,
     this.pesan,
+    this.id__akun,
     this.data,
   });
 
@@ -57,15 +59,8 @@ class LoginApi {
       kode: body['kode'],
       pesan: body['pesan'],
       data: body['data'],
+      id__akun: int.parse(body['id_akun'] == null ? "0" : body['id_akun']),
     );
-    //String apiURL = "http://172.16.109.54/vscode/api_rest_pkk/login.php";
-    // Uri uri = Uri.parse(apiURL);
-
-    // var apiResult = await http
-    //     .post(uri, body: {"no_whatsapp": no_whatsapp, "password": password});
-    // var jsonObject = json.decode(apiResult.body);
-
-    // return LoginApi.createLoginApi(jsonObject);
   }
 
   static Future<LoginApi> registrasiPost(

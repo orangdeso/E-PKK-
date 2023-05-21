@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -35,7 +36,6 @@ class _otpPageState extends State<otpPage> {
 
   void verifyCode() {
     if (otpRegister.toString() == kodeotptxt.text) {
-      //whenVerified();
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -49,10 +49,11 @@ class _otpPageState extends State<otpPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(
-          "Kode verifikasi tidak sesuai!",
-          textAlign: TextAlign.center,
-        )),
+          content: Text(
+            "Kode verifikasi tidak sesuai!",
+            textAlign: TextAlign.center,
+          ),
+        ),
       );
     }
   }
@@ -68,7 +69,7 @@ class _otpPageState extends State<otpPage> {
   }
 
   void _kirimUlangOTP() async {
-    var url = Uri.parse('http://172.16.110.130/vscode/api_rest_pkk/OtpWa.php');
+    Uri url = Uri.parse(ApiHelper.url + 'otpWa.php');
 
     var data = {
       "kodeOtp": randomNumber.toString(),
@@ -90,10 +91,12 @@ class _otpPageState extends State<otpPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
-        elevation: 4,
+        elevation: 1,
         title: Text(
           "Verifikasi Lupa Password",
-          style: TextStyle(color: grey900),
+          style: TextStyle(
+            color: grey900,
+          ),
         ),
         leading: BackButton(
           color: grey800,
@@ -164,6 +167,7 @@ class _otpPageState extends State<otpPage> {
                     onChanged: (value) {
                       // aksi yang dijalankan setiap kali kode OTP berubah
                     },
+                    keyboardType: TextInputType.number,
                     cursorColor: Colors.black,
                     animationType: AnimationType.fade,
                     pinTheme: PinTheme(
@@ -187,200 +191,6 @@ class _otpPageState extends State<otpPage> {
                   ),
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //     children: [
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin1,
-              //           onSaved: (pin1) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin2,
-              //           onSaved: (pin2) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin3,
-              //           onSaved: (pin3) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin4,
-              //           onSaved: (pin4) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin5,
-              //           onSaved: (pin5) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //       SizedBox(
-              //         height: 68,
-              //         width: 55,
-              //         child: TextFormField(
-              //           controller: tPin6,
-              //           onSaved: (pin6) {},
-              //           onChanged: (value) {
-              //             if (value.length == 1) {
-              //               FocusScope.of(context).nextFocus();
-              //             }
-              //           },
-              //           validator: (value) {
-              //             if (value == null || value.isEmpty) {
-              //               return '';
-              //             }
-              //           },
-              //           decoration: const InputDecoration(
-              //             hintText: "0",
-              //             hintStyle: TextStyle(
-              //               color: Colors.grey,
-              //             ),
-              //           ),
-              //           style: Theme.of(context).textTheme.headline6,
-              //           keyboardType: TextInputType.number,
-              //           textAlign: TextAlign.center,
-              //           inputFormatters: [
-              //             LengthLimitingTextInputFormatter(1),
-              //             FilteringTextInputFormatter.digitsOnly,
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -419,7 +229,7 @@ class _otpPageState extends State<otpPage> {
                     },
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),

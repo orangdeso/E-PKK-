@@ -1,5 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:e_pkk/controller/ApiController.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/DataAKun.dart';
 
 class ProfilPage extends StatefulWidget {
   const ProfilPage({super.key});
@@ -9,13 +15,62 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
+  TextEditingController textEditingControllerNama =
+      TextEditingController(text: "Ahmad Kahfi Smith");
+  TextEditingController textEditingControllerNoWhatsapp =
+      TextEditingController(text: "0812345678");
+  TextEditingController textEditingControllerAlamat =
+      TextEditingController(text: "Baron");
+
+  late Future<DataAkun> futureAkun;
+  String idAkun = '';
+
+  Future<void> getIdAkunFromSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ??
+        ''; // Menggunakan operator nullish coalescing untuk menetapkan nilai default jika kunci tidak ada
+    setState(() {
+      idAkun = idAkunValue;
+    });
+  }
+
+  _showAlertSukses(context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      animType: AnimType.topSlide,
+      showCloseIcon: true,
+      title: "Berhasil Update Akun",
+      desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
+      btnOkOnPress: () {},
+    ).show();
+  }
+
+  void showBerhasil(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIosWeb: 1,
+      backgroundColor: whiteColor,
+      textColor: textColor2,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getIdAkunFromSharedPreferences();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    futureAkun = API_CONTROLLER.fetchData(idAkun);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Profil Saya",
+          "Informasi Akun",
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -23,49 +78,193 @@ class _ProfilPageState extends State<ProfilPage> {
         centerTitle: true,
         backgroundColor: ktextColor,
       ),
-      backgroundColor: grey100,
-      body: ListView(
-        physics: BouncingScrollPhysics(),
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: 150,
-            decoration: BoxDecoration(
-              color: grey800,
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(50),
-                bottomLeft: Radius.circular(50),
-              ),
-            ),
-            child: Column(
-              children: <Widget>[
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    border: Border.all(
-                      width: 5,
-                      color: whiteColor,
-                    ),
-                    color: whiteColor,
-                    boxShadow: [
-                      BoxShadow(
-                        color: grey100,
-                        blurRadius: 20,
-                        offset: const Offset(5, 5),
+      backgroundColor: Color.fromARGB(255, 244, 244, 244),
+      body: FutureBuilder<DataAkun>(
+        future: futureAkun,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            textEditingControllerNama.text =
+                snapshot.data!.data!.namaPengguna.toString();
+            textEditingControllerAlamat.text =
+                snapshot.data!.data!.namaKec.toString();
+            textEditingControllerNoWhatsapp.text =
+                snapshot.data!.data!.noWhatsapp.toString();
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Card(
+                    child: Padding(
+                      padding: EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: AssetImage(
+                              "assets/icons/user64.png",
+                            ),
+                            radius: 40,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 15),
+                            child: Text(
+                              "Profil Anda",
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                  child: Image.asset(
-                    "assets/icons/user512.png",
-                    height: 50,
-                    width: 50,
-                    fit: BoxFit.cover,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 15,
+                    left: 10,
                   ),
+                  child: Text(
+                    "Informasi Pribadi",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Card(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Nama",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "No. Whatsapp",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Alamat",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 170,
+                              child: TextField(
+                                controller: textEditingControllerNama,
+                                style: TextStyle(color: Colors.black),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 170,
+                              child: TextField(
+                                controller: textEditingControllerNoWhatsapp,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 170,
+                              child: TextField(
+                                controller: textEditingControllerAlamat,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.zero,
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(child: Text("")),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ElevatedButton(
+                    onPressed: () => {
+                      API_CONTROLLER.editAkun(
+                        idAkun,
+                        textEditingControllerNama.text,
+                        textEditingControllerAlamat.text,
+                        textEditingControllerNoWhatsapp.text,
+                      ),
+                      showBerhasil("Berhasil menyimpan profil"),
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return navbarView();
+                      //     },
+                      //   ),
+                      // ),
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ktextColor,
+                      elevation: 0,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        "SIMPAN",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
                 )
               ],
-            ),
-          ),
-        ],
+            );
+          } else {
+            return Text(snapshot.stackTrace.toString());
+          }
+        },
       ),
     );
   }

@@ -24,6 +24,7 @@ dependencies:
   searchfield: ^0.7.5
   # dropdownfield: ^1.0.0
   simple_shadow: ^0.2.0
+  intl: ^0.18.1
   # substring_highlight: ^1.0.33
 
 dev_dependencies:

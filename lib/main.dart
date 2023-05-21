@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: PageGaleri(),
+      home: LoginScreen(),
       routes: {
         // 'lupa_password_screen': (context) => const lupaPassword(),
         // 'welcome_screen': (context) => const WelcomeScreen(),
@@ -41,7 +41,8 @@ class MainApp extends StatelessWidget {
             PageLingkunganHidup(),
         PageDetailRiwayat.route.toString(): (context) => PageDetailRiwayat(),
         RiwayatPage.route.toString(): (context) => RiwayatPage(),
-        PagePerencaanSehat.route.toString(): (context) => PagePerencaanSehat()
+        PagePerencaanSehat.route.toString(): (context) => PagePerencaanSehat(),
+        PageGaleri.route.toString(): (context) => PageGaleri()
       },
     );
   }

@@ -35,7 +35,7 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Detail Bidang KLH",
+            "Bidang Perencanaan Sehat",
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           leading: IconButton(

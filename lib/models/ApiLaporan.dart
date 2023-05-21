@@ -42,6 +42,34 @@ class GetApi {
     }
   }
 
+  static Future<void> InsertGallery(
+      {File? file,
+      String? judul,
+      String? desc,
+      String? tanggal,
+      String? idUser,
+      BuildContext? context}) async {
+    final url = Uri.parse(ApiHelper.url + 'insert_galery.php');
+    final request = http.MultipartRequest('POST', url)
+      ..fields['judul'] = judul.toString()
+      ..fields['deskripsi'] = desc.toString()
+      ..fields['tanggal'] = tanggal.toString()
+      ..fields['id_user'] = idUser.toString()
+      ..files.add(http.MultipartFile.fromBytes(
+        'file',
+        file!.readAsBytesSync(),
+        filename: file.path.split('/').last,
+      ));
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      CherryToast.success(title: Text("Berhasil")).show(context!);
+    } else {
+      print('Data gagal disimpan!');
+    }
+  }
+
   static Future<void> LaporanBidangPerencaanKesehatan(
       {File? fileBruh,
       String? PriaSubur,

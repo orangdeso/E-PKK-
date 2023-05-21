@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../SettingAkun/keamanan_page.dart';
+import 'detail_gallery.dart';
 
 class RiwayatPage extends StatefulWidget {
   static String route = '/Riwayat';
@@ -28,6 +29,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
   List<dynamic> _dataKesehatan = [];
   List<dynamic> _dataKLH = [];
   List<dynamic> _dataPSehat = [];
+  List<dynamic> _gallery = [];
 
   //Repository repository = Repository();
   Future<void> fetchDataKesehatan({String? idUser}) async {
@@ -56,6 +58,22 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
       setState(() {
         _dataPSehat = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> fetchDataGaleery({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "getGallery.php"),
+        body: {"id_user": idUser});
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _gallery = jsonData['data'];
       });
     } else {
       throw Exception('Failed to load data');
@@ -125,6 +143,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
     fetchDataKesehatan(idUser: "5");
     fetchDataKLH(idUser: "5");
     fetchDataPSehat(idUser: "5");
+    fetchDataGaleery(idUser: "5");
     super.initState();
   }
 
@@ -408,6 +427,75 @@ class _RiwayatPageState extends State<RiwayatPage> {
                   );
                 },
               ),
+              ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _gallery.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade100,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 2.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10)),
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(20),
+                        leading: Container(
+                          width: 80,
+                          height: 80,
+                          child: Image.network(
+                            "${ApiHelper.url}assets/gallery/${_gallery[index]['image']}",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        title: Text(
+                          "Gallery",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        trailing: InkWell(
+                          onTap: () {
+                            Navigator.of(context, rootNavigator: true)
+                                .pushReplacement(MaterialPageRoute(
+                                    builder: (context) {
+                                      return DetailGallery();
+                                    },
+                                    settings: RouteSettings(arguments: {
+                                      "status": _gallery[index]['status'],
+                                      "tanggal": _gallery[index]['tanggal'],
+                                      "judul": _gallery[index]['judul'],
+                                      "deskripsi": _gallery[index]['deskripsi'],
+                                      "gambar": _gallery[index]['image'],
+                                      "user": _gallery[index]['id_user'],
+                                    })));
+                          },
+                          child: Container(
+                            width: 120,
+                            child: Card(
+                                color: WarnaButton(
+                                    stts: _gallery[index]['status']),
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 30, vertical: 5),
+                                  child: Center(
+                                    child: Text(
+                                      "${_gallery[index]['status']}",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
               // ListView.builder(
               //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               //   itemCount: _dataPSehat.length,
@@ -482,7 +570,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
               //     );
               //   },
               // ),
-              Text("Cooming Soon")
+              // Text("Cooming Soon")
             ],
           ),
         ),

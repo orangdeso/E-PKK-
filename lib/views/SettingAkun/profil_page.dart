@@ -89,9 +89,10 @@ class _ProfilPageState extends State<ProfilPage> {
                 snapshot.data!.data!.namaKec.toString();
             textEditingControllerNoWhatsapp.text =
                 snapshot.data!.data!.noWhatsapp.toString();
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+            return ListView(
+              shrinkWrap: true,
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(
                   height: 10,
@@ -221,36 +222,39 @@ class _ProfilPageState extends State<ProfilPage> {
                 ),
                 Expanded(child: Text("")),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ElevatedButton(
-                    onPressed: () => {
-                      API_CONTROLLER.editAkun(
-                        idAkun,
-                        textEditingControllerNama.text,
-                        textEditingControllerAlamat.text,
-                        textEditingControllerNoWhatsapp.text,
+                  padding: EdgeInsets.only(top: 30),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                      onPressed: () => {
+                        API_CONTROLLER.editAkun(
+                          idAkun,
+                          textEditingControllerNama.text,
+                          textEditingControllerAlamat.text,
+                          textEditingControllerNoWhatsapp.text,
+                        ),
+                        showBerhasil("Berhasil menyimpan profil"),
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return navbarView();
+                        //     },
+                        //   ),
+                        // ),
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: ktextColor,
+                        elevation: 5,
                       ),
-                      showBerhasil("Berhasil menyimpan profil"),
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       return navbarView();
-                      //     },
-                      //   ),
-                      // ),
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ktextColor,
-                      elevation: 0,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        "SIMPAN",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          "SIMPAN",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     ),

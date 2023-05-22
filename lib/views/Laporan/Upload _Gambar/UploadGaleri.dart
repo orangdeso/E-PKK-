@@ -42,7 +42,6 @@ class _PageGaleriState extends State<PageGaleri> {
                       .pickFiles(
                           type: FileType.custom,
                           allowedExtensions: ['jpg', 'jpeg', 'png']);
-
                   if (result != null) {
                     setState(() {
                       _file = File(result.files.single.path!);

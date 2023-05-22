@@ -1,5 +1,6 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
+import 'package:e_pkk/views/Login/login_screen.dart';
 import 'package:e_pkk/views/SettingAkun/hubungi_page.dart';
 import 'package:e_pkk/views/SettingAkun/keamanan_page.dart';
 import 'package:e_pkk/views/SettingAkun/profil_page.dart';
@@ -387,7 +388,10 @@ class _SettingAkunState extends State<SettingAkun> {
                                 ),
                               ),
                               AnimatedButton(
-                                pressEvent: () {},
+                                pressEvent: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                                },
                                 text: "Ya",
                                 width: 70,
                                 color: ktextColor,

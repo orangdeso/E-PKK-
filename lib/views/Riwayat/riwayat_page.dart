@@ -106,33 +106,45 @@ class _RiwayatPageState extends State<RiwayatPage> {
   List<Tab> myTab = [
     Tab(
       child: Text(
-        "Kesehatan",
+        "Bidang Kesehatan",
+        textAlign: TextAlign.center,
         style: GoogleFonts.inter(
-          textStyle: TextStyle(),
+          textStyle: TextStyle(
+            fontSize: 10.5,
+          ),
         ),
       ),
     ),
     Tab(
       child: Text(
-        "KLH",
+        "Kelesrarian LH",
+        textAlign: TextAlign.center,
         style: GoogleFonts.inter(
-          textStyle: TextStyle(),
+          textStyle: TextStyle(
+            fontSize: 10.5,
+          ),
         ),
       ),
     ),
     Tab(
       child: Text(
-        "P. Sehat",
+        "Perencanaan Sehat",
+        textAlign: TextAlign.center,
         style: GoogleFonts.inter(
-          textStyle: TextStyle(),
+          textStyle: TextStyle(
+            fontSize: 10.5,
+          ),
         ),
       ),
     ),
     Tab(
       child: Text(
         "Galeri",
+        textAlign: TextAlign.center,
         style: GoogleFonts.inter(
-          textStyle: TextStyle(),
+          textStyle: TextStyle(
+            fontSize: 10.5,
+          ),
         ),
       ),
     ),
@@ -170,6 +182,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
             title: Text(
               "Riwayat",
               style: TextStyle(
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
               ),
             ),

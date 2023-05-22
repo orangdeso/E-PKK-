@@ -320,42 +320,42 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-              OrDivider(),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(
-                  width: size.width * 0.9,
-                  height: 47,
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: grey100,
-                        side: BorderSide(color: grey300),
-                      ),
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            "assets/images/whatsapp5.png",
-                          ),
-                          SizedBox(width: 15),
-                          Text(
-                            "Login dengan WhatsApp",
-                            style: TextStyle(
-                              color: grey700,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // OrDivider(),
+              // Padding(
+              //   padding: EdgeInsets.only(top: 5),
+              //   child: Container(
+              //     width: size.width * 0.9,
+              //     height: 47,
+              //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              //     child: ClipRRect(
+              //       borderRadius: BorderRadius.circular(8),
+              //       child: ElevatedButton(
+              //         style: ElevatedButton.styleFrom(
+              //           backgroundColor: grey100,
+              //           side: BorderSide(color: grey300),
+              //         ),
+              //         onPressed: () {},
+              //         child: Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             Image.asset(
+              //               "assets/images/whatsapp5.png",
+              //             ),
+              //             SizedBox(width: 15),
+              //             Text(
+              //               "Login dengan WhatsApp",
+              //               style: TextStyle(
+              //                 color: grey700,
+              //                 fontSize: 16,
+              //                 fontWeight: FontWeight.w600,
+              //               ),
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Row(

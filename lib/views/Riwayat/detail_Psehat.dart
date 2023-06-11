@@ -1,3 +1,4 @@
+import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/navbar_view.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +23,12 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
     String agt = getData?['jml_anggota'];
     String krt = getData?['jml_kartu'];
     String sts = getData?['stss'];
-    // TODO: implement build
+
     Color WarnaButton({String? stts}) {
       if (stts == "Proses") {
-        return Colors.blueAccent;
+        return Colors.orange.shade400;
       } else {
-        return Colors.green;
+        return Colors.green.shade500;
       }
     }
 
@@ -35,17 +36,23 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
       appBar: AppBar(
         title: Text(
           "Detail Bidang Kesehatan",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => navbarView()));
-            },
-            icon: Icon(Icons.arrow_back_ios)),
-        iconTheme: IconThemeData(color: Colors.black),
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => navbarView()));
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
         centerTitle: true,
-        // iconTheme: IconThemeData(color: Colors.black),
+        elevation: 1,
         backgroundColor: Colors.white,
       ),
       body: Center(
@@ -62,17 +69,19 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 217, 217, 217),
-                        borderRadius: BorderRadius.circular(20)),
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Container(
                       height: 200,
                       decoration: BoxDecoration(
                         color: Color.fromARGB(255, 217, 217, 217),
                         image: DecorationImage(
-                            image: NetworkImage(
-                                "${ApiHelper.url}assets/Bidang_kesehatan/$gbr"),
-                            fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(20),
+                          image: NetworkImage(
+                              "${ApiHelper.url}assets/Bidang_kesehatan/$gbr"),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
@@ -81,17 +90,28 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Icon(Icons.date_range_outlined),
-                      SizedBox(
-                        width: 10,
+                      Icon(
+                        Icons.calendar_month,
+                        color: grey500,
                       ),
-                      Text("${tgl}"),
                       SizedBox(
                         width: 10,
                       ),
                       Text(
+                        "${tgl}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Text(
                         "${ktg}",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
                       )
                     ],
                   ),
@@ -99,13 +119,22 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                 Align(
                   alignment: Alignment.topRight,
                   child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     color: WarnaButton(stts: sts),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 10),
+                        horizontal: 25,
+                        vertical: 10,
+                      ),
                       child: Text(
                         "${sts}",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ),
@@ -117,7 +146,7 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey,
@@ -138,50 +167,19 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("Jumlah Posyandu"),
-                                Text("${psy}")
-                              ],
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                          ],
-                        ),
-                        //pertama Jumlah Posyandu Integrasi
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Jumlah Posyandu terintegrasi"),
-                                Text("${psy_i}")
-                              ],
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                          ],
-                        ),
-                        //pertama Jumlah KLP
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [Text("Jumlah KLP"), Text("${klp}")],
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                          ],
-                        ),
-                        //pertama Jumlah Posyandu Anggota
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text("Jumlah anggota"),
-                                Text("${agt}")
+                                Text(
+                                  "Jumlah Posyandu",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "${psy}",
+                                  style: TextStyle(
+                                    color: grey400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
                               ],
                             ),
                             Divider(
@@ -196,8 +194,96 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                    "Jumlah yang memiliki kartu Berobat Gratis"),
-                                Text("${krt}")
+                                  "Jumlah Posyandu terintegrasi",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "${psy_i}",
+                                  style: TextStyle(
+                                    color: grey400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                            ),
+                          ],
+                        ),
+                        //pertama Jumlah KLP
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Jumlah KLP",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "${klp}",
+                                  style: TextStyle(
+                                    color: grey400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                            ),
+                          ],
+                        ),
+                        //pertama Jumlah Posyandu Anggota
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Jumlah anggota",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "${agt}",
+                                  style: TextStyle(
+                                    color: grey400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Divider(
+                              thickness: 2,
+                            ),
+                          ],
+                        ),
+                        //pertama Jumlah Posyandu Integrasi
+                        Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "Jumlah yang memiliki kartu Berobat Gratis",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Text(
+                                  "${krt}",
+                                  style: TextStyle(
+                                    color: grey400,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                )
                               ],
                             ),
                             Divider(

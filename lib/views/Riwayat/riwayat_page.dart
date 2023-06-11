@@ -1,4 +1,5 @@
 import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/models/DataAkun.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/models/Riwayat.dart';
 import 'package:e_pkk/models/laporanModel.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../SettingAkun/keamanan_page.dart';
 import 'detail_gallery.dart';
@@ -25,13 +27,25 @@ class RiwayatPage extends StatefulWidget {
 
 class _RiwayatPageState extends State<RiwayatPage> {
   int _current = 0;
-  // List<Data> listLaporan = [];
   List<dynamic> _dataKesehatan = [];
   List<dynamic> _dataKLH = [];
   List<dynamic> _dataPSehat = [];
   List<dynamic> _gallery = [];
+  String idAkun = '';
+  late Future<DataAkun> futureAkun;
 
-  //Repository repository = Repository();
+  Future<void> getIdAkun() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ?? '';
+    setState(() {
+      idAkun = idAkunValue;
+      fetchDataKesehatan(idUser: idAkun);
+      fetchDataKLH(idUser: idAkun);
+      fetchDataPSehat(idUser: idAkun);
+      fetchDataGaleery(idUser: idAkun);
+    });
+  }
+
   Future<void> fetchDataKesehatan({String? idUser}) async {
     final response = await http.post(
         Uri.parse(ApiHelper.url + "RiwayatKesehatan.php"),
@@ -97,12 +111,6 @@ class _RiwayatPageState extends State<RiwayatPage> {
     }
   }
 
-  //
-
-  // getData() async {
-  //   listLaporan = await repository.getRiwayat();
-  // }
-
   List<Tab> myTab = [
     Tab(
       child: Text(
@@ -152,18 +160,21 @@ class _RiwayatPageState extends State<RiwayatPage> {
 
   @override
   void initState() {
-    fetchDataKesehatan(idUser: "5");
-    fetchDataKLH(idUser: "5");
-    fetchDataPSehat(idUser: "5");
-    fetchDataGaleery(idUser: "5");
+    getIdAkun();
+    fetchDataKesehatan(idUser: idAkun);
+    fetchDataKLH(idUser: idAkun);
+    fetchDataPSehat(idUser: idAkun);
+    fetchDataGaleery(idUser: "21");
+    print(idAkun);
+    setState(() {});
     super.initState();
   }
 
   Color WarnaButton({String? stts}) {
     if (stts == "Proses") {
-      return Colors.blueAccent;
+      return Colors.orange.shade400;
     } else {
-      return Colors.green;
+      return Colors.green.shade500;
     }
   }
 
@@ -213,16 +224,47 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 2.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailSehat();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "gambar": _dataKesehatan[index]
+                                      ['gambar_upload'],
+                                  "tanggal": _dataKesehatan[index]['tanggal'],
+                                  "kategori_laporan": _dataKesehatan[index]
+                                      ['kategori_laporan'],
+                                  "jml_posyandu": _dataKesehatan[index]
+                                      ['jumlah_posyandu'],
+                                  "jml_posint": _dataKesehatan[index]
+                                      ['jumlah_posyandu_iterasi'],
+                                  "jml_klp": _dataKesehatan[index]
+                                      ['jumlah_klp'],
+                                  "jml_anggota": _dataKesehatan[index]
+                                      ['jumlah_anggota'],
+                                  "jml_kartu": _dataKesehatan[index]
+                                      ['jumlah_kartu_gratis'],
+                                  "stss": _dataKesehatan[index]['status']
+                                },
+                              ),
+                            ),
+                          );
+                        },
                         contentPadding: EdgeInsets.all(20),
                         leading: Container(
                           width: 80,
@@ -234,57 +276,84 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         title: Text(
                           "${_dataKesehatan[index]['kategori_laporan']}",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                        subtitle: Text(
-                            "Jumlah Posyandu : ${_dataKesehatan[index]['jumlah_posyandu']}"),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 8),
+                              child: Text(
+                                  "Jumlah Posyandu : ${_dataKesehatan[index]['jumlah_posyandu']}"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 15),
+                              child: Text(
+                                "${_dataKesehatan[index]['tanggal']}",
+                              ),
+                            ),
+                          ],
+                        ),
                         trailing: InkWell(
-                          onTap: () {
-                            // Navigator.pushReplacement(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return PageDetailSehat();
-                            // }));
-
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) {
-                                      return PageDetailSehat();
-                                    },
-                                    settings: RouteSettings(arguments: {
-                                      "gambar": _dataKesehatan[index]
-                                          ['gambar_upload'],
-                                      "tanggal": _dataKesehatan[index]
-                                          ['tanggal'],
-                                      "kategori_laporan": _dataKesehatan[index]
-                                          ['kategori_laporan'],
-                                      "jml_posyandu": _dataKesehatan[index]
-                                          ['jumlah_posyandu'],
-                                      "jml_posint": _dataKesehatan[index]
-                                          ['jumlah_posyandu_iterasi'],
-                                      "jml_klp": _dataKesehatan[index]
-                                          ['jumlah_klp'],
-                                      "jml_anggota": _dataKesehatan[index]
-                                          ['jumlah_anggota'],
-                                      "jml_kartu": _dataKesehatan[index]
-                                          ['jumlah_kartu_gratis'],
-                                      "stss": _dataKesehatan[index]['status']
-                                    })));
-                          },
+                          // onTap: () {
+                          //   Navigator.of(context, rootNavigator: true)
+                          //       .pushReplacement(
+                          //     MaterialPageRoute(
+                          //       builder: (context) {
+                          //         return PageDetailSehat();
+                          //       },
+                          //       settings: RouteSettings(
+                          //         arguments: {
+                          //           "gambar": _dataKesehatan[index]
+                          //               ['gambar_upload'],
+                          //           "tanggal": _dataKesehatan[index]['tanggal'],
+                          //           "kategori_laporan": _dataKesehatan[index]
+                          //               ['kategori_laporan'],
+                          //           "jml_posyandu": _dataKesehatan[index]
+                          //               ['jumlah_posyandu'],
+                          //           "jml_posint": _dataKesehatan[index]
+                          //               ['jumlah_posyandu_iterasi'],
+                          //           "jml_klp": _dataKesehatan[index]
+                          //               ['jumlah_klp'],
+                          //           "jml_anggota": _dataKesehatan[index]
+                          //               ['jumlah_anggota'],
+                          //           "jml_kartu": _dataKesehatan[index]
+                          //               ['jumlah_kartu_gratis'],
+                          //           "stss": _dataKesehatan[index]['status']
+                          //         },
+                          //       ),
+                          //     ),
+                          //   );
+                          // },
                           child: Container(
-                            width: 120,
+                            width: 85,
+                            height: 40,
                             child: Card(
-                                color: WarnaButton(
-                                    stts: _dataKesehatan[index]['status']),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 5),
-                                  child: Center(
-                                    child: Text(
-                                      "${_dataKesehatan[index]['status']}",
-                                      style: TextStyle(color: Colors.white),
+                              color: WarnaButton(
+                                  stts: _dataKesehatan[index]['status']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "${_dataKesehatan[index]['status']}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
                                     ),
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -310,6 +379,30 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           ],
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailKlh();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "jamban": _dataKLH[index]['jamban'],
+                                  "tanggal": _dataKLH[index]['tanggal'],
+                                  "spal": _dataKLH[index]['spal'],
+                                  "tps": _dataKLH[index]['tps'],
+                                  "mck": _dataKLH[index]['mck'],
+                                  "pdam": _dataKLH[index]['pdam'],
+                                  "sumur": _dataKLH[index]['sumur'],
+                                  "dll": _dataKLH[index]['dll'],
+                                  "stss": _dataKLH[index]['status'],
+                                  "gambar": _dataKLH[index]['gambar_upload']
+                                },
+                              ),
+                            ),
+                          );
+                        },
                         contentPadding: EdgeInsets.all(20),
                         leading: Container(
                           width: 80,
@@ -320,45 +413,56 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           ),
                         ),
                         title: Text(
-                          "Data KLH",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          "Data Kelestarian Lingkungan Hidup",
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                        subtitle: Text("Jamban : ${_dataKLH[index]['jamban']}"),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 8),
+                              child:
+                                  Text("Jamban : ${_dataKLH[index]['jamban']}"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 15),
+                              child: Text(
+                                "${_dataKLH[index]['tanggal']}",
+                              ),
+                            ),
+                          ],
+                        ),
                         trailing: InkWell(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) {
-                                      return PageDetailKlh();
-                                    },
-                                    settings: RouteSettings(arguments: {
-                                      "jamban": _dataKLH[index]['jamban'],
-                                      "tanggal": _dataKLH[index]['tanggal'],
-                                      "spal": _dataKLH[index]['spal'],
-                                      "tps": _dataKLH[index]['tps'],
-                                      "mck": _dataKLH[index]['mck'],
-                                      "pdam": _dataKLH[index]['pdam'],
-                                      "sumur": _dataKLH[index]['sumur'],
-                                      "dll": _dataKLH[index]['dll'],
-                                      "stss": _dataKLH[index]['status'],
-                                      "gambar": _dataKLH[index]['gambar_upload']
-                                    })));
-                          },
                           child: Container(
-                            width: 120,
+                            width: 85,
+                            height: 40,
                             child: Card(
-                                color: WarnaButton(
-                                    stts: _dataKLH[index]['status']),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 5),
-                                  child: Center(
-                                    child: Text(
-                                      "${_dataKLH[index]['status']}",
-                                      style: TextStyle(color: Colors.white),
+                              color:
+                                  WarnaButton(stts: _dataKLH[index]['status']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "${_dataKLH[index]['status']}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -374,16 +478,40 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 2.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailPerencaanSehat();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "jps": _dataPSehat[index]['J_Psubur'],
+                                  "jws": _dataPSehat[index]['J_Wsubur'],
+                                  "kbp": _dataPSehat[index]['Kb_p'],
+                                  "kbw": _dataPSehat[index]['Kb_w'],
+                                  "kk_tbg": _dataPSehat[index]['Kk_tbg'],
+                                  "user": _dataPSehat[index]['id_user'],
+                                  "tgl": _dataPSehat[index]['tanggal'],
+                                  "gbr": _dataPSehat[index]['gambar'],
+                                  "stss": _dataPSehat[index]['status'],
+                                },
+                              ),
+                            ),
+                          );
+                        },
                         contentPadding: EdgeInsets.all(20),
                         leading: Container(
                           width: 80,
@@ -395,44 +523,52 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         title: Text(
                           "Data Perencanaan Sehat",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                        subtitle: Text(
-                            "Pria Subur: ${_dataPSehat[index]['J_Psubur']}"),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 8),
+                              child: Text(
+                                  "Pria Subur: ${_dataPSehat[index]['J_Psubur']}"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 15),
+                              child: Text(
+                                "${_dataPSehat[index]['tanggal']}",
+                              ),
+                            ),
+                          ],
+                        ),
                         trailing: InkWell(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) {
-                                      return PageDetailPerencaanSehat();
-                                    },
-                                    settings: RouteSettings(arguments: {
-                                      "jps": _dataPSehat[index]['J_Psubur'],
-                                      "jws": _dataPSehat[index]['J_Wsubur'],
-                                      "kbp": _dataPSehat[index]['Kb_p'],
-                                      "kbw": _dataPSehat[index]['Kb_w'],
-                                      "kk_tbg": _dataPSehat[index]['Kk_tbg'],
-                                      "user": _dataPSehat[index]['id_user'],
-                                      "tgl": _dataPSehat[index]['tanggal'],
-                                      "gbr": _dataPSehat[index]['gambar'],
-                                      "stss": _dataPSehat[index]['status'],
-                                    })));
-                          },
                           child: Container(
-                            width: 120,
+                            width: 85,
+                            height: 40,
                             child: Card(
-                                color: WarnaButton(
-                                    stts: _dataPSehat[index]['status']),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 5),
-                                  child: Center(
-                                    child: Text(
-                                      "${_dataPSehat[index]['status']}",
-                                      style: TextStyle(color: Colors.white),
+                              color: WarnaButton(
+                                  stts: _dataPSehat[index]['status']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 5),
+                                child: Center(
+                                  child: Text(
+                                    "${_dataPSehat[index]['status']}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
                                     ),
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -458,6 +594,26 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           ],
                           borderRadius: BorderRadius.circular(10)),
                       child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return DetailGallery();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "status": _gallery[index]['status'],
+                                  "tanggal": _gallery[index]['tanggal'],
+                                  "judul": _gallery[index]['judul'],
+                                  "deskripsi": _gallery[index]['deskripsi'],
+                                  "gambar": _gallery[index]['image'],
+                                  "user": _gallery[index]['id_user'],
+                                },
+                              ),
+                            ),
+                          );
+                        },
                         contentPadding: EdgeInsets.all(20),
                         leading: Container(
                           width: 80,
@@ -469,39 +625,42 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         title: Text(
                           "Gallery",
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Padding(
+                          padding: EdgeInsets.only(top: 15),
+                          child: Text(
+                            "${_gallery[index]['tanggal']}",
+                          ),
                         ),
                         trailing: InkWell(
-                          onTap: () {
-                            Navigator.of(context, rootNavigator: true)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (context) {
-                                      return DetailGallery();
-                                    },
-                                    settings: RouteSettings(arguments: {
-                                      "status": _gallery[index]['status'],
-                                      "tanggal": _gallery[index]['tanggal'],
-                                      "judul": _gallery[index]['judul'],
-                                      "deskripsi": _gallery[index]['deskripsi'],
-                                      "gambar": _gallery[index]['image'],
-                                      "user": _gallery[index]['id_user'],
-                                    })));
-                          },
                           child: Container(
-                            width: 120,
+                            width: 85,
+                            height: 40,
                             child: Card(
-                                color: WarnaButton(
-                                    stts: _gallery[index]['status']),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 30, vertical: 5),
-                                  child: Center(
-                                    child: Text(
-                                      "${_gallery[index]['status']}",
-                                      style: TextStyle(color: Colors.white),
+                              color:
+                                  WarnaButton(stts: _gallery[index]['status']),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "${_gallery[index]['status']}",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
                                     ),
                                   ),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),

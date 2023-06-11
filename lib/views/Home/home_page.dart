@@ -212,26 +212,43 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xFFEDF6FF),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: ListTile(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  PageLaporanMenu.route.toString(),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/essay.png",
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
-              ),
-              title: Text("Upload Laporan"),
-              subtitle: Text("Upload Laporan dengan mudah"),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.keyboard_arrow_right_outlined),
-                iconSize: 32,
-                padding: EdgeInsets.all(8.0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    PageLaporanMenu.route.toString(),
+                  );
+                },
+                leading: Image.asset(
+                  "assets/images/essay.png",
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                  "Upload Laporan",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                subtitle: Container(
+                  margin: EdgeInsets.only(top: 7),
+                  child: Text(
+                    "Upload Laporan PKK mu disini",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.keyboard_arrow_right_outlined),
+                  iconSize: 32,
+                  padding: EdgeInsets.all(8.0),
+                ),
               ),
             ),
           ),
@@ -245,26 +262,43 @@ class _HomePageState extends State<HomePage> {
               color: Color(0xFF25BFFA).withOpacity(0.4),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: ListTile(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  PageGaleri.route.toString(),
-                );
-              },
-              leading: Image.asset(
-                "assets/images/picture.png",
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
-              ),
-              title: Text("Upload Galeri"),
-              subtitle: Text("Upload Galeri dengan mudah"),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.keyboard_arrow_right_outlined),
-                iconSize: 32,
-                padding: EdgeInsets.all(8.0),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    PageGaleri.route.toString(),
+                  );
+                },
+                leading: Image.asset(
+                  "assets/images/picture.png",
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                ),
+                title: Text(
+                  "Upload Galeri",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                subtitle: Container(
+                  margin: EdgeInsets.only(top: 7),
+                  child: Text(
+                    "Upload Galeri kegiatan PKK mu",
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.keyboard_arrow_right_outlined),
+                  iconSize: 32,
+                  padding: EdgeInsets.all(8.0),
+                ),
               ),
             ),
           ),

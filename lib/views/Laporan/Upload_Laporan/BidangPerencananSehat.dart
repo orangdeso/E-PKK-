@@ -1,8 +1,9 @@
 import 'dart:io';
-
 import 'package:e_pkk/models/ApiLaporan.dart';
+import 'package:e_pkk/models/DataAKun.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PagePerencaanSehat extends StatefulWidget {
   static String route = '/perencanaanSehat';
@@ -11,17 +12,36 @@ class PagePerencaanSehat extends StatefulWidget {
 }
 
 class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
+  File? _file;
+  static String? namaFileInput;
+  final _formKey = GlobalKey<FormState>();
+  String idAkun = '';
+  late Future<DataAkun> futureAkun;
+
+  // Shared Preferences untuk pemanggilan ID pengguna
+  Future<void> getIdAkun() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ?? '';
+    setState(() {
+      idAkun = idAkunValue;
+    });
+  }
+
   TextEditingController? PriaSubur = TextEditingController();
   TextEditingController? WanitaSubur = TextEditingController();
   TextEditingController? KbPria = TextEditingController();
   TextEditingController? KbWanita = TextEditingController();
   TextEditingController? kkTabungan = TextEditingController();
-  File? _file;
-  static String? namaFileInput;
-  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    getIdAkun();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       appBar: AppBar(
@@ -45,11 +65,11 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
               InkWell(
                 onTap: () async {
                   print("dek");
-                  final FilePickerResult? result = await FilePicker.platform
-                      .pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: ['jpg', 'jpeg', 'png']);
-
+                  final FilePickerResult? result =
+                      await FilePicker.platform.pickFiles(
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'jpeg', 'png'],
+                  );
                   if (result != null) {
                     setState(() {
                       _file = File(result.files.single.path!);
@@ -62,7 +82,7 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                   height: 200,
                   decoration: BoxDecoration(
                       color: Color.fromARGB(255, 217, 217, 217),
-                      borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(10)),
                   child: _file == null || _file == ""
                       ? Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +90,9 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                             Text(
                               "Upload Gambar",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                              ),
                             ),
                             SizedBox(
                               height: 20,
@@ -78,18 +100,21 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                             Text(
                               "Silakan Upload gambar di sini",
                               style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold),
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w500,
+                              ),
                             )
                           ],
                         )
                       : Container(
                           height: 200,
                           decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 217, 217, 217),
-                              image: DecorationImage(
-                                  image: FileImage(_file!), fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(20))),
+                            color: Color.fromARGB(255, 217, 217, 217),
+                            image: DecorationImage(
+                                image: FileImage(_file!), fit: BoxFit.cover),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                 ),
               ),
               SizedBox(
@@ -97,7 +122,10 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
               ),
               Text(
                 "Jumlah Pria Usia Subur (PUS)",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -110,26 +138,37 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                       child: TextFormField(
                         controller: PriaSubur,
                         decoration: InputDecoration(
-                            fillColor: Color.fromARGB(255, 235, 235, 235),
-                            filled: true,
-                            hintText: "Masukkan Jumlah",
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
+                          fillColor: Color.fromARGB(255, 235, 235, 235),
+                          filled: true,
+                          hintText: "Masukkan Jumlah",
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 226, 226, 226)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                        ),
                         // controller: nameController,
                       ),
                     ),
                   ),
-                  Expanded(child: Container()),
+                  Expanded(
+                    child: Container(),
+                  ),
                 ],
               ),
               SizedBox(
@@ -137,7 +176,10 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
               ),
               Text(
                 "Jumlah Wanita Usia Subur (WUS)",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -150,26 +192,38 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                       child: TextFormField(
                         controller: WanitaSubur,
                         decoration: InputDecoration(
-                            fillColor: Color.fromARGB(255, 235, 235, 235),
-                            filled: true,
-                            hintText: "Masukkan Jumlah",
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
+                          fillColor: Color.fromARGB(255, 235, 235, 235),
+                          filled: true,
+                          hintText: "Masukkan Jumlah",
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                        ),
                         // controller: nameController,
                       ),
                     ),
                   ),
-                  Expanded(child: Container()),
+                  Expanded(
+                    child: Container(),
+                  ),
                 ],
               ),
               //ll
@@ -187,7 +241,9 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                           Text(
                             "Anggota KB Pria",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
                           ),
                           SizedBox(
                             height: 15,
@@ -195,23 +251,31 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                           TextFormField(
                             controller: KbPria,
                             decoration: InputDecoration(
-                                fillColor: Color.fromARGB(255, 235, 235, 235),
-                                filled: true,
-                                hintText: "Masukkan Jumlah",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color:
-                                            Color.fromARGB(255, 226, 226, 226)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color:
-                                            Color.fromARGB(255, 226, 226, 226)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)))),
+                              fillColor: Color.fromARGB(255, 235, 235, 235),
+                              filled: true,
+                              hintText: "Masukkan Jumlah",
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 226, 226, 226),
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 226, 226, 226),
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                            ),
                             // controller: nameController,
                           ),
                         ],
@@ -227,7 +291,9 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                           Text(
                             "Anggota KB Wanita",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
                           ),
                           SizedBox(
                             height: 15,
@@ -235,23 +301,31 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                           TextFormField(
                             controller: KbWanita,
                             decoration: InputDecoration(
-                                fillColor: Color.fromARGB(255, 235, 235, 235),
-                                filled: true,
-                                hintText: "Masukkan Jumlah",
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color:
-                                            Color.fromARGB(255, 226, 226, 226)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10))),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2,
-                                        color:
-                                            Color.fromARGB(255, 226, 226, 226)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)))),
+                              fillColor: Color.fromARGB(255, 235, 235, 235),
+                              filled: true,
+                              hintText: "Masukkan Jumlah",
+                              hintStyle: TextStyle(
+                                fontSize: 14,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 226, 226, 226),
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 2,
+                                  color: Color.fromARGB(255, 226, 226, 226),
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                              ),
+                            ),
                             // controller: emailController,
                           ),
                         ],
@@ -265,7 +339,10 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
               ),
               Text(
                 "KK yang memiliki tabungan keluarga",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -278,26 +355,37 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                       child: TextFormField(
                         controller: kkTabungan,
                         decoration: InputDecoration(
-                            fillColor: Color.fromARGB(255, 235, 235, 235),
-                            filled: true,
-                            hintText: "Masukkan Jumlah",
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 2,
-                                    color: Color.fromARGB(255, 226, 226, 226)),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)))),
+                          fillColor: Color.fromARGB(255, 235, 235, 235),
+                          filled: true,
+                          hintText: "Masukkan Jumlah",
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                                width: 2,
+                                color: Color.fromARGB(255, 226, 226, 226)),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                        ),
                         // controller: nameController,
                       ),
                     ),
                   ),
-                  Expanded(child: Container()),
+                  Expanded(
+                    child: Container(),
+                  ),
                 ],
               ),
               //ll
@@ -314,16 +402,32 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                             WanitaSubur: WanitaSubur!.text,
                             Kb_Pria: KbPria!.text,
                             context: context,
-                            userID: '5',
+                            userID: idAkun,
                             Kb_Wanita: KbWanita!.text,
                             Tabungan_Kk: kkTabungan!.text)
-                        .then((value) => {print('pppppppp')});
+                        .then(
+                      (value) => {
+                        print('pppppppp'),
+                        print(idAkun),
+                      },
+                    );
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 55, 149, 183),
-                    minimumSize: Size.fromHeight(50)),
-                child: Text("UPLOAD"),
+                  backgroundColor: Color.fromARGB(255, 55, 149, 183),
+                  minimumSize: Size.fromHeight(50),
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  "UPLOAD",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               SizedBox(
                 height: 20,

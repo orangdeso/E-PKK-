@@ -1,13 +1,10 @@
 import 'dart:io';
-
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:e_pkk/models/DataAKun.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/ApiLaporan.dart';
 
@@ -18,8 +15,20 @@ class PageBidangKesehatan extends StatefulWidget {
 }
 
 class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
-  static String? randomValueAsalPelapor = "Topik lainnya";
   final _formKey = GlobalKey<FormState>();
+  static String? randomValueAsalPelapor = "Topik lainnya";
+  String idAkun = '';
+  late Future<DataAkun> futureAkun;
+
+  // Shared Preferences untuk pemanggilan ID pengguna
+  Future<void> getIdAkun() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ?? '';
+    setState(() {
+      idAkun = idAkunValue;
+    });
+  }
+
   TextEditingController getKategori = TextEditingController();
   TextEditingController getJmlPosyandu = TextEditingController();
   TextEditingController getJmlPosyanduInterasi = TextEditingController();
@@ -45,8 +54,14 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    getIdAkun();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       appBar: AppBar(
@@ -57,6 +72,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: Center(
         child: Padding(
@@ -71,24 +87,27 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                 InkWell(
                   onTap: () async {
                     print("dek");
-                    final FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['jpg', 'jpeg', 'png']);
-
+                    final FilePickerResult? result =
+                        await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['jpg', 'jpeg', 'png'],
+                    );
                     if (result != null) {
-                      setState(() {
-                        _file = File(result.files.single.path!);
-                        PlatformFile namaFile = result.files.first;
-                        namaFileInput = namaFile.name.toString();
-                      });
+                      setState(
+                        () {
+                          _file = File(result.files.single.path!);
+                          PlatformFile namaFile = result.files.first;
+                          namaFileInput = namaFile.name.toString();
+                        },
+                      );
                     }
                   },
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 217, 217, 217),
-                        borderRadius: BorderRadius.circular(20)),
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: _file == null || _file == ""
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +115,9 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               Text(
                                 "Upload Gambar",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 20,
+                                ),
                               ),
                               SizedBox(
                                 height: 20,
@@ -104,19 +125,23 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               Text(
                                 "Silakan Upload gambar di sini",
                                 style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               )
                             ],
                           )
                         : Container(
                             height: 200,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 217, 217, 217),
-                                image: DecorationImage(
-                                    image: FileImage(_file!),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(20))),
+                              color: Color.fromARGB(255, 217, 217, 217),
+                              image: DecorationImage(
+                                image: FileImage(_file!),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
                   ),
                 ),
                 Column(
@@ -158,12 +183,12 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                     //               BorderRadius.all(Radius.circular(10)))),
                     // ),
                     customDropDownLokasiAsalPelapor(
-                        listItem: ListPosyandu,
-                        namaLabel: "Kategori",
-                        hintText: "Pilih Kategori",
-                        randomlabel: "Posyandu Lansia",
-                        errorKosong: "Harap Isi"),
-                    //pppp
+                      listItem: ListPosyandu,
+                      namaLabel: "Kategori",
+                      hintText: "Pilih Kategori",
+                      randomlabel: "Posyandu Lansia",
+                      errorKosong: "Harap Isi",
+                    ),
                     SizedBox(
                       height: 20,
                     ),
@@ -178,8 +203,9 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                 Text(
                                   "Jumlah posyandu",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -196,24 +222,34 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                     FilteringTextInputFormatter.digitsOnly
                                   ],
                                   decoration: InputDecoration(
-                                      fillColor:
-                                          Color.fromARGB(255, 235, 235, 235),
-                                      filled: true,
-                                      hintText: "Masukkan Jumlah",
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)))),
+                                    fillColor:
+                                        Color.fromARGB(255, 235, 235, 235),
+                                    filled: true,
+                                    hintText: "Masukkan Jumlah",
+                                    hintStyle: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                  ),
                                   // controller: nameController,
                                 ),
                               ],
@@ -227,10 +263,11 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Posyandu terinterasi",
+                                  "Posyandu terintengrasi",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -238,7 +275,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                 TextFormField(
                                   validator: (value) {
                                     if (value.toString().isEmpty) {
-                                      return "Harap isi Jumlah Posyandu Iterasi";
+                                      return "Harap isi Jumlah Posyandu Terintegrasi";
                                     }
                                   },
                                   controller: getJmlPosyanduInterasi,
@@ -247,24 +284,33 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                     FilteringTextInputFormatter.digitsOnly
                                   ],
                                   decoration: InputDecoration(
-                                      fillColor:
-                                          Color.fromARGB(255, 235, 235, 235),
-                                      filled: true,
-                                      hintText: "Masukkan Jumlah",
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)))),
+                                    fillColor:
+                                        Color.fromARGB(255, 235, 235, 235),
+                                    filled: true,
+                                    hintText: "Masukkan Jumlah",
+                                    hintStyle: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          width: 2,
+                                          color: Color.fromARGB(
+                                              255, 226, 226, 226)),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                  ),
                                   // controller: emailController,
                                 ),
                               ],
@@ -287,8 +333,9 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                 Text(
                                   "Jumlah KLP",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -305,24 +352,34 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                     FilteringTextInputFormatter.digitsOnly
                                   ],
                                   decoration: InputDecoration(
-                                      fillColor:
-                                          Color.fromARGB(255, 235, 235, 235),
-                                      filled: true,
-                                      hintText: "Masukkan Jumlah",
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)))),
+                                    fillColor:
+                                        Color.fromARGB(255, 235, 235, 235),
+                                    filled: true,
+                                    hintText: "Masukkan Jumlah",
+                                    hintStyle: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                  ),
                                   // controller: nameController,
                                 ),
                               ],
@@ -338,8 +395,9 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                 Text(
                                   "Jumlah Anggota",
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 15,
@@ -356,24 +414,34 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                     FilteringTextInputFormatter.digitsOnly
                                   ],
                                   decoration: InputDecoration(
-                                      fillColor:
-                                          Color.fromARGB(255, 235, 235, 235),
-                                      filled: true,
-                                      hintText: "Masukkan Jumlah",
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10))),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              width: 2,
-                                              color: Color.fromARGB(
-                                                  255, 226, 226, 226)),
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10)))),
+                                    fillColor:
+                                        Color.fromARGB(255, 235, 235, 235),
+                                    filled: true,
+                                    hintText: "Masukkan Jumlah",
+                                    hintStyle: TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 2,
+                                        color:
+                                            Color.fromARGB(255, 226, 226, 226),
+                                      ),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(8),
+                                      ),
+                                    ),
+                                  ),
                                   // controller: emailController,
                                 ),
                               ],
@@ -387,8 +455,10 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                     ),
                     Text(
                       "Jumlah yang memiliki kartu berobat gratis",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                      ),
                     ),
                     SizedBox(
                       height: 15,
@@ -410,28 +480,38 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               ],
                               controller: getKartuBerobat,
                               decoration: InputDecoration(
-                                  fillColor: Color.fromARGB(255, 235, 235, 235),
-                                  filled: true,
-                                  hintText: "Masukkan Jumlah",
-                                  enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 2,
-                                          color: Color.fromARGB(
-                                              255, 226, 226, 226)),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          width: 2,
-                                          color: Color.fromARGB(
-                                              255, 226, 226, 226)),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10)))),
+                                fillColor: Color.fromARGB(255, 235, 235, 235),
+                                filled: true,
+                                hintText: "Masukkan Jumlah",
+                                hintStyle: TextStyle(
+                                  fontSize: 14,
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 226, 226, 226),
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: Color.fromARGB(255, 226, 226, 226),
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8),
+                                  ),
+                                ),
+                              ),
                               // controller: nameController,
                             ),
                           ),
                         ),
-                        Expanded(child: Container()),
+                        Expanded(
+                          child: Container(),
+                        ),
                       ],
                     ),
                     SizedBox(
@@ -451,7 +531,6 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                           String JumlahKLP = getJmlKLP.text.toString();
                           String JumlahKartuGratis =
                               getKartuBerobat.text.toString();
-
                           print("Jml Posyandu :: ${JumlahPosyandu}");
                           print(
                               "Jml Posyandu Iterasi :: ${JumlahPosyanduIterasi}");
@@ -461,7 +540,6 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                           print("Kategori Posyandu  :: ${KategoriPosyandu}");
                           print("Nama File Input :: ${namaFileInput}");
                           print("Tes Fileee :: ${_file}");
-
                           GetApi.LaporanBidangKesehatan(
                                   fileBruh: _file,
                                   kategori: KategoriPosyandu,
@@ -470,15 +548,32 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                   posIterasi: JumlahPosyanduIterasi,
                                   jml_klp: JumlahKLP,
                                   context: context,
-                                  userID: "5",
+                                  userID: idAkun,
                                   kartuFree: JumlahKartuGratis)
-                              .then((value) => {print("awikwok"), Succes()});
+                              .then(
+                            (value) => {
+                              print("awikwok"),
+                              print(idAkun),
+                              Succes(),
+                            },
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 55, 149, 183),
-                          minimumSize: Size.fromHeight(50)),
-                      child: Text("UPLOAD"),
+                        backgroundColor: Color.fromARGB(255, 55, 149, 183),
+                        minimumSize: Size.fromHeight(50),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        "UPLOAD",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -508,51 +603,62 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
         ),
         Text(
           "$namaLabel",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 15,
+          ),
         ),
         SizedBox(
           height: 15,
         ),
         DropdownButtonFormField2(
           decoration: InputDecoration(
-              filled: true,
-              fillColor: Color.fromARGB(255, 235, 235, 235),
-              //Add isDense true and zero Padding.
-              //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-              isDense: true,
-              contentPadding:
-                  EdgeInsets.only(bottom: 5.0, top: 5.0, right: 5.0),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                    width: 2, color: Color.fromARGB(255, 226, 226, 226)),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+            filled: true,
+            fillColor: Color.fromARGB(255, 235, 235, 235),
+            isDense: true,
+            contentPadding: EdgeInsets.only(
+              bottom: 5.0,
+              top: 5.0,
+              right: 5.0,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
               ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    width: 2, color: Color.fromARGB(255, 226, 226, 226)),
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
               ),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 2, color: Color.fromARGB(255, 226, 226, 226)))
-              //Add more decoration as you want here
-              //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 2,
+                color: Color.fromARGB(255, 226, 226, 226),
               ),
+            ),
+          ),
           isExpanded: true,
           hint: Text(
             '$hintText',
             style: TextStyle(fontSize: 14),
           ),
           items: listItem
-              ?.map((item) => DropdownMenuItem<String>(
-                    value: item,
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+              ?.map(
+                (item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
                     ),
-                  ))
+                  ),
+                ),
+              )
               .toList(),
           validator: (value) {
             if (value == null) {

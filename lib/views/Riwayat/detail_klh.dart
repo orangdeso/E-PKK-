@@ -1,3 +1,4 @@
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/ApiHelper.dart';
@@ -31,22 +32,30 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
     String dll = getData?['dll'];
     String gbr = getData?['gambar'];
     String stss = getData?['stss'];
-    // TODO: implement build
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Detail Bidang KLH",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          "Detail Bidang Kelestarian L H",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => navbarView()));
-            },
-            icon: Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => navbarView(),
+              ),
+            );
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
+        elevation: 1,
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
-        // iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
       ),
       body: Center(
@@ -63,8 +72,9 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 217, 217, 217),
-                        borderRadius: BorderRadius.circular(20)),
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                     child: Container(
                       height: 200,
                       decoration: BoxDecoration(
@@ -73,13 +83,13 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                             image: NetworkImage(
                                 "${ApiHelper.url}assets/Bidang_LingkunganHidup/${gbr}"),
                             fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 15,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,11 +98,20 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Icon(Icons.date_range_outlined),
+                          Icon(
+                            Icons.calendar_month,
+                            color: grey500,
+                          ),
                           SizedBox(
                             width: 10,
                           ),
-                          Text("${tgl}"),
+                          Text(
+                            "${tgl}",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                            ),
+                          ),
                           SizedBox(
                             width: 10,
                           ),
@@ -105,10 +124,16 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                         color: WarnaButton(stts: "${stss}"),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 40, vertical: 10),
+                            horizontal: 25,
+                            vertical: 10,
+                          ),
                           child: Text(
                             "${stss}",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14
+                            ),
                           ),
                         ),
                       ),

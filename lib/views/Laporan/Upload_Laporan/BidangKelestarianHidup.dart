@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:e_pkk/models/DataAKun.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/ApiLaporan.dart';
 
@@ -16,6 +18,18 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
   final _formKey = GlobalKey<FormState>();
   File? _file;
   static String? namaFileInput;
+  String idAkun = '';
+  late Future<DataAkun> futureAkun;
+
+  Future<void> getIdAkun() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String idAkunValue = prefs.getString("id_akun") ??
+        ''; // Menggunakan operator nullish coalescing untuk menetapkan nilai default jika kunci tidak ada
+    setState(() {
+      idAkun = idAkunValue;
+    });
+  }
+
   TextEditingController getJamban = TextEditingController();
   TextEditingController getSpal = TextEditingController();
   TextEditingController getTps = TextEditingController();
@@ -23,19 +37,30 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
   TextEditingController getPdam = TextEditingController();
   TextEditingController getSumur = TextEditingController();
   TextEditingController getDll = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    getIdAkun();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       appBar: AppBar(
         title: Text(
           "Bidang Kelestarian Lingkungan Hidup",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: Center(
         child: Padding(
@@ -50,24 +75,27 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                 InkWell(
                   onTap: () async {
                     print("dek");
-                    final FilePickerResult? result = await FilePicker.platform
-                        .pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['jpg', 'jpeg', 'png']);
-
+                    final FilePickerResult? result =
+                        await FilePicker.platform.pickFiles(
+                      type: FileType.custom,
+                      allowedExtensions: ['jpg', 'jpeg', 'png'],
+                    );
                     if (result != null) {
-                      setState(() {
-                        _file = File(result.files.single.path!);
-                        PlatformFile namaFile = result.files.first;
-                        namaFileInput = namaFile.name.toString();
-                      });
+                      setState(
+                        () {
+                          _file = File(result.files.single.path!);
+                          PlatformFile namaFile = result.files.first;
+                          namaFileInput = namaFile.name.toString();
+                        },
+                      );
                     }
                   },
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 217, 217, 217),
-                        borderRadius: BorderRadius.circular(15)),
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: _file == null || _file == ""
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -75,7 +103,9 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                               Text(
                                 "Upload Gambar",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
                               SizedBox(
                                 height: 20,
@@ -83,19 +113,23 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                               Text(
                                 "Silakan Upload gambar di sini",
                                 style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold),
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               )
                             ],
                           )
                         : Container(
                             height: 200,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 217, 217, 217),
-                                image: DecorationImage(
-                                    image: FileImage(_file!),
-                                    fit: BoxFit.cover),
-                                borderRadius: BorderRadius.circular(20))),
+                              color: Color.fromARGB(255, 217, 217, 217),
+                              image: DecorationImage(
+                                image: FileImage(_file!),
+                                fit: BoxFit.cover,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
                   ),
                 ),
                 SizedBox(
@@ -104,9 +138,10 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                 Text(
                   "Upload Laporan",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -149,25 +184,31 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                                         FilteringTextInputFormatter.digitsOnly
                                       ],
                                       decoration: InputDecoration(
-                                          fillColor: Color.fromARGB(
-                                              255, 235, 235, 235),
-                                          filled: true,
-                                          hintText: "Masukkan Jumlah",
-                                          enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Color.fromARGB(
-                                                      255, 226, 226, 226)),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10))),
-                                          focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  width: 2,
-                                                  color: Color.fromARGB(
-                                                      255, 226, 226, 226)),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(10)))),
-                                      // controller: nameController,
+                                        fillColor:
+                                            Color.fromARGB(255, 235, 235, 235),
+                                        filled: true,
+                                        hintText: "Masukkan Jumlah",
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: 2,
+                                            color: Color.fromARGB(
+                                                255, 226, 226, 226),
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            width: 2,
+                                            color: Color.fromARGB(
+                                                255, 226, 226, 226),
+                                          ),
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(10),
+                                          ),
+                                        ),
+                                      ), // controller: nameController,
                                     ),
                                   ],
                                 ),
@@ -182,8 +223,9 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                                     Text(
                                       "SPAL",
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15),
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
                                     ),
                                     SizedBox(
                                       height: 15,
@@ -537,22 +579,36 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           GetApi.LaporanBidangLingkuhanHidup(
-                              fileBruh: _file,
-                              jamban: getJamban.text,
-                              spal: getSpal.text,
-                              mck: getMck.text,
-                              tps: getTps.text,
-                              IdUser: '5',
-                              context: context,
-                              pdam: getPdam.text,
-                              sumur: getSumur.text,
-                              danlainlain: getDll.text);
+                            fileBruh: _file,
+                            jamban: getJamban.text,
+                            spal: getSpal.text,
+                            mck: getMck.text,
+                            tps: getTps.text,
+                            // IdUser: '5',
+                            IdUser: idAkun,
+                            context: context,
+                            pdam: getPdam.text,
+                            sumur: getSumur.text,
+                            danlainlain: getDll.text,
+                          );
+                          print(idAkun);
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 55, 149, 183),
-                          minimumSize: Size.fromHeight(50)),
-                      child: Text("UPLOAD"),
+                        backgroundColor: Color.fromARGB(255, 55, 149, 183),
+                        minimumSize: Size.fromHeight(50),
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: Text(
+                        "UPLOAD",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 20,

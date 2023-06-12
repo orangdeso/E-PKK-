@@ -70,6 +70,35 @@ class GetApi {
     }
   }
 
+  static Future<void> DoubleuploadDataImage(
+      {List<File>? imageFiles,
+      String? judul,
+      String? desc,
+      String? tanggal,
+      String? idUser,
+      BuildContext? context}) async {
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(ApiHelper.url + 'multiImage.php'));
+
+    for (var i = 0; i < imageFiles!.length; i++) {
+      var file = imageFiles[i];
+      request.files
+          .add(await http.MultipartFile.fromPath('image[]', file.path));
+    }
+    request.fields['judul'] = judul.toString();
+    request.fields['deskripsi'] = desc.toString();
+    request.fields['tanggal'] = tanggal.toString();
+    request.fields['id_user'] = idUser.toString();
+
+    var response = await request.send();
+    if (response.statusCode == 200) {
+      print('Upload berhasil');
+      CherryToast.success(title: Text("Berhasil")).show(context!);
+    } else {
+      print('Upload gagal');
+    }
+  }
+
   static Future<void> LaporanBidangPerencaanKesehatan(
       {File? fileBruh,
       String? PriaSubur,

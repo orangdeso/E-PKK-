@@ -1,4 +1,5 @@
 import 'package:e_pkk/models/SemuaGambar.dart';
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../helpers/ApiHelper.dart';
@@ -12,9 +13,9 @@ class DetailGallery extends StatefulWidget {
 class _DetailGalleryState extends State<DetailGallery> {
   Color WarnaButton({String? stts}) {
     if (stts == "Proses") {
-      return Colors.blueAccent;
+      return Colors.orange.shade400;
     } else {
-      return Colors.green;
+      return Colors.green.shade500;
     }
   }
 
@@ -22,7 +23,6 @@ class _DetailGalleryState extends State<DetailGallery> {
   late Future<List<GetLinkGambar>> listGambar;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -52,11 +52,11 @@ class _DetailGalleryState extends State<DetailGallery> {
               ),
             );
           },
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
-        // iconTheme: IconThemeData(color: Colors.black),
+        elevation: 1,
         backgroundColor: Colors.white,
       ),
       body: Container(
@@ -68,26 +68,37 @@ class _DetailGalleryState extends State<DetailGallery> {
                 height: 20,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "${juudull}",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    Container(
+                      width: 210,
+                      child: Text(
+                        "${juudull}",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
                     Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                       color: WarnaButton(stts: "${stss}"),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
+                          horizontal: 25,
                           vertical: 10,
                         ),
                         child: Text(
                           "${stss}",
                           style: TextStyle(
                             color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
                           ),
                         ),
                       ),
@@ -96,14 +107,26 @@ class _DetailGalleryState extends State<DetailGallery> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.only(
+                  top: 8,
+                  bottom: 20,
+                ),
                 child: Row(
                   children: [
-                    Icon(Icons.date_range_outlined),
+                    Icon(
+                      Icons.calendar_month,
+                      color: grey700,
+                    ),
                     SizedBox(
                       width: 10,
                     ),
-                    Text("${tglll}"),
+                    Text(
+                      "${tglll}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 14,
+                      ),
+                    ),
                     SizedBox(
                       width: 10,
                     ),
@@ -126,18 +149,19 @@ class _DetailGalleryState extends State<DetailGallery> {
                           itemCount: dataa.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Jumlah kolom dalam grid
-                            mainAxisSpacing:
-                                5, // Jarak vertikal antara item dalam grid
-                            crossAxisSpacing:
-                                5, // Jarak horizontal antara item dalam grid
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                              color: Colors.blue,
-                              child: Image.network(
-                                "${ApiHelper.url}assets/gallery2/${dataa[index].urlGambar}",
-                                fit: BoxFit.cover,
+                              //color: Colors.grey,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  "${ApiHelper.url}assets/gallery2/${dataa[index].urlGambar}",
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             );
                           },
@@ -148,7 +172,6 @@ class _DetailGalleryState extends State<DetailGallery> {
                   return Container();
                 },
               ),
-
               // InkWell(
               //   onTap: () async {},
               //   child: Container(

@@ -12,9 +12,9 @@ class PageDetailKlh extends StatefulWidget {
 class _PageDetailKlhState extends State<PageDetailKlh> {
   Color WarnaButton({String? stts}) {
     if (stts == "Proses") {
-      return Colors.blueAccent;
+      return Colors.orange.shade400;
     } else {
-      return Colors.green;
+      return Colors.green.shade500;
     }
   }
 
@@ -130,10 +130,9 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                           child: Text(
                             "${stss}",
                             style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14
-                            ),
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 14),
                           ),
                         ),
                       ),

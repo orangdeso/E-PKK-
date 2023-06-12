@@ -1,5 +1,9 @@
 import 'dart:io';
 import 'package:cherry_toast/cherry_toast.dart';
+import 'package:e_pkk/views/Laporan/Upload%20_Gambar/notifikasi_sukses.dart';
+import 'package:e_pkk/views/Laporan/Upload_Laporan/notifikasi_kelestarian_LH.dart';
+import 'package:e_pkk/views/Laporan/Upload_Laporan/notifikasi_kesehatan.dart';
+import 'package:e_pkk/views/Laporan/Upload_Laporan/notifikasi_perencanaan_sehat.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,10 +39,25 @@ class GetApi {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      // print('Data berhasil disimpan!');
-      CherryToast.success(title: Text("Berhasil")).show(context!);
+      print('Data berhasil disimpan!');
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
     } else {
       print('Data gagal disimpan!');
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
     }
   }
 
@@ -73,7 +92,7 @@ class GetApi {
   static Future<void> DoubleuploadDataImage(
       {List<File>? imageFiles,
       String? judul,
-      String? desc,
+      //String? desc,
       String? tanggal,
       String? idUser,
       BuildContext? context}) async {
@@ -86,20 +105,36 @@ class GetApi {
           .add(await http.MultipartFile.fromPath('image[]', file.path));
     }
     request.fields['judul'] = judul.toString();
-    request.fields['deskripsi'] = desc.toString();
+    //request.fields['deskripsi'] = desc.toString();
     request.fields['tanggal'] = tanggal.toString();
     request.fields['id_user'] = idUser.toString();
 
     var response = await request.send();
     if (response.statusCode == 200) {
       print('Upload berhasil');
-      CherryToast.success(title: Text("Berhasil")).show(context!);
+      //CherryToast.success(title: Text("Berhasil")).show(context!);
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadGallery();
+          },
+        ),
+      );
     } else {
       print('Upload gagal');
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
     }
   }
 
-  static Future<void> LaporanBidangPerencaanKesehatan(
+  static Future<void> LaporanBidangPerencaanSehat(
       {File? fileBruh,
       String? PriaSubur,
       String? WanitaSubur,
@@ -126,9 +161,24 @@ class GetApi {
     final response = await request.send();
 
     if (response.statusCode == 200) {
-      // print('Data berhasil disimpan!');
-      CherryToast.success(title: Text("Berhasil")).show(context!);
+      print('Data berhasil disimpan!');
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadPerencanaan();
+          },
+        ),
+      );
     } else {
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
       print('Data gagal disimpan!');
     }
   }
@@ -144,7 +194,7 @@ class GetApi {
       String? sumur,
       BuildContext? context,
       String? danlainlain}) async {
-    final url = Uri.parse(ApiHelper.url + 'insert_kelestarian_pangan.php');
+    final url = Uri.parse(ApiHelper.url + 'insert_kelestarian_LH.php');
 
     final request = http.MultipartRequest('POST', url)
       ..fields['jamban'] = jamban.toString()
@@ -165,8 +215,23 @@ class GetApi {
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      CherryToast.success(title: Text("Berhasil")).show(context!);
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKelestarian();
+          },
+        ),
+      );
     } else {
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
       print('Data gagal disimpan!');
     }
   }

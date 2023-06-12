@@ -389,7 +389,6 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                 ],
               ),
               //ll
-
               SizedBox(
                 height: 20,
               ),

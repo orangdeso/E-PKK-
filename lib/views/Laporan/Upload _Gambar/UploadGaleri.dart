@@ -26,6 +26,40 @@ class _PageGaleriState extends State<PageGaleri> {
     });
   }
 
+  //Get Multi Image
+  // Future<List<String>> pickMultipleFiles({List<String>? imggg}) async {
+  //   // List<String> paths = [];
+
+  //   try {
+  //     FilePickerResult? result = await FilePicker.platform
+  //         .pickFiles(allowMultiple: true, type: FileType.image);
+
+  //     if (result != null) {
+  //       setState(() {
+  //         for (PlatformFile file in result.files) {
+  //           imggg!.add(file.path!);
+  //         }
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print('Error saat memilih file: $e');
+  //   }
+
+  //   return imggg;
+  // }
+
+//Convert Type File
+  Future<List<File>> convertPathsToFiles(List<String> paths) async {
+    List<File> files = [];
+
+    for (String path in paths) {
+      File file = File(path);
+      files.add(file);
+    }
+
+    return files;
+  }
+
   TextEditingController? getJudul = TextEditingController();
   TextEditingController? getDesc = TextEditingController();
   TextEditingController? getTgl = TextEditingController();
@@ -39,6 +73,9 @@ class _PageGaleriState extends State<PageGaleri> {
   }
 
   File? _file;
+  PlatformFile? _fileP;
+  List<File> kumpulanImage = [];
+  List<String> selectedPaths = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,28 +104,59 @@ class _PageGaleriState extends State<PageGaleri> {
                 padding: EdgeInsets.only(top: 20),
                 child: InkWell(
                   onTap: () async {
-                    final FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions: ['jpg', 'jpeg', 'png'],
-                    );
-                    if (result != null) {
-                      setState(
-                        () {
-                          _file = File(result.files.single.path!);
-                          PlatformFile namaFile = result.files.first;
-                          // namaFileInput = namaFile.name.toString();
-                        },
-                      );
+                    //Single
+                    // final FilePickerResult? result =
+                    //     await FilePicker.platform.pickFiles(
+                    //   type: FileType.custom,
+                    //   allowedExtensions: ['jpg', 'jpeg', 'png'],
+                    // );
+                    // if (result != null) {
+                    //   setState(
+                    //     () {
+                    //       _file = File(result.files.single.path!);
+                    //       PlatformFile namaFile = result.files.first;
+                    //       // namaFileInput = namaFile.name.toString();
+                    //     },
+                    //   );
+                    // }
+                    //End Single
+
+                    //Multi Imageeee
+                    try {
+                      FilePickerResult? result = await FilePicker.platform
+                          .pickFiles(allowMultiple: true, type: FileType.image);
+
+                      if (result != null) {
+                        setState(() {
+                          for (PlatformFile file in result.files) {
+                            selectedPaths.add(file.path!);
+                          }
+
+                          // _file = File(result.files.single.path!);
+                        });
+                        kumpulanImage =
+                            await convertPathsToFiles(selectedPaths);
+                        setState(() {
+                          _file = kumpulanImage.isNotEmpty
+                              ? kumpulanImage[0]
+                              : null;
+                        });
+                      }
+                    } catch (e) {
+                      print('Error saat memilih file: $e');
                     }
                   },
                   child: Container(
                     height: 200,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 217, 217, 217),
+                      color: kumpulanImage.isEmpty || kumpulanImage.length == 0
+                          ? Color.fromARGB(255, 217, 217, 217)
+                          : Color.fromARGB(255, 244, 244, 244),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: _file == null || _file == ""
+                    child: kumpulanImage.isEmpty ||
+                            kumpulanImage.length == 0 ||
+                            kumpulanImage == null
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -111,17 +179,44 @@ class _PageGaleriState extends State<PageGaleri> {
                               )
                             ],
                           )
-                        : Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 217, 217, 217),
-                              image: DecorationImage(
-                                image: FileImage(_file!),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
+                        : ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: kumpulanImage.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Image.file(
+                                  kumpulanImage[index],
+                                  fit: BoxFit.cover,
+                                  width: 300,
+                                  height: 50,
+                                ),
+                              );
+                              // return Container(
+                              //   height: 200,
+                              //   decoration: BoxDecoration(
+                              //     color: Color.fromARGB(255, 217, 217, 217),
+                              //     image: DecorationImage(
+                              //       image: FileImage(kumpulanImage[index]),
+                              //       fit: BoxFit.cover,
+                              //     ),
+                              //     borderRadius: BorderRadius.circular(10),
+                              //   ),
+                              // );
+                            },
                           ),
+                    // Container(
+                    //     height: 200,
+                    //     decoration: BoxDecoration(
+                    //       color: Color.fromARGB(255, 217, 217, 217),
+                    //       image: DecorationImage(
+                    //         image: FileImage(_file!),
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //       borderRadius: BorderRadius.circular(10),
+                    //     ),
+                    //   ),
                   ),
                 ),
               ),
@@ -303,20 +398,47 @@ class _PageGaleriState extends State<PageGaleri> {
                       height: 30,
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         String pp =
                             DateFormat('yyyy-MM-dd').format(selectedDate);
                         print("tanggal == ${pp}");
                         print("judul == ${getJudul!.text}");
                         print("desk == ${getDesc!.text}");
-                        GetApi.InsertGallery(
-                          file: _file,
+                        print("tes path single == $_file");
+                        for (String item in selectedPaths) {
+                          print("gambar terpilih == $item");
+                        }
+                        kumpulanImage =
+                            await convertPathsToFiles(selectedPaths);
+                        for (File file in kumpulanImage) {
+                          print("fileterpilih == $file.path ");
+                        }
+
+                        GetApi.DoubleuploadDataImage(
+                          imageFiles: kumpulanImage,
                           judul: getJudul!.text,
                           desc: getDesc!.text,
                           tanggal: pp,
                           idUser: idAkun,
                           context: context,
-                        );
+                        ).then((value) => {
+                              _file == null,
+                              kumpulanImage.clear(),
+                              selectedPaths.clear(),
+                              getJudul!.clear(),
+                              getDesc!.clear(),
+                              getTgl!.clear(),
+                              pp == ""
+                            });
+
+                        // GetApi.InsertGallery(
+                        //   file: _file,
+                        //   judul: getJudul!.text,
+                        //   desc: getDesc!.text,
+                        //   tanggal: pp,
+                        //   idUser: idAkun,
+                        //   context: context,
+                        // );
                         print(idAkun);
                       },
                       style: ElevatedButton.styleFrom(

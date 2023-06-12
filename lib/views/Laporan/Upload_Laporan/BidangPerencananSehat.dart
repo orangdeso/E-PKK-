@@ -396,7 +396,7 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    GetApi.LaporanBidangPerencaanKesehatan(
+                    GetApi.LaporanBidangPerencaanSehat(
                             fileBruh: _file,
                             PriaSubur: PriaSubur!.text,
                             WanitaSubur: WanitaSubur!.text,

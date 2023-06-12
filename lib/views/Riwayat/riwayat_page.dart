@@ -164,7 +164,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
     fetchDataKesehatan(idUser: idAkun);
     fetchDataKLH(idUser: idAkun);
     fetchDataPSehat(idUser: idAkun);
-    fetchDataGaleery(idUser: "21");
+    fetchDataGaleery(idUser: idAkun);
     print(idAkun);
     setState(() {});
     super.initState();

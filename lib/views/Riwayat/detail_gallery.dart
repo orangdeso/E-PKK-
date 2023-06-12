@@ -21,11 +21,12 @@ class _DetailGalleryState extends State<DetailGallery> {
   @override
   Widget build(BuildContext context) {
     getData = ModalRoute.of(context)?.settings.arguments as Map;
+    String juudull = getData!['judul'];
+    String gbrrr = getData!['gambar'];
     String stss = getData!['status'];
     String tglll = getData!['tanggal'];
-    String juudull = getData!['judul'];
-    String descc = getData!['deskripsi'];
-    String gbrrr = getData!['gambar'];
+    //String descc = getData!['deskripsi'];
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -34,11 +35,16 @@ class _DetailGalleryState extends State<DetailGallery> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => navbarView()));
-            },
-            icon: Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => navbarView(),
+              ),
+            );
+          },
+          icon: Icon(Icons.arrow_back_ios),
+        ),
         iconTheme: IconThemeData(color: Colors.black),
         centerTitle: true,
         // iconTheme: IconThemeData(color: Colors.black),
@@ -58,17 +64,20 @@ class _DetailGalleryState extends State<DetailGallery> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 217, 217, 217),
-                      borderRadius: BorderRadius.circular(20)),
+                    color: Color.fromARGB(255, 217, 217, 217),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   child: Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 217, 217, 217),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "${ApiHelper.url}assets/gallery/${gbrrr}"),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.circular(20))),
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "${ApiHelper.url}assets/gallery/${gbrrr}"),
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
                 ),
               ),
               Padding(
@@ -100,10 +109,14 @@ class _DetailGalleryState extends State<DetailGallery> {
                       color: WarnaButton(stts: "${stss}"),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
                         child: Text(
                           "${stss}",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -115,14 +128,17 @@ class _DetailGalleryState extends State<DetailGallery> {
               ),
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blueAccent, width: 2),
-                    borderRadius: BorderRadius.circular(20)),
+                  border: Border.all(color: Colors.blueAccent, width: 2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 height: 300,
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text("${descc}"),
+                  // child: Text(
+                  //   "${descc}",
+                  // ),
                 ),
-              )
+              ),
             ],
           )),
         ),

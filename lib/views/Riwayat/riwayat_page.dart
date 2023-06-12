@@ -584,15 +584,16 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 2.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ListTile(
                         onTap: () {
                           Navigator.of(context, rootNavigator: true)
@@ -606,8 +607,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                   "status": _gallery[index]['status'],
                                   "tanggal": _gallery[index]['tanggal'],
                                   "judul": _gallery[index]['judul'],
-                                  "deskripsi": _gallery[index]['deskripsi'],
-                                  "gambar": _gallery[index]['image'],
+                                  //"deskripsi": _gallery[index]['deskripsi'],
+                                  "gambar": _gallery[index]['gambar'],
                                   "user": _gallery[index]['id_user'],
                                 },
                               ),
@@ -619,12 +620,13 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           width: 80,
                           height: 80,
                           child: Image.network(
-                            "${ApiHelper.url}assets/gallery/${_gallery[index]['image']}",
+                            "${ApiHelper.url}assets/gallery2/${_gallery[index]['gambar']}",
                             fit: BoxFit.cover,
                           ),
                         ),
                         title: Text(
-                          "Gallery",
+                          "${_gallery[index]['judul']}",
+                          maxLines: 2,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                           ),

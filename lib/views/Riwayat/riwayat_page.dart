@@ -610,6 +610,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                   //"deskripsi": _gallery[index]['deskripsi'],
                                   "gambar": _gallery[index]['gambar'],
                                   "user": _gallery[index]['id_user'],
+                                  "idGalery": _gallery[index]['id']
                                 },
                               ),
                             ),

@@ -8,7 +8,8 @@ class SuccesUploadKelestarian extends StatefulWidget {
   const SuccesUploadKelestarian({super.key});
 
   @override
-  State<SuccesUploadKelestarian> createState() => _SuccesUploadKelestarianState();
+  State<SuccesUploadKelestarian> createState() =>
+      _SuccesUploadKelestarianState();
 }
 
 class _SuccesUploadKelestarianState extends State<SuccesUploadKelestarian> {
@@ -42,7 +43,7 @@ class _SuccesUploadKelestarianState extends State<SuccesUploadKelestarian> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
-                  height: 50,
+                  height: 70,
                   child: Text(
                     "Selamat Anda berhasil upload Laporan Bidang Kelestarian Lingkungan Hidup. Silahkan cek riwayat Anda!",
                     textAlign: TextAlign.center,

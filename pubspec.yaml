@@ -20,24 +20,32 @@ dependencies:
   carousel_slider: ^4.2.1
   lottie: ^2.3.2
   pin_code_fields: ^7.4.0
-
-  # dropdown_button2: ^2.0.0
   dropdown_button2: ^2.1.2
   cherry_toast: ^1.2.1
   file_picker: ^5.3.0
-  
+  simple_shadow: ^0.2.0
+  intl: ^0.18.1
+  shimmer: ^3.0.0
+  # flutter_native_splash: ^2.2.19
+
+  # dropdown_button2: ^2.0.0
+  # substring_highlight: ^1.0.33
   # file_picker: ^5.2.9
   # cherry_toast: ^1.2.1
   # intl: ^0.18.
   # dropdownfield: ^1.0.0
-  simple_shadow: ^0.2.0
-  intl: ^0.18.1
-  # substring_highlight: ^1.0.33
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # flutter_lints: ^2.0.0
+
+# flutter_native_splash:
+#   color: "#FFFFFF"
+#   image: assets/images/pkk.png
+#   android: true
+#   ios: true
+#   web: true
 
 flutter:
   uses-material-design: true

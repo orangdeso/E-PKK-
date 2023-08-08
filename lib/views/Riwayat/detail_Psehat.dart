@@ -78,7 +78,7 @@ class _PageDetailSehatState extends State<PageDetailSehat> {
                         color: Color.fromARGB(255, 217, 217, 217),
                         image: DecorationImage(
                           image: NetworkImage(
-                              "${ApiHelper.url}assets/Bidang_kesehatan/$gbr"),
+                              "${ApiHelper.url}../public/frontend2/Bidang_kesehatan/$gbr"),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(10),

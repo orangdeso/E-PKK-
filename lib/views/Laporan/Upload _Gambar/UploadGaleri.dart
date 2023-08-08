@@ -1,4 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/models/ApiBidang.dart';
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAkun.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -7,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class PageGaleri extends StatefulWidget {
   static String route = "/page_galeery";
@@ -16,6 +21,8 @@ class PageGaleri extends StatefulWidget {
 
 class _PageGaleriState extends State<PageGaleri> {
   final _formKey = GlobalKey<FormState>();
+  static String? randomLaporan = "Topik lainnya";
+  static String? randomLaporan2 = "Topik lainnya";
   String idAkun = '';
   late Future<DataAkun> futureAkun;
 
@@ -63,10 +70,55 @@ class _PageGaleriState extends State<PageGaleri> {
   TextEditingController? getTgl = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
+  final List<String> ListL = [
+    'Pokja I',
+    'Pokja II',
+    'Pokja III',
+    'Pokja IV',
+    'Laporan Umum'
+  ];
+
+  final List<String> ListB = [
+    'Pendidikan',
+    'Gotong Royong',
+    'Pokja III',
+    'Pokja IV',
+    'Laporan Umum'
+  ];
+
+  List<DataBidang> listBidang = [];
+  String? bidang;
+
+  // Future<void> fetchDataBidang({String? id}) async {
+  //   final response = await http.post(Uri.parse(ApiHelper.url + "getBidang.php"),
+  //       body: {"id_detail_pokja1": id});
+
+  //   if (response.statusCode == 200) {
+  //     final jsonData = json.decode(response.body);
+
+  //     setState(() {
+  //       _dataBidang = jsonData['data'];
+  //     });
+  //   } else {
+  //     throw Exception('Failed to load data');
+  //   }
+  // }
+  // void pilihPokja(BuildContext context, String id) {
+  //   ApiBidang.getPengguna(id).then((value) async {
+  //     Future.delayed(Duration(seconds: 2), () {});
+  //     if (value.kode == 1) {
+  //       print("tampil bidang");
+  //     } else {
+  //       print("gagal");
+  //     }
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
     getIdAkun();
+    //fetchDataBidang();
     setState(() {});
   }
 
@@ -231,8 +283,76 @@ class _PageGaleriState extends State<PageGaleri> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      dropdownBidang(
+                        listItem: ListL,
+                        namaLabel: "Bidang",
+                        hintText: "Pilih Jenis Laporan",
+                        randomlabel: "Pokja I",
+                        errorKosong: "Harap Isi",
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      dropdownBidang(
+                        listItem: ListB,
+                        namaLabel: "Bidang",
+                        hintText: "Pilih Bidang Laporan",
+                        randomlabel: "Kesehatan",
+                        errorKosong: "Harap Isi",
+                      ),
+                      // Text(
+                      //   "Bidang",
+                      //   style: TextStyle(
+                      //     fontWeight: FontWeight.w500,
+                      //     fontSize: 15,
+                      //   ),
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // TextFormField(
+                      //   validator: (value) {
+                      //     if (value.toString().isEmpty) {
+                      //       return "Harap isi Judul";
+                      //     }
+                      //   },
+                      //   maxLines: 1,
+                      //   textAlignVertical: TextAlignVertical.top,
+                      //   controller: getJudul,
+                      //   keyboardType: TextInputType.text,
+                      //   decoration: InputDecoration(
+                      //     fillColor: Color.fromARGB(255, 235, 235, 235),
+                      //     filled: true,
+                      //     hintText: "Bidang Kesehatan",
+                      //     hintStyle: TextStyle(
+                      //       fontSize: 15,
+                      //     ),
+                      //     enabledBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         width: 2,
+                      //         color: Color.fromARGB(255, 226, 226, 226),
+                      //       ),
+                      //       borderRadius: BorderRadius.all(
+                      //         Radius.circular(8),
+                      //       ),
+                      //     ),
+                      //     focusedBorder: OutlineInputBorder(
+                      //       borderSide: BorderSide(
+                      //         width: 2,
+                      //         color: Color.fromARGB(255, 226, 226, 226),
+                      //       ),
+                      //       borderRadius: BorderRadius.all(
+                      //         Radius.circular(8),
+                      //       ),
+                      //     ),
+                      //   ),
+                      //   // controller: nameController,
+                      // ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       Text(
-                        "Judul",
+                        "Deskripsi",
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 15,
@@ -254,7 +374,10 @@ class _PageGaleriState extends State<PageGaleri> {
                         decoration: InputDecoration(
                           fillColor: Color.fromARGB(255, 235, 235, 235),
                           filled: true,
-                          hintText: "Masukkan Judul",
+                          hintText: "Masukkan Deskripsi",
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                          ),
                           enabledBorder: OutlineInputBorder(
                             borderSide: BorderSide(
                               width: 2,
@@ -426,7 +549,8 @@ class _PageGaleriState extends State<PageGaleri> {
                               GetApi.DoubleuploadDataImage(
                                 imageFiles: kumpulanImage,
                                 judul: getJudul!.text,
-                                //desc: getDesc!.text,
+                                bidang: randomLaporan2,
+                                pokja: randomLaporan,
                                 tanggal: pp,
                                 idUser: idAkun,
                                 context: context,
@@ -440,14 +564,6 @@ class _PageGaleriState extends State<PageGaleri> {
                                     pp == ""
                                   });
                             }
-                            // GetApi.InsertGallery(
-                            //   file: _file,
-                            //   judul: getJudul!.text,
-                            //   desc: getDesc!.text,
-                            //   tanggal: pp,
-                            //   idUser: idAkun,
-                            //   context: context,
-                            // );
                             print(idAkun);
                           },
                           style: ElevatedButton.styleFrom(
@@ -474,6 +590,218 @@ class _PageGaleriState extends State<PageGaleri> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget customDropDownLokasiAsalPelapor(
+      {List<String>? listItem,
+      String? namaLabel,
+      String? hintText,
+      String? randomlabel,
+      String? errorKosong}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          "$namaLabel",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 15,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        DropdownButtonFormField2(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Color.fromARGB(255, 235, 235, 235),
+            isDense: true,
+            contentPadding: EdgeInsets.only(
+              bottom: 5.0,
+              top: 5.0,
+              right: 5.0,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 2,
+                color: Color.fromARGB(255, 226, 226, 226),
+              ),
+            ),
+          ),
+          isExpanded: true,
+          hint: Text(
+            '$hintText',
+            style: TextStyle(fontSize: 14),
+          ),
+          items: listItem
+              ?.map(
+                (item) => DropdownMenuItem<String>(
+                  onTap: () {
+                    print(item);
+                    //fetchDataBidang(id: item);
+                  },
+                  value: item,
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+          validator: (value) {
+            if (value == null) {
+              return 'Harap Memilih $errorKosong !.';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              randomLaporan = value;
+            });
+          },
+          buttonStyleData: ButtonStyleData(
+            height: 50,
+            padding: EdgeInsets.only(right: 10),
+          ),
+          iconStyleData: const IconStyleData(
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.black45,
+            ),
+            iconSize: 30,
+          ),
+          dropdownStyleData: DropdownStyleData(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget dropdownBidang(
+      {List<String>? listItem,
+      String? namaLabel,
+      String? hintText,
+      String? randomlabel,
+      String? errorKosong}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          "$namaLabel",
+          style: TextStyle(
+            fontWeight: FontWeight.w500,
+            fontSize: 15,
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        DropdownButtonFormField2(
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Color.fromARGB(255, 235, 235, 235),
+            isDense: true,
+            contentPadding: EdgeInsets.only(
+              bottom: 5.0,
+              top: 5.0,
+              right: 5.0,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            border: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Color.fromARGB(255, 226, 226, 226)),
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                width: 2,
+                color: Color.fromARGB(255, 226, 226, 226),
+              ),
+            ),
+          ),
+          isExpanded: true,
+          hint: Text(
+            '$hintText',
+            style: TextStyle(fontSize: 14),
+          ),
+          items: listItem
+              ?.map(
+                (item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              )
+              .toList(),
+          validator: (value) {
+            if (value == null) {
+              return 'Harap Memilih $errorKosong !.';
+            }
+            return null;
+          },
+          onChanged: (value) {
+            setState(() {
+              randomLaporan = value;
+            });
+          },
+          buttonStyleData: ButtonStyleData(
+            height: 50,
+            padding: EdgeInsets.only(right: 10),
+          ),
+          iconStyleData: const IconStyleData(
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: Colors.black45,
+            ),
+            iconSize: 30,
+          ),
+          dropdownStyleData: DropdownStyleData(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

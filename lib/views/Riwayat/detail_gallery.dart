@@ -73,7 +73,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 210,
+                      width: 190,
                       child: Text(
                         "${juudull}",
                         style: TextStyle(
@@ -159,7 +159,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: Image.network(
-                                  "${ApiHelper.url}assets/gallery2/${dataa[index].urlGambar}",
+                                  "${ApiHelper.url}../public/frontend2/gallery2/${dataa[index].urlGambar}",
                                   fit: BoxFit.cover,
                                 ),
                               ),

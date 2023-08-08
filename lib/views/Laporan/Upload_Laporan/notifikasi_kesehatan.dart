@@ -42,7 +42,7 @@ class _SuccesUploadKesehatanState extends State<SuccesUploadKesehatan> {
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: SizedBox(
-                  height: 50,
+                  height: 60,
                   child: Text(
                     "Selamat Anda berhasil upload Laporan Bidang Kesehatan. Silahkan cek riwayat Anda!",
                     textAlign: TextAlign.center,

@@ -241,7 +241,7 @@ class _BodyState extends State<Body> {
                   },
                   obscureText: controller.getObscure,
                   decoration: InputDecoration(
-                    hintText: "Masukkan password",
+                    hintText: "Minimal 6 Karakter",
                     hintStyle: TextStyle(
                       color: grey400,
                       fontSize: 15,

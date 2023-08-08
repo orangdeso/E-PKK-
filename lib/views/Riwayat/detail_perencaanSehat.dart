@@ -31,7 +31,6 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
     String gambar = getData?['gbr'];
     String status = getData?['stss'];
 
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(
           title: Text(
@@ -39,14 +38,19 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           leading: IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => navbarView()));
-              },
-              icon: Icon(Icons.arrow_back_ios)),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => navbarView(),
+                ),
+              );
+            },
+            icon: Icon(Icons.arrow_back),
+          ),
+          elevation: 1,
           iconTheme: IconThemeData(color: Colors.black),
           centerTitle: true,
-          // iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
         ),
         body: Center(
@@ -66,14 +70,16 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
                       color: Color.fromARGB(255, 217, 217, 217),
                       borderRadius: BorderRadius.circular(20)),
                   child: Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 217, 217, 217),
-                          image: DecorationImage(
-                              image: NetworkImage(
-                                  "${ApiHelper.url}assets/Bidang_Perencaan_Sehat/${gambar}"),
-                              fit: BoxFit.cover),
-                          borderRadius: BorderRadius.circular(20))),
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 217, 217, 217),
+                      image: DecorationImage(
+                          image: NetworkImage(
+                              "${ApiHelper.url}../public/frontend2/Bidang_Perencaan_Sehat/${gambar}"),
+                          fit: BoxFit.cover),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(
@@ -103,10 +109,14 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
                       color: WarnaButton(stts: "${status}"),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 40, vertical: 10),
+                          horizontal: 40,
+                          vertical: 10,
+                        ),
                         child: Text(
                           "${status}",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

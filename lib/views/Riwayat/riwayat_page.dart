@@ -1,20 +1,17 @@
 import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/DataAkun.dart';
-import 'package:e_pkk/models/LoginApi.dart';
-import 'package:e_pkk/models/Riwayat.dart';
-import 'package:e_pkk/models/laporanModel.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/detail_Psehat.dart';
+import 'package:e_pkk/views/Riwayat/detail_gotong_royong.dart';
+import 'package:e_pkk/views/Riwayat/detail_kader1.dart';
 import 'package:e_pkk/views/Riwayat/detail_klh.dart';
+import 'package:e_pkk/views/Riwayat/detail_penghayatan.dart';
 import 'package:e_pkk/views/Riwayat/detail_perencaanSehat.dart';
-import 'package:e_pkk/views/Riwayat/page_detail_riwayat.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../SettingAkun/keamanan_page.dart';
 import 'detail_gallery.dart';
 
 class RiwayatPage extends StatefulWidget {
@@ -27,13 +24,21 @@ class RiwayatPage extends StatefulWidget {
 
 class _RiwayatPageState extends State<RiwayatPage> {
   int _current = 0;
+
+  //List Dynamic Data Laporan
   List<dynamic> _dataKesehatan = [];
   List<dynamic> _dataKLH = [];
   List<dynamic> _dataPSehat = [];
   List<dynamic> _gallery = [];
+  List<dynamic> _dataKader1 = [];
+  List<dynamic> _dataPenghayatan = [];
+  List<dynamic> _dataGotong = [];
+
+  //Pendeklarasian
   String idAkun = '';
   late Future<DataAkun> futureAkun;
 
+  //SharedPreferences
   Future<void> getIdAkun() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String idAkunValue = prefs.getString("id_akun") ?? '';
@@ -43,6 +48,9 @@ class _RiwayatPageState extends State<RiwayatPage> {
       fetchDataKLH(idUser: idAkun);
       fetchDataPSehat(idUser: idAkun);
       fetchDataGaleery(idUser: idAkun);
+      fetchDataKader1(idUser: idAkun);
+      fetchDataPenghayatan(idUser: idAkun);
+      fetchDataGotong(idUser: idAkun);
     });
   }
 
@@ -111,15 +119,97 @@ class _RiwayatPageState extends State<RiwayatPage> {
     }
   }
 
+  //Revisi
+  Future<void> fetchDataKader1({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "RiwayatKader1.php"),
+        body: {"id_user": idUser});
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _dataKader1 = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> fetchDataPenghayatan({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "RiwayatPenghayatan.php"),
+        body: {"id_user": idUser});
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _dataPenghayatan = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> fetchDataGotong({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "RiwayatGotong.php"),
+        body: {"id_user": idUser});
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _dataGotong = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   List<Tab> myTab = [
+    Tab(
+      child: Text(
+        "Kader Pokja I",
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter(
+          textStyle: TextStyle(
+              //fontSize: 10.5,
+              ),
+        ),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Penghayatan & Pengamalan Pancasila",
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter(
+          textStyle: TextStyle(
+              //fontSize: 10.5,
+              ),
+        ),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Gotong Royong",
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter(
+          textStyle: TextStyle(
+              //fontSize: 10.5,
+              ),
+        ),
+      ),
+    ),
     Tab(
       child: Text(
         "Bidang Kesehatan",
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
           textStyle: TextStyle(
-            fontSize: 10.5,
-          ),
+              //fontSize: 10.5,
+              ),
         ),
       ),
     ),
@@ -129,8 +219,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
           textStyle: TextStyle(
-            fontSize: 10.5,
-          ),
+              //fontSize: 13,
+              ),
         ),
       ),
     ),
@@ -140,8 +230,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
           textStyle: TextStyle(
-            fontSize: 10.5,
-          ),
+              //fontSize: 10.5,
+              ),
         ),
       ),
     ),
@@ -151,8 +241,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
           textStyle: TextStyle(
-            fontSize: 10.5,
-          ),
+              //fontSize: 10.5,
+              ),
         ),
       ),
     ),
@@ -165,6 +255,9 @@ class _RiwayatPageState extends State<RiwayatPage> {
     fetchDataKLH(idUser: idAkun);
     fetchDataPSehat(idUser: idAkun);
     fetchDataGaleery(idUser: idAkun);
+    fetchDataKader1(idUser: idAkun);
+    fetchDataPenghayatan(idUser: idAkun);
+    fetchDataGotong(idUser: idAkun);
     print(idAkun);
     setState(() {});
     super.initState();
@@ -173,6 +266,10 @@ class _RiwayatPageState extends State<RiwayatPage> {
   Color WarnaButton({String? stts}) {
     if (stts == "Proses") {
       return Colors.orange.shade400;
+    } else if (stts == "Dibatalkan") {
+      return Colors.red.shade400;
+    } else if (stts == "Direview") {
+      return Colors.blue.shade400;
     } else {
       return Colors.green.shade500;
     }
@@ -201,6 +298,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
             automaticallyImplyLeading: false,
             backgroundColor: ktextColor,
             bottom: TabBar(
+              isScrollable: true,
               indicatorColor: blueLight50,
               labelColor: whiteColor,
               unselectedLabelColor: grey400,
@@ -216,6 +314,729 @@ class _RiwayatPageState extends State<RiwayatPage> {
           resizeToAvoidBottomInset: true,
           body: TabBarView(
             children: [
+              ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _dataKader1.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailKader1();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "id_kader_pokja1": _dataKader1[index]
+                                      ['id_kader_pokja1'],
+                                  "PKBN": _dataKader1[index]['PKBN'],
+                                  "PKDRT": _dataKader1[index]['PKDRT'],
+                                  "pola_asuh": _dataKader1[index]['pola_asuh'],
+                                  "catatan":
+                                      _dataKader1[index]['catatan'] != null &&
+                                              _dataKader1[index]['catatan']
+                                                  .isNotEmpty
+                                          ? _dataKader1[index]['catatan']
+                                          : "-",
+                                  "status": _dataKader1[index]['status'],
+                                  "tanggal": _dataKader1[index]['tanggal'],
+                                  "waktu": _dataKader1[index]['waktu'],
+                                  "created_at": _dataKader1[index]
+                                      ['created_at'],
+                                  "updated_at": _dataKader1[index]
+                                      ['updated_at'],
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        contentPadding: EdgeInsets.all(20),
+                        // leading: Container(
+                        //   width: 80,
+                        //   height: 80,
+                        //   child: Image.network(
+                        //     "${ApiHelper.url}../public/frontend2/Bidang_LingkunganHidup/${_dataKLH[index]['gambar_upload']}",
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
+                        title: Text(
+                          "Laporan Kader Pokja I",
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text(
+                                "Id Laporan : ${_dataKader1[index]['id_kader_pokja1']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Text("PKBN"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "${_dataKader1[index]['PKBN']}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Text("PKDRT"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "${_dataKader1[index]['PKDRT']}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Text("Pola Asuh"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "${_dataKader1[index]['pola_asuh']}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataKader1[index]['tanggal']}",
+                                      style: TextStyle(
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Icon(
+                                      Icons.access_time_rounded,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataKader1[index]['waktu']}",
+                                      style: TextStyle(
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: ktextColor,
+                                  ),
+                                  Text(
+                                    "Lihat Detail",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: ktextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: ktextColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: Column(
+                          children: [
+                            InkWell(
+                              child: Container(
+                                width: 100,
+                                height: 40,
+                                child: Card(
+                                  color: WarnaButton(
+                                      stts: _dataKader1[index]['status']),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${_dataKader1[index]['status']}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _dataPenghayatan.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailPenghayatan();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "id_pokja1_bidang1": _dataPenghayatan[index]
+                                      ['id_pokja1_bidang1'],
+                                  "jumlah_kel_simulasi1":
+                                      _dataPenghayatan[index]
+                                          ['jumlah_kel_simulasi1'],
+                                  "jumlah_anggota1": _dataPenghayatan[index]
+                                      ['jumlah_anggota1'],
+                                  "jumlah_kel_simulasi2":
+                                      _dataPenghayatan[index]
+                                          ['jumlah_kel_simulasi2'],
+                                  "jumlah_anggota2": _dataPenghayatan[index]
+                                      ['jumlah_anggota2'],
+                                  "jumlah_kel_simulasi3":
+                                      _dataPenghayatan[index]
+                                          ['jumlah_kel_simulasi3'],
+                                  "jumlah_anggota3": _dataPenghayatan[index]
+                                      ['jumlah_anggota3'],
+                                  "jumlah_kel_simulasi4":
+                                      _dataPenghayatan[index]
+                                          ['jumlah_kel_simulasi4'],
+                                  "jumlah_anggota4": _dataPenghayatan[index]
+                                      ['jumlah_anggota4'],
+                                  "status": _dataPenghayatan[index]['status'],
+                                  "tanggal": _dataPenghayatan[index]['tanggal'],
+                                  "catatan": _dataPenghayatan[index]
+                                                  ['catatan'] !=
+                                              null &&
+                                          _dataPenghayatan[index]['catatan']
+                                              .isNotEmpty
+                                      ? _dataPenghayatan[index]['catatan']
+                                      : "-",
+                                  "waktu": _dataPenghayatan[index]['waktu'],
+                                  "created_at": _dataPenghayatan[index]
+                                      ['created_at'],
+                                  "updated_at": _dataPenghayatan[index]
+                                      ['updated_at'],
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        contentPadding: EdgeInsets.all(20),
+                        // leading: Container(
+                        //   width: 80,
+                        //   height: 80,
+                        //   child: Image.network(
+                        //     "${ApiHelper.url}../public/frontend2/Bidang_LingkunganHidup/${_dataKLH[index]['gambar_upload']}",
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
+                        title: Text(
+                          "Penghayatan & Pengamalan Pancasila",
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text(
+                                "Id Laporan : ${_dataPenghayatan[index]['id_pokja1_bidang1']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text(
+                                "Sosial Pendidikan PKBN :",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, left: 10),
+                              child: Text("Jumlah Kel Simulasi"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 5),
+                              child: Text(
+                                "${_dataPenghayatan[index]['jumlah_kel_simulasi1']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10, left: 10),
+                              child: Text("Jumlah Anggota"),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 10, top: 5),
+                              child: Text(
+                                "${_dataPenghayatan[index]['jumlah_anggota1']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataPenghayatan[index]['tanggal']}",
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Icon(
+                                      Icons.access_time_rounded,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataPenghayatan[index]['waktu']}",
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: ktextColor,
+                                  ),
+                                  Text(
+                                    "Lihat Detail",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: ktextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: ktextColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: Column(
+                          children: [
+                            InkWell(
+                              child: Container(
+                                width: 85,
+                                height: 40,
+                                child: Card(
+                                  color: WarnaButton(
+                                      stts: _dataPenghayatan[index]['status']),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${_dataPenghayatan[index]['status']}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                itemCount: _dataGotong.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ListTile(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true)
+                              .pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return PageDetailGotongRoyong();
+                              },
+                              settings: RouteSettings(
+                                arguments: {
+                                  "id_pokja1_bidang2": _dataGotong[index]
+                                      ['id_pokja1_bidang2'],
+                                  "kerja_bakti": _dataGotong[index]
+                                      ['kerja_bakti'],
+                                  "rukun_kematian": _dataGotong[index]
+                                      ['rukun_kematian'],
+                                  "keagamaan": _dataGotong[index]['keagamaan'],
+                                  "jimpitan": _dataGotong[index]['jimpitan'],
+                                  "arisan": _dataGotong[index]['arisan'],
+                                  "catatan":
+                                      _dataGotong[index]['catatan'] != null &&
+                                              _dataGotong[index]['catatan']
+                                                  .isNotEmpty
+                                          ? _dataGotong[index]['catatan']
+                                          : "-",
+                                  "status": _dataGotong[index]['status'],
+                                  "tanggal": _dataGotong[index]['tanggal'],
+                                  "waktu": _dataGotong[index]['waktu'],
+                                  "created_at": _dataGotong[index]
+                                      ['created_at'],
+                                  "updated_at": _dataGotong[index]
+                                      ['updated_at'],
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                        contentPadding: EdgeInsets.all(20),
+                        // leading: Container(
+                        //   width: 80,
+                        //   height: 80,
+                        //   child: Image.network(
+                        //     "${ApiHelper.url}../public/frontend2/Bidang_LingkunganHidup/${_dataKLH[index]['gambar_upload']}",
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // ),
+                        title: Text(
+                          "Laporan Gotong Royong",
+                          maxLines: 2,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Text(
+                                "Id Laporan : ${_dataGotong[index]['id_pokja1_bidang2']}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Text("Kerja Bakti"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "${_dataGotong[index]['kerja_bakti']}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Text("Rukun Kematian"),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "${_dataGotong[index]['rukun_kematian']}",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataGotong[index]['tanggal']}",
+                                      style: TextStyle(
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 20),
+                                    child: Icon(
+                                      Icons.access_time_rounded,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      "${_dataGotong[index]['waktu']}",
+                                      style: TextStyle(
+                                        letterSpacing: 1,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(top: 20),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.arrow_back_ios,
+                                    color: ktextColor,
+                                  ),
+                                  Text(
+                                    "Lihat Detail",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: ktextColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 5),
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: ktextColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        trailing: Column(
+                          children: [
+                            InkWell(
+                              child: Container(
+                                width: 85,
+                                height: 40,
+                                child: Card(
+                                  color: WarnaButton(
+                                      stts: _dataGotong[index]['status']),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "${_dataGotong[index]['status']}",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
               ListView.builder(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 itemCount: _dataKesehatan.length,
@@ -270,7 +1091,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           width: 80,
                           height: 80,
                           child: Image.network(
-                            "${ApiHelper.url}assets/Bidang_kesehatan/${_dataKesehatan[index]['gambar_upload']}",
+                            "${ApiHelper.url}../public/frontend2/Bidang_kesehatan/${_dataKesehatan[index]['gambar_upload']}",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -299,36 +1120,6 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           ],
                         ),
                         trailing: InkWell(
-                          // onTap: () {
-                          //   Navigator.of(context, rootNavigator: true)
-                          //       .pushReplacement(
-                          //     MaterialPageRoute(
-                          //       builder: (context) {
-                          //         return PageDetailSehat();
-                          //       },
-                          //       settings: RouteSettings(
-                          //         arguments: {
-                          //           "gambar": _dataKesehatan[index]
-                          //               ['gambar_upload'],
-                          //           "tanggal": _dataKesehatan[index]['tanggal'],
-                          //           "kategori_laporan": _dataKesehatan[index]
-                          //               ['kategori_laporan'],
-                          //           "jml_posyandu": _dataKesehatan[index]
-                          //               ['jumlah_posyandu'],
-                          //           "jml_posint": _dataKesehatan[index]
-                          //               ['jumlah_posyandu_iterasi'],
-                          //           "jml_klp": _dataKesehatan[index]
-                          //               ['jumlah_klp'],
-                          //           "jml_anggota": _dataKesehatan[index]
-                          //               ['jumlah_anggota'],
-                          //           "jml_kartu": _dataKesehatan[index]
-                          //               ['jumlah_kartu_gratis'],
-                          //           "stss": _dataKesehatan[index]['status']
-                          //         },
-                          //       ),
-                          //     ),
-                          //   );
-                          // },
                           child: Container(
                             width: 85,
                             height: 40,
@@ -369,15 +1160,16 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey.shade100,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0.0, 1.0), //(x,y)
-                              blurRadius: 2.0,
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.grey.shade100,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0.0, 1.0), //(x,y)
+                            blurRadius: 2.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: ListTile(
                         onTap: () {
                           Navigator.of(context, rootNavigator: true)
@@ -408,7 +1200,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           width: 80,
                           height: 80,
                           child: Image.network(
-                            "${ApiHelper.url}assets/Bidang_LingkunganHidup/${_dataKLH[index]['gambar_upload']}",
+                            "${ApiHelper.url}../public/frontend2/Bidang_LingkunganHidup/${_dataKLH[index]['gambar_upload']}",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -517,7 +1309,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           width: 80,
                           height: 80,
                           child: Image.network(
-                            "${ApiHelper.url}assets/Bidang_Perencaan_Sehat/${_dataPSehat[index]['gambar']}",
+                            "${ApiHelper.url}../public/frontend2/Bidang_Perencaan_Sehat/${_dataPSehat[index]['gambar']}",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -621,7 +1413,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           width: 80,
                           height: 80,
                           child: Image.network(
-                            "${ApiHelper.url}assets/gallery2/${_gallery[index]['gambar']}",
+                            "${ApiHelper.url}../public/frontend2/gallery2/${_gallery[index]['gambar']}",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -670,7 +1462,8 @@ class _RiwayatPageState extends State<RiwayatPage> {
                     ),
                   );
                 },
-              )
+              ),
+
               // ListView.builder(
               //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               //   itemCount: _dataPSehat.length,

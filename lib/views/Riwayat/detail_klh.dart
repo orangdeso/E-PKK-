@@ -81,7 +81,7 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
                         color: Color.fromARGB(255, 217, 217, 217),
                         image: DecorationImage(
                             image: NetworkImage(
-                                "${ApiHelper.url}assets/Bidang_LingkunganHidup/${gbr}"),
+                                "${ApiHelper.url}../public/frontend2/Bidang_LingkunganHidup/${gbr}"),
                             fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(10),
                       ),

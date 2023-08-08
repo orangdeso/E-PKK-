@@ -1,17 +1,18 @@
-// import 'package:e_pkk/login_view.dart';
+import 'package:e_pkk/splash_screen.dart';
+import 'package:e_pkk/views/Laporan/Pokja1/gotong_royong.dart';
 import 'package:e_pkk/views/Laporan/Upload%20_Gambar/UploadGaleri.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKelestarianHidup.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangKesehatan.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/BidangPerencananSehat.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/MenuLaporan.dart';
 import 'package:e_pkk/views/Login/login_screen.dart';
-// import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
 import 'package:e_pkk/views/Riwayat/page_detail_riwayat.dart';
 import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
 import 'package:e_pkk/views/Welcome/welcome_screen.dart';
 import 'package:e_pkk/views/navbar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:e_pkk/utils/constants.dart';
+//import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() {
   runApp(MainApp());
@@ -28,9 +29,9 @@ class MainApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       home: WelcomeScreen(),
+      initialRoute: '/splash',
       routes: {
-        // 'lupa_password_screen': (context) => const lupaPassword(),
-        // 'welcome_screen': (context) => const WelcomeScreen(),
+        '/splash': (context) => SplashScreen(),
         navbarView.route.toString(): (context) => navbarView(),
         LoginScreen.route.toString(): (context) => LoginScreen(),
         PageLaporanMenu.route.toString(): (context) => PageLaporanMenu(),
@@ -41,7 +42,8 @@ class MainApp extends StatelessWidget {
         PageDetailRiwayat.route.toString(): (context) => PageDetailRiwayat(),
         RiwayatPage.route.toString(): (context) => RiwayatPage(),
         PagePerencaanSehat.route.toString(): (context) => PagePerencaanSehat(),
-        PageGaleri.route.toString(): (context) => PageGaleri()
+        PageGaleri.route.toString(): (context) => PageGaleri(),
+        PageGotongRoyong.route.toString(): (context) => PageGotongRoyong(),
       },
     );
   }

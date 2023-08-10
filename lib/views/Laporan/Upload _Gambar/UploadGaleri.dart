@@ -21,8 +21,8 @@ class PageGaleri extends StatefulWidget {
 
 class _PageGaleriState extends State<PageGaleri> {
   final _formKey = GlobalKey<FormState>();
-  static String? randomLaporan = "Topik lainnya";
-  static String? randomLaporan2 = "Topik lainnya";
+  static String? randomPokja = "Topik lainnya";
+  static String? randomBidang = "Topik lainnya";
   String idAkun = '';
   late Future<DataAkun> futureAkun;
 
@@ -283,9 +283,9 @@ class _PageGaleriState extends State<PageGaleri> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      dropdownBidang(
+                      dropdownPokja(
                         listItem: ListL,
-                        namaLabel: "Bidang",
+                        namaLabel: "Laporan",
                         hintText: "Pilih Jenis Laporan",
                         randomlabel: "Pokja I",
                         errorKosong: "Harap Isi",
@@ -535,7 +535,6 @@ class _PageGaleriState extends State<PageGaleri> {
                                 DateFormat('yyyy-MM-dd').format(selectedDate);
                             print("tanggal == ${pp}");
                             print("judul == ${getJudul!.text}");
-                            //print("desk == ${getDesc!.text}");
                             print("tes path single == $_file");
                             for (String item in selectedPaths) {
                               print("gambar terpilih == $item");
@@ -548,9 +547,9 @@ class _PageGaleriState extends State<PageGaleri> {
                             if (_formKey.currentState!.validate()) {
                               GetApi.DoubleuploadDataImage(
                                 imageFiles: kumpulanImage,
-                                judul: getJudul!.text,
-                                bidang: randomLaporan2,
-                                pokja: randomLaporan,
+                                deskripsi: getJudul!.text,
+                                pokja: randomPokja,
+                                bidang: randomBidang,
                                 tanggal: pp,
                                 idUser: idAkun,
                                 context: context,
@@ -559,7 +558,6 @@ class _PageGaleriState extends State<PageGaleri> {
                                     kumpulanImage.clear(),
                                     selectedPaths.clear(),
                                     getJudul!.clear(),
-                                    //getDesc!.clear(),
                                     getTgl!.clear(),
                                     pp == ""
                                   });
@@ -593,7 +591,7 @@ class _PageGaleriState extends State<PageGaleri> {
     );
   }
 
-  Widget customDropDownLokasiAsalPelapor(
+  Widget dropdownPokja(
       {List<String>? listItem,
       String? namaLabel,
       String? hintText,
@@ -677,7 +675,7 @@ class _PageGaleriState extends State<PageGaleri> {
           },
           onChanged: (value) {
             setState(() {
-              randomLaporan = value;
+              randomPokja = value;
             });
           },
           buttonStyleData: ButtonStyleData(
@@ -781,7 +779,7 @@ class _PageGaleriState extends State<PageGaleri> {
           },
           onChanged: (value) {
             setState(() {
-              randomLaporan = value;
+              randomBidang = value;
             });
           },
           buttonStyleData: ButtonStyleData(

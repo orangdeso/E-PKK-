@@ -118,7 +118,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                           width: 100,
                           height: 200,
                           child: Image(
-                            image: AssetImage("assets/images/ketua_pkk.png"),
+                            image: AssetImage("assets/images/ketua_pkk1.png"),
                             fit: BoxFit.cover,
                             alignment: Alignment.center,
                           ),

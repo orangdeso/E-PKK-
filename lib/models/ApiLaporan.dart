@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 
 import '../helpers/ApiHelper.dart';
 
+//List<String> detailGambarList = [];
+
 class GetApi {
   static Future<void> LaporanKader1(
       {String? PKBN,
@@ -665,9 +667,10 @@ class GetApi {
 
   static Future<void> DoubleuploadDataImage(
       {List<File>? imageFiles,
-      String? judul,
+      String? deskripsi,
       String? pokja,
       String? bidang,
+      String? detail_gambar,
       String? tanggal,
       String? idUser,
       BuildContext? context}) async {
@@ -676,10 +679,14 @@ class GetApi {
 
     for (var i = 0; i < imageFiles!.length; i++) {
       var file = imageFiles[i];
+
       request.files
           .add(await http.MultipartFile.fromPath('image[]', file.path));
+
+      request.fields['detail_gambar'] = 'gambar${i + 1}';
     }
-    request.fields['judul'] = judul.toString();
+
+    request.fields['deskripsi'] = deskripsi.toString();
     request.fields['pokja'] = pokja.toString();
     request.fields['bidang'] = bidang.toString();
     request.fields['tanggal'] = tanggal.toString();
@@ -739,4 +746,3 @@ class GetApi {
   //   }
   // }
 }
-

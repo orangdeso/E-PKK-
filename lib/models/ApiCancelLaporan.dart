@@ -4,19 +4,14 @@ import 'package:e_pkk/views/Laporan/Upload_Laporan/notifikasi_kesehatan.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class EditApiLaporan {
-  static Future<void> editLaporanKader1(
-      {String? PKBN,
-      String? PKDRT,
-      String? pola_asuh,
-      String? userID,
-      BuildContext? context}) async {
-    final url = Uri.parse(ApiHelper.url + 'editKader1.php');
+class EditBatalkanLaporan {
+  static Future<void> cancelLaporanKader1({
+    String? userID,
+    BuildContext? context,
+  }) async {
+    final url = Uri.parse(ApiHelper.url + 'editStatusKader1.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['PKBN'] = PKBN.toString()
-      ..fields['PKDRT'] = PKDRT.toString()
-      ..fields['pola_asuh'] = pola_asuh.toString()
       ..fields['id_kader_pokja1'] = userID.toString();
 
     final response = await request.send();
@@ -46,28 +41,13 @@ class EditApiLaporan {
     }
   }
 
-  static Future<void> editLaporanPenghayatan(
-      {String? jumlah_kel_simulasi1,
-      String? jumlah_anggota1,
-      String? jumlah_kel_simulasi2,
-      String? jumlah_anggota2,
-      String? jumlah_kel_simulasi3,
-      String? jumlah_anggota3,
-      String? jumlah_kel_simulasi4,
-      String? jumlah_anggota4,
-      String? userID,
-      BuildContext? context}) async {
-    final url = Uri.parse(ApiHelper.url + 'editPenghayatan.php');
+  static Future<void> cancelLaporanPenghayatan({
+    String? userID,
+    BuildContext? context,
+  }) async {
+    final url = Uri.parse(ApiHelper.url + 'editStatusPenghayatan.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['jumlah_kel_simulasi1'] = jumlah_kel_simulasi1.toString()
-      ..fields['jumlah_anggota1'] = jumlah_anggota1.toString()
-      ..fields['jumlah_kel_simulasi2'] = jumlah_kel_simulasi2.toString()
-      ..fields['jumlah_anggota2'] = jumlah_anggota2.toString()
-      ..fields['jumlah_kel_simulasi3'] = jumlah_kel_simulasi3.toString()
-      ..fields['jumlah_anggota3'] = jumlah_anggota3.toString()
-      ..fields['jumlah_kel_simulasi4'] = jumlah_kel_simulasi4.toString()
-      ..fields['jumlah_anggota4'] = jumlah_anggota4.toString()
       ..fields['id_pokja1_bidang1'] = userID.toString();
 
     final response = await request.send();
@@ -97,22 +77,13 @@ class EditApiLaporan {
     }
   }
 
-  static Future<void> editLaporanGotong(
-      {String? kerja_bakti,
-      String? rukun_kematian,
-      String? keagamaan,
-      String? jimpitan,
-      String? arisan,
-      String? userID,
-      BuildContext? context}) async {
-    final url = Uri.parse(ApiHelper.url + 'editGotong.php');
+  static Future<void> cancelLaporanGotong({
+    String? userID,
+    BuildContext? context,
+  }) async {
+    final url = Uri.parse(ApiHelper.url + 'editStatusGotong.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['kerja_bakti'] = kerja_bakti.toString()
-      ..fields['rukun_kematian'] = rukun_kematian.toString()
-      ..fields['keagamaan'] = keagamaan.toString()
-      ..fields['jimpitan'] = jimpitan.toString()
-      ..fields['arisan'] = arisan.toString()
       ..fields['id_pokja1_bidang2'] = userID.toString();
 
     final response = await request.send();
@@ -142,5 +113,3 @@ class EditApiLaporan {
     }
   }
 }
-
-

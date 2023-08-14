@@ -33,6 +33,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
   List<dynamic> _dataKader1 = [];
   List<dynamic> _dataPenghayatan = [];
   List<dynamic> _dataGotong = [];
+  List<dynamic> _dataPendidikan = [];
 
   //Pendeklarasian
   String idAkun = '';
@@ -51,6 +52,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
       fetchDataKader1(idUser: idAkun);
       fetchDataPenghayatan(idUser: idAkun);
       fetchDataGotong(idUser: idAkun);
+      fetchDataPendidikan(idUser: idAkun);
     });
   }
 
@@ -168,6 +170,22 @@ class _RiwayatPageState extends State<RiwayatPage> {
     }
   }
 
+  Future<void> fetchDataPendidikan({String? idUser}) async {
+    final response = await http.post(
+        Uri.parse(ApiHelper.url + "RiwayatPendidikan.php"),
+        body: {"id_user": idUser});
+
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+
+      setState(() {
+        _dataPendidikan = jsonData['data'];
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   List<Tab> myTab = [
     Tab(
       child: Text(
@@ -194,6 +212,17 @@ class _RiwayatPageState extends State<RiwayatPage> {
     Tab(
       child: Text(
         "Gotong Royong",
+        textAlign: TextAlign.center,
+        style: GoogleFonts.inter(
+          textStyle: TextStyle(
+              //fontSize: 10.5,
+              ),
+        ),
+      ),
+    ),
+    Tab(
+      child: Text(
+        "Pendidikan & Ketrampilan ",
         textAlign: TextAlign.center,
         style: GoogleFonts.inter(
           textStyle: TextStyle(
@@ -258,6 +287,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
     fetchDataKader1(idUser: idAkun);
     fetchDataPenghayatan(idUser: idAkun);
     fetchDataGotong(idUser: idAkun);
+    fetchDataPendidikan(idUser: idAkun);
     print(idAkun);
     setState(() {});
     super.initState();
@@ -268,7 +298,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
       return Colors.orange.shade400;
     } else if (stts == "Dibatalkan") {
       return Colors.red.shade400;
-    } else if (stts == "Direview") {
+    } else if (stts == "Review") {
       return Colors.blue.shade400;
     } else {
       return Colors.green.shade500;
@@ -443,24 +473,24 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                 SizedBox(
                                   width: 20,
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 20),
-                                      child: Text("Pola Asuh"),
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Pola Asuh"),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    "${_dataKader1[index]['pola_asuh']}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 5),
-                                      child: Text(
-                                        "${_dataKader1[index]['pola_asuh']}",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -767,7 +797,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           children: [
                             InkWell(
                               child: Container(
-                                width: 85,
+                                width: 100,
                                 height: 40,
                                 child: Card(
                                   color: WarnaButton(
@@ -908,30 +938,24 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  width: 20,
+                              ],
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Text("Rukun Kematian"),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 20),
-                                      child: Text("Rukun Kematian"),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    "${_dataGotong[index]['rukun_kematian']}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 5),
-                                      child: Text(
-                                        "${_dataGotong[index]['rukun_kematian']}",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: 20,
+                                  ),
                                 ),
                               ],
                             ),
@@ -1004,7 +1028,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           children: [
                             InkWell(
                               child: Container(
-                                width: 85,
+                                width: 100,
                                 height: 40,
                                 child: Card(
                                   color: WarnaButton(
@@ -1121,7 +1145,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         trailing: InkWell(
                           child: Container(
-                            width: 85,
+                            width: 100,
                             height: 40,
                             child: Card(
                               color: WarnaButton(
@@ -1231,7 +1255,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         trailing: InkWell(
                           child: Container(
-                            width: 85,
+                            width: 100,
                             height: 40,
                             child: Card(
                               color:
@@ -1339,7 +1363,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         trailing: InkWell(
                           child: Container(
-                            width: 85,
+                            width: 100,
                             height: 40,
                             child: Card(
                               color: WarnaButton(
@@ -1398,7 +1422,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                 arguments: {
                                   "status": _gallery[index]['status'],
                                   "tanggal": _gallery[index]['tanggal'],
-                                  "judul": _gallery[index]['judul'],
+                                  "deskripsi": _gallery[index]['deskripsi'],
                                   //"deskripsi": _gallery[index]['deskripsi'],
                                   "gambar": _gallery[index]['gambar'],
                                   "user": _gallery[index]['id_user'],
@@ -1432,7 +1456,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                         ),
                         trailing: InkWell(
                           child: Container(
-                            width: 85,
+                            width: 100,
                             height: 40,
                             child: Card(
                               color:

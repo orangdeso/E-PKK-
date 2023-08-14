@@ -28,7 +28,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 2), () {
+      Future.delayed(Duration(seconds: 3), () {
         setState(() {
           isLoading = false;
         });
@@ -67,6 +67,8 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
         child: isLoading
             ? CircularProgressIndicator(
                 color: ktextColor,
+                backgroundColor: Colors.grey.shade300,
+                semanticsLabel: 'Loading',
               )
             : Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),

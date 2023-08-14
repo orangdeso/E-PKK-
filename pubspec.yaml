@@ -16,17 +16,17 @@ dependencies:
   fluttertoast: ^8.2.1
   google_nav_bar: ^5.0.6
   awesome_dialog: ^3.0.2
-  searchfield: ^0.7.5
+  searchfield: ^0.8.4
   carousel_slider: ^4.2.1
   lottie: ^2.3.2
-  pin_code_fields: ^7.4.0
+  pin_code_fields: ^8.0.1
   dropdown_button2: ^2.1.2
   cherry_toast: ^1.2.1
   file_picker: ^5.3.0
-  simple_shadow: ^0.2.0
+  simple_shadow: ^0.3.1
   intl: ^0.18.1
   shimmer: ^3.0.0
-  awesome_notifications: ^0.6.19
+  # awesome_notifications: ^0.6.19
   # flutter_native_splash: ^2.2.19
 
   # dropdown_button2: ^2.0.0

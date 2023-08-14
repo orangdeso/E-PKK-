@@ -205,7 +205,7 @@ class GetApi {
       String? damas_pkk,
       String? userID,
       BuildContext? context}) async {
-    final url = Uri.parse(ApiHelper.url + 'insert_pendidikan_ketrampilan.php');
+    final url = Uri.parse(ApiHelper.url + 'insert_pendidikan.php');
 
     final request = http.MultipartRequest('POST', url)
       ..fields['warga_buta'] = warga_buta.toString()
@@ -233,23 +233,13 @@ class GetApi {
       ..fields['damas_pkk'] = damas_pkk.toString()
       ..fields['id_user'] = userID.toString();
 
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadKesehatan();
@@ -258,7 +248,7 @@ class GetApi {
       );
     } else {
       print('Data gagal disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -266,7 +256,7 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
     }
   }
 

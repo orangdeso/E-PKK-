@@ -36,9 +36,22 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
     getPola.text = "";
   }
 
+  var isLoading = true;
+
+  void loadTampilan() {
+    setState(() {
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          isLoading = false;
+        });
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    loadTampilan();
     getIdAkun();
     setState(() {});
   }
@@ -63,243 +76,252 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
         elevation: 1,
       ),
       body: Center(
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        child: isLoading
+            ? CircularProgressIndicator(
+                color: ktextColor,
+                backgroundColor: Colors.grey.shade300,
+                semanticsLabel: 'Loading',
+              )
+            : Form(
+                key: _formKey,
+                child: ListView(
                   children: [
-                    Text(
-                      "Isi Data Dibawah ini",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
-                        color: grey500,
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Isi Data Dibawah ini",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17,
+                              color: grey500,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Divider(
+                            height: 2,
+                          )
+                        ],
                       ),
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 30,
                     ),
-                    Divider(
-                      height: 2,
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                    decoration: BoxDecoration(
-                      color: whiteColor,
-                    ),
-                    child: Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "PKBN",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 30),
+                          decoration: BoxDecoration(
+                            color: whiteColor,
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: FractionalOffset.topCenter,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 2),
-                            width: size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: grey100,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: grey300,
-                                width: 1.2,
-                              ),
-                            ),
-                            child: TextFormField(
-                              controller: getPKBN,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Tidak boleh kosong';
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Masukkan jumlah PKBN",
-                                hintStyle: TextStyle(
-                                  color: grey400,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "PKBN",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 15,
                                 ),
-                                border: InputBorder.none,
                               ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "PKDRT",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: FractionalOffset.topCenter,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 2),
-                            width: size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: grey100,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: grey300,
-                                width: 1.2,
+                              SizedBox(
+                                height: 15,
                               ),
-                            ),
-                            child: TextFormField(
-                              controller: getPKDRT,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Tidak boleh kosong';
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Masukkan jumlah PKDRT",
-                                hintStyle: TextStyle(
-                                  color: grey400,
+                              Align(
+                                alignment: FractionalOffset.topCenter,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 2),
+                                  width: size.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    color: grey100,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: grey300,
+                                      width: 1.2,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    controller: getPKBN,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Tidak boleh kosong';
+                                      }
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: "Masukkan jumlah PKBN",
+                                      hintStyle: TextStyle(
+                                        color: grey400,
+                                        fontSize: 15,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "PKDRT",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 15,
                                 ),
-                                border: InputBorder.none,
                               ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Pola Asuh",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Align(
-                          alignment: FractionalOffset.topCenter,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 2),
-                            width: size.width * 0.9,
-                            decoration: BoxDecoration(
-                              color: grey100,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: grey300,
-                                width: 1.2,
+                              SizedBox(
+                                height: 15,
                               ),
-                            ),
-                            child: TextFormField(
-                              controller: getPola,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Tidak boleh kosong';
-                                }
-                              },
-                              keyboardType: TextInputType.number,
-                              inputFormatters: <TextInputFormatter>[
-                                FilteringTextInputFormatter.digitsOnly
-                              ],
-                              decoration: InputDecoration(
-                                hintText: "Masukkan jumlah pola asuh",
-                                hintStyle: TextStyle(
-                                  color: grey400,
+                              Align(
+                                alignment: FractionalOffset.topCenter,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 2),
+                                  width: size.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    color: grey100,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: grey300,
+                                      width: 1.2,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    controller: getPKDRT,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Tidak boleh kosong';
+                                      }
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: "Masukkan jumlah PKDRT",
+                                      hintStyle: TextStyle(
+                                        color: grey400,
+                                        fontSize: 15,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Pola Asuh",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 15,
                                 ),
-                                border: InputBorder.none,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Align(
+                                alignment: FractionalOffset.topCenter,
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 2),
+                                  width: size.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    color: grey100,
+                                    borderRadius: BorderRadius.circular(8),
+                                    border: Border.all(
+                                      color: grey300,
+                                      width: 1.2,
+                                    ),
+                                  ),
+                                  child: TextFormField(
+                                    controller: getPola,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Tidak boleh kosong';
+                                      }
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    inputFormatters: <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    decoration: InputDecoration(
+                                      hintText: "Masukkan jumlah pola asuh",
+                                      hintStyle: TextStyle(
+                                        color: grey400,
+                                        fontSize: 15,
+                                      ),
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              print(idAkun);
+                              if (_formKey.currentState!.validate()) {
+                                String pkbn = getPKBN.text.toString();
+                                String pkdrt = getPKDRT.text.toString();
+                                String pola = getPola.text.toString();
+                                GetApi.LaporanKader1(
+                                  context: context,
+                                  PKBN: pkbn,
+                                  PKDRT: pkdrt,
+                                  pola_asuh: pola,
+                                  userID: idAkun,
+                                ).then(
+                                  (value) => {
+                                    print("Berhasil"),
+                                  },
+                                );
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Color.fromARGB(255, 55, 149, 183),
+                              minimumSize: Size.fromHeight(50),
+                              elevation: 5,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                              "UPLOAD",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        print(idAkun);
-                        if (_formKey.currentState!.validate()) {
-                          String pkbn = getPKBN.text.toString();
-                          String pkdrt = getPKDRT.text.toString();
-                          String pola = getPola.text.toString();
-                          GetApi.LaporanKader1(
-                            context: context,
-                            PKBN: pkbn,
-                            PKDRT: pkdrt,
-                            pola_asuh: pola,
-                            userID: idAkun,
-                          ).then(
-                            (value) => {
-                              print("Berhasil"),
-                            },
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color.fromARGB(255, 55, 149, 183),
-                        minimumSize: Size.fromHeight(50),
-                        elevation: 5,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        "UPLOAD",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
       ),
     );
   }

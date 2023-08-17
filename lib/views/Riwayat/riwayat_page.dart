@@ -511,21 +511,21 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Icon(
-                                      Icons.access_time_rounded,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${_dataKader1[index]['waktu']}",
-                                      style: TextStyle(
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 20),
+                                  //   child: Icon(
+                                  //     Icons.access_time_rounded,
+                                  //   ),
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 10),
+                                  //   child: Text(
+                                  //     "${_dataKader1[index]['waktu']}",
+                                  //     style: TextStyle(
+                                  //       letterSpacing: 1,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -748,18 +748,18 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                       "${_dataPenghayatan[index]['tanggal']}",
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Icon(
-                                      Icons.access_time_rounded,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${_dataPenghayatan[index]['waktu']}",
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 20),
+                                  //   child: Icon(
+                                  //     Icons.access_time_rounded,
+                                  //   ),
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 10),
+                                  //   child: Text(
+                                  //     "${_dataPenghayatan[index]['waktu']}",
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -976,21 +976,21 @@ class _RiwayatPageState extends State<RiwayatPage> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 20),
-                                    child: Icon(
-                                      Icons.access_time_rounded,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: Text(
-                                      "${_dataGotong[index]['waktu']}",
-                                      style: TextStyle(
-                                        letterSpacing: 1,
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 20),
+                                  //   child: Icon(
+                                  //     Icons.access_time_rounded,
+                                  //   ),
+                                  // ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(left: 10),
+                                  //   child: Text(
+                                  //     "${_dataGotong[index]['waktu']}",
+                                  //     style: TextStyle(
+                                  //       letterSpacing: 1,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -1420,12 +1420,14 @@ class _RiwayatPageState extends State<RiwayatPage> {
                               },
                               settings: RouteSettings(
                                 arguments: {
+                                  "deskripsi": _gallery[index]['deskripsi'],
+                                  "pokja": _gallery[index]['pokja'],
+                                  "bidang": _gallery[index]['bidang'],
+                                  "gambar": _gallery[index]['gambar'],
                                   "status": _gallery[index]['status'],
                                   "tanggal": _gallery[index]['tanggal'],
-                                  "deskripsi": _gallery[index]['deskripsi'],
-                                  //"deskripsi": _gallery[index]['deskripsi'],
-                                  "gambar": _gallery[index]['gambar'],
                                   "user": _gallery[index]['id_user'],
+                                  "waktu": _gallery[index]['waktu'],
                                   "idGalery": _gallery[index]['id']
                                 },
                               ),
@@ -1442,7 +1444,7 @@ class _RiwayatPageState extends State<RiwayatPage> {
                           ),
                         ),
                         title: Text(
-                          "${_gallery[index]['judul']}",
+                          "${_gallery[index]['deskripsi']}",
                           maxLines: 2,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,

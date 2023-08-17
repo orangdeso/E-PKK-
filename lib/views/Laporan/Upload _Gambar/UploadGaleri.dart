@@ -79,10 +79,11 @@ class _PageGaleriState extends State<PageGaleri> {
   ];
 
   final List<String> ListB = [
-    'Pendidikan',
+    'Kader Pokja I',
+    'Penghayatan & Pengamalan Pancasila',
     'Gotong Royong',
-    'Pokja III',
-    'Pokja IV',
+    'Pendidikan & Ketrampilan',
+    'Pengembangan Kehidupan Berkoperasi',
     'Laporan Umum'
   ];
 

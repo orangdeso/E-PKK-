@@ -1,6 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
-import 'package:e_pkk/views/Login/login_screen.dart';
 import 'package:e_pkk/views/navbar_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';

@@ -1,11 +1,11 @@
-import 'dart:io';
+// ignore_for_file: body_might_complete_normally_nullable, unused_field
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:e_pkk/models/DataAKun.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../models/ApiLaporan.dart';
 
 class PageBidangKesehatan extends StatefulWidget {
@@ -29,7 +29,6 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
     });
   }
 
-  TextEditingController getKategori = TextEditingController();
   TextEditingController getJmlPosyandu = TextEditingController();
   TextEditingController getJmlPosyanduInterasi = TextEditingController();
   TextEditingController getJmlKLP = TextEditingController();
@@ -42,8 +41,8 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
     'Posyandu Balita'
   ];
 
-  File? _file;
-  static String? namaFileInput;
+  // File? _file;
+  // static String? namaFileInput;
 
   Succes() {
     getJmlPosyandu.text = "";
@@ -82,75 +81,75 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
             child: ListView(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
-                InkWell(
-                  onTap: () async {
-                    print("dek");
-                    final FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions: ['jpg', 'jpeg', 'png'],
-                    );
-                    if (result != null) {
-                      setState(
-                        () {
-                          _file = File(result.files.single.path!);
-                          PlatformFile namaFile = result.files.first;
-                          namaFileInput = namaFile.name.toString();
-                        },
-                      );
-                    }
-                  },
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 217, 217, 217),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: _file == null || _file == ""
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Upload Gambar",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Silakan Upload gambar di sini",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                            ],
-                          )
-                        : Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 217, 217, 217),
-                              image: DecorationImage(
-                                image: FileImage(_file!),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () async {
+                //     print("dek");
+                //     final FilePickerResult? result =
+                //         await FilePicker.platform.pickFiles(
+                //       type: FileType.custom,
+                //       allowedExtensions: ['jpg', 'jpeg', 'png'],
+                //     );
+                //     if (result != null) {
+                //       setState(
+                //         () {
+                //           _file = File(result.files.single.path!);
+                //           PlatformFile namaFile = result.files.first;
+                //           namaFileInput = namaFile.name.toString();
+                //         },
+                //       );
+                //     }
+                //   },
+                //   child: Container(
+                //     height: 200,
+                //     decoration: BoxDecoration(
+                //       color: Color.fromARGB(255, 217, 217, 217),
+                //       borderRadius: BorderRadius.circular(10),
+                //     ),
+                //     child: _file == null || _file == ""
+                //         ? Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Text(
+                //                 "Upload Gambar",
+                //                 style: TextStyle(
+                //                   fontWeight: FontWeight.w600,
+                //                   fontSize: 20,
+                //                 ),
+                //               ),
+                //               SizedBox(
+                //                 height: 20,
+                //               ),
+                //               Text(
+                //                 "Silakan Upload gambar di sini",
+                //                 style: TextStyle(
+                //                   color: Colors.grey,
+                //                   fontWeight: FontWeight.w500,
+                //                 ),
+                //               )
+                //             ],
+                //           )
+                //         : Container(
+                //             height: 200,
+                //             decoration: BoxDecoration(
+                //               color: Color.fromARGB(255, 217, 217, 217),
+                //               image: DecorationImage(
+                //                 image: FileImage(_file!),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //               borderRadius: BorderRadius.circular(10),
+                //             ),
+                //           ),
+                //   ),
+                // ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 15,
-                    ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
                     // Text(
                     //   "Kategori",
                     //   style:
@@ -182,16 +181,16 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                     //           borderRadius:
                     //               BorderRadius.all(Radius.circular(10)))),
                     // ),
-                    customDropDownLokasiAsalPelapor(
-                      listItem: ListPosyandu,
-                      namaLabel: "Kategori",
-                      hintText: "Pilih Kategori",
-                      randomlabel: "Posyandu Lansia",
-                      errorKosong: "Harap Isi",
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
+                    // customDropDownLokasiAsalPelapor(
+                    //   listItem: ListPosyandu,
+                    //   namaLabel: "Kategori",
+                    //   hintText: "Pilih Kategori",
+                    //   randomlabel: "Posyandu Lansia",
+                    //   errorKosong: "Harap Isi",
+                    // ),
+                    // SizedBox(
+                    //   height: 20,
+                    // ),
                     Row(
                       children: [
                         Expanded(
@@ -515,14 +514,28 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 70,
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          print("Tes Input ------------------------");
-                          String KategoriPosyandu =
-                              randomValueAsalPelapor.toString();
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // Tidak bisa ditutup selama menunggu
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: ktextColor,
+                                  backgroundColor: Colors.grey.shade400,
+                                  semanticsLabel: 'Loading',
+                                ),
+                              );
+                            },
+                          );
+
+                          await Future.delayed(Duration(seconds: 2));
+                          
                           String JumlahPosyandu =
                               getJmlPosyandu.text.toString();
                           String JumlahPosyanduIterasi =
@@ -531,26 +544,16 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                           String JumlahKLP = getJmlKLP.text.toString();
                           String JumlahKartuGratis =
                               getKartuBerobat.text.toString();
-                          print("Jml Posyandu :: ${JumlahPosyandu}");
-                          print(
-                              "Jml Posyandu Iterasi :: ${JumlahPosyanduIterasi}");
-                          print("Jml Posyandu Anggota :: ${JumlahAnggota}");
-                          print("Jml Posyandu Kartu :: ${JumlahKartuGratis}");
-                          print("Jml Posyandu KLP :: ${JumlahKLP}");
-                          print("Kategori Posyandu  :: ${KategoriPosyandu}");
-                          print("Nama File Input :: ${namaFileInput}");
-                          print("Tes Fileee :: ${_file}");
+                          //print("Tes Fileee :: ${_file}");
                           GetApi.LaporanBidangKesehatan(
-                                  fileBruh: _file,
-                                  kategori: KategoriPosyandu,
-                                  jml_posyandu: JumlahPosyandu,
-                                  jml_anggota: JumlahAnggota,
-                                  posIterasi: JumlahPosyanduIterasi,
-                                  jml_klp: JumlahKLP,
-                                  context: context,
-                                  userID: idAkun,
-                                  kartuFree: JumlahKartuGratis)
-                              .then(
+                            jumlah_posyandu: JumlahPosyandu,
+                            jumlah_anggota: JumlahAnggota,
+                            jumlah_posyandu_iterasi: JumlahPosyanduIterasi,
+                            jumlah_klp: JumlahKLP,
+                            jumlah_kartu_gratis: JumlahKartuGratis,
+                            context: context,
+                            userID: idAkun,
+                          ).then(
                             (value) => {
                               print("awikwok"),
                               print(idAkun),

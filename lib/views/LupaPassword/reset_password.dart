@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -8,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class ResetPassword extends StatefulWidget {
   //ResetPassword({super.key});
-  String noHp;
+  final String noHp;
 
   ResetPassword({Key? key, required this.noHp}) : super(key: key);
 
@@ -23,13 +25,6 @@ class _ResetPasswordState extends State<ResetPassword> {
   var _formKey = GlobalKey<FormState>();
   TextEditingController tPw_baru = TextEditingController();
   TextEditingController tKonfirm_pw = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    noWa = widget.noHp;
-    print(widget.noHp);
-  }
 
   void btUpdate(
     BuildContext context,
@@ -79,9 +74,17 @@ class _ResetPasswordState extends State<ResetPassword> {
       animType: AnimType.topSlide,
       showCloseIcon: true,
       title: "Gagal",
-      desc: "Password yang Anda masukkan adalah password lama. Silahkan gunakan password baru !",
+      desc:
+          "Password yang Anda masukkan adalah password lama. Silahkan gunakan password baru !",
       btnOkOnPress: () {},
     ).show();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    noWa = widget.noHp;
+    print(widget.noHp);
   }
 
   @override

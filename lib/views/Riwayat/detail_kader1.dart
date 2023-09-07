@@ -1,12 +1,10 @@
-import 'package:cherry_toast/cherry_toast.dart';
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiCancelLaporan.dart';
 import 'package:e_pkk/models/ApiEditLaporan.dart';
-import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
-import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PageDetailKader1 extends StatefulWidget {
   const PageDetailKader1({super.key});
@@ -34,7 +32,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
       setState(() => isButtonAktif = false);
       setState(() => isButtonBatalAktif = false);
       return Colors.red.shade400;
-    } else if (stts == "Review") {
+    } else if (stts == "Revisi") {
       setState(() => isButtonBatalAktif = false);
       return Colors.blue.shade400;
     } else {
@@ -48,7 +46,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 2), () {
         setState(() {
           isLoading = false;
         });
@@ -74,7 +72,6 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
   Map? getData;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     getData = ModalRoute.of(context)?.settings.arguments as Map;
     String id = getData?['id_kader_pokja1'];
     String pkbn = getData?['PKBN'];
@@ -103,8 +100,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RiwayatPage()));
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back),
         ),
@@ -799,8 +795,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                       keyboardType:
                                                                           TextInputType
                                                                               .number,
-                                                                      inputFormatters: <
-                                                                          TextInputFormatter>[
+                                                                      inputFormatters: <TextInputFormatter>[
                                                                         FilteringTextInputFormatter
                                                                             .digitsOnly
                                                                       ],
@@ -885,8 +880,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                       keyboardType:
                                                                           TextInputType
                                                                               .number,
-                                                                      inputFormatters: <
-                                                                          TextInputFormatter>[
+                                                                      inputFormatters: <TextInputFormatter>[
                                                                         FilteringTextInputFormatter
                                                                             .digitsOnly
                                                                       ],
@@ -971,8 +965,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                       keyboardType:
                                                                           TextInputType
                                                                               .number,
-                                                                      inputFormatters: <
-                                                                          TextInputFormatter>[
+                                                                      inputFormatters: <TextInputFormatter>[
                                                                         FilteringTextInputFormatter
                                                                             .digitsOnly
                                                                       ],

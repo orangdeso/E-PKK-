@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/controller/ApiController.dart';
 import 'package:e_pkk/utils/constants.dart';

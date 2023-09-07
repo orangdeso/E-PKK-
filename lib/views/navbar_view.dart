@@ -1,6 +1,6 @@
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Home/home_page.dart';
-import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
+import 'package:e_pkk/views/Riwayat/riwayat2.dart';
 import 'package:e_pkk/views/SettingAkun/setting_akun_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -16,7 +16,7 @@ class navbarView extends StatefulWidget {
 
 class _navbarViewState extends State<navbarView> {
   int _currentIndex = 0;
-  List<Widget> _children = [HomePage(), RiwayatPage(), SettingAkun()];
+  List<Widget> _children = [HomePage(), PageRiwayat2(), SettingAkun()];
 
   void _onItemTap(int index) {
     setState(() {

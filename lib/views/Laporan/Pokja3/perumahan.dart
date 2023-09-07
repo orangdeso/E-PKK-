@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -43,11 +45,11 @@ class _PagePerumahanState extends State<PagePerumahan> {
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       appBar: AppBar(
         title: Text(
-          "Sandang",
+          "Perumahan & Tata Laksana Rumah Tangga",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontSize: 16,
           ),
         ),
         centerTitle: true,
@@ -223,6 +225,23 @@ class _PagePerumahanState extends State<PagePerumahan> {
                         onPressed: () async {
                           print(idAkun);
                           if (_formKey.currentState!.validate()) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Tidak bisa ditutup selama menunggu
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: ktextColor,
+                                    backgroundColor: Colors.grey.shade400,
+                                    semanticsLabel: 'Loading',
+                                  ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(Duration(seconds: 2));
+
                             String layak = tLayak.text.toString();
                             String tidakLayak = tTidak.text.toString();
                             GetApi.LaporanPerumahan(

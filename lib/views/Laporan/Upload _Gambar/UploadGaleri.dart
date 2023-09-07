@@ -1,7 +1,7 @@
-import 'dart:convert';
+// ignore_for_file: body_might_complete_normally_nullable, unnecessary_null_comparison, unused_field
+
 import 'dart:io';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/ApiBidang.dart';
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAkun.dart';
@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class PageGaleri extends StatefulWidget {
   static String route = "/page_galeery";
@@ -284,6 +283,77 @@ class _PageGaleriState extends State<PageGaleri> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        "Tanggal",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFormField(
+                        validator: (value) {
+                          if (value.toString().isEmpty) {
+                            return "Harap pilih Tanggal";
+                          }
+                        },
+                        controller: getTgl,
+                        keyboardType: TextInputType.number,
+                        readOnly: true,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            onPressed: () async {
+                              final DateTime? picked = await showDatePicker(
+                                  context: context,
+                                  initialDate: selectedDate,
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2025));
+                              if (picked != null && picked != selectedDate) {
+                                setState(() {
+                                  selectedDate = picked;
+                                  getTgl!.text = DateFormat('yyyy-MM-dd')
+                                      .format(selectedDate);
+                                });
+                              }
+                            },
+                            icon: Icon(Icons.date_range),
+                            color: Colors.grey,
+                          ),
+                          fillColor: Color.fromARGB(255, 235, 235, 235),
+                          filled: true,
+                          hintText: "Pilih Tanggal",
+                          hintStyle: TextStyle(
+                            fontSize: 15,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: Color.fromARGB(255, 226, 226, 226),
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                        ),
+                        // controller: nameController,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       dropdownPokja(
                         listItem: ListL,
                         namaLabel: "Laporan",
@@ -296,8 +366,8 @@ class _PageGaleriState extends State<PageGaleri> {
                       ),
                       dropdownBidang(
                         listItem: ListB,
-                        namaLabel: "Bidang",
-                        hintText: "Pilih Bidang Laporan",
+                        namaLabel: "Program Kerja",
+                        hintText: "Pilih Program Kerja Laporan",
                         randomlabel: "Kesehatan",
                         errorKosong: "Harap Isi",
                       ),
@@ -350,7 +420,7 @@ class _PageGaleriState extends State<PageGaleri> {
                       //   // controller: nameController,
                       // ),
                       SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                       Text(
                         "Deskripsi",
@@ -365,7 +435,7 @@ class _PageGaleriState extends State<PageGaleri> {
                       TextFormField(
                         validator: (value) {
                           if (value.toString().isEmpty) {
-                            return "Harap isi Judul";
+                            return "Harap isi Deskripsi";
                           }
                         },
                         maxLines: 4,
@@ -447,77 +517,7 @@ class _PageGaleriState extends State<PageGaleri> {
                       //   ),
                       //   // controller: nameController,
                       // ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        "Tanggal",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 15,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value.toString().isEmpty) {
-                            return "Harap pilih Tanggal";
-                          }
-                        },
-                        controller: getTgl,
-                        keyboardType: TextInputType.number,
-                        readOnly: true,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        decoration: InputDecoration(
-                          suffixIcon: IconButton(
-                            onPressed: () async {
-                              final DateTime? picked = await showDatePicker(
-                                  context: context,
-                                  initialDate: selectedDate,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2025));
-                              if (picked != null && picked != selectedDate) {
-                                setState(() {
-                                  selectedDate = picked;
-                                  getTgl!.text = DateFormat('yyyy-MM-dd')
-                                      .format(selectedDate);
-                                });
-                              }
-                            },
-                            icon: Icon(Icons.date_range),
-                            color: Colors.grey,
-                          ),
-                          fillColor: Color.fromARGB(255, 235, 235, 235),
-                          filled: true,
-                          hintText: "Pilih Tanggal",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Color.fromARGB(255, 226, 226, 226),
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: Color.fromARGB(255, 226, 226, 226),
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10),
-                            ),
-                          ),
-                        ),
-                        // controller: nameController,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
+
                       // Text(
                       //   "Masukkan beberapa foto kegiatan",
                       //   style: TextStyle(
@@ -545,7 +545,25 @@ class _PageGaleriState extends State<PageGaleri> {
                             for (File file in kumpulanImage) {
                               print("fileterpilih == $file.path ");
                             }
+                            
                             if (_formKey.currentState!.validate()) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible:
+                                    false, // Tidak bisa ditutup selama menunggu
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: ktextColor,
+                                      backgroundColor: Colors.grey.shade400,
+                                      semanticsLabel: 'Loading',
+                                    ),
+                                  );
+                                },
+                              );
+
+                              await Future.delayed(Duration(seconds: 2));
+
                               GetApi.DoubleuploadDataImage(
                                 imageFiles: kumpulanImage,
                                 deskripsi: getJudul!.text,

@@ -1,8 +1,6 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:e_pkk/models/ApiCancelLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/EditLaporan/edit_gotong.dart';
-import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
 import 'package:flutter/material.dart';
 
 class PageDetailGotongRoyong extends StatefulWidget {
@@ -23,7 +21,7 @@ class _PageDetailGotongRoyongState extends State<PageDetailGotongRoyong> {
       setState(() => isButtonAktif = false);
       setState(() => isButtonBatalAktif = false);
       return Colors.red.shade400;
-    } else if (stts == "Review") {
+    } else if (stts == "Revisi") {
       setState(() => isButtonBatalAktif = false);
       return Colors.blue.shade400;
     } else {
@@ -36,7 +34,7 @@ class _PageDetailGotongRoyongState extends State<PageDetailGotongRoyong> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 2), () {
         setState(() {
           isLoading = false;
         });
@@ -80,8 +78,7 @@ class _PageDetailGotongRoyongState extends State<PageDetailGotongRoyong> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RiwayatPage()));
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back),
         ),

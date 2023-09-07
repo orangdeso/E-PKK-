@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +47,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 2), () {
         setState(() {
           isLoading = false;
         });
@@ -388,6 +390,24 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                             child: ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
+                                  // Menampilkan Circular Progres Indicator
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        false, // Tidak bisa ditutup selama menunggu
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ktextColor,
+                                          backgroundColor: Colors.grey.shade400,
+                                          semanticsLabel: 'Loading',
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  await Future.delayed(Duration(seconds: 3));
+
                                   print("Test Laporan Gotong Royong");
                                   String kerja_bakti = tKerja.text.toString();
                                   String rukun_kematian =

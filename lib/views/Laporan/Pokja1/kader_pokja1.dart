@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -40,7 +42,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 2), () {
         setState(() {
           isLoading = false;
         });
@@ -106,7 +108,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                             height: 10,
                           ),
                           Divider(
-                            height: 2,
+                            thickness: 1,
                           )
                         ],
                       ),
@@ -283,6 +285,24 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                             onPressed: () async {
                               print(idAkun);
                               if (_formKey.currentState!.validate()) {
+                                // Menampilkan Circular Progres Indicator
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Tidak bisa ditutup selama menunggu
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: ktextColor,
+                                        backgroundColor: Colors.grey.shade400,
+                                        semanticsLabel: 'Loading',
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                await Future.delayed(Duration(seconds: 3));
+
                                 String pkbn = getPKBN.text.toString();
                                 String pkdrt = getPKDRT.text.toString();
                                 String pola = getPola.text.toString();

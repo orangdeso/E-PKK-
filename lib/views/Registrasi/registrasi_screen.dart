@@ -1,10 +1,11 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'dart:convert';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/LoginApi.dart';
 import 'package:e_pkk/views/Login/login_screen.dart';
 import 'package:e_pkk/views/Registrasi/components/RegistrasiController.dart';
-import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/components/background.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Registrasi/otp_page_regis.dart';
@@ -67,14 +68,33 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       String password,
       String konfirm,
       String kode_otp,
-      String status) {
+      String status) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Tidak bisa ditutup selama menunggu
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(
+            color: ktextColor,
+            backgroundColor: Colors.grey.shade400,
+            semanticsLabel: 'Loading',
+          ),
+        );
+      },
+    );
+    // await Future.delayed(Duration(seconds: 2));
     if (password != konfirm) {
       _alertPassword(context);
     } else {
-      LoginApi.registrasiPost(nama_pengguna, nama_kec, no_whatsapp, alamat,
-              password, kode_otp, status)
-          .then((value) async {
-        Future.delayed(Duration(seconds: 2), () {});
+      LoginApi.registrasiPost(
+        nama_pengguna,
+        nama_kec,
+        no_whatsapp,
+        alamat,
+        password,
+        kode_otp,
+        status,
+      ).then((value) async {
         if (value.kode == 1) {
           _kirimNotifikasi();
           Navigator.push(
@@ -101,10 +121,12 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
-      showCloseIcon: true,
+      showCloseIcon: false,
       title: "Gagal",
       desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
     ).show();
   }
 
@@ -113,23 +135,13 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
-      showCloseIcon: true,
+      showCloseIcon: false,
       title: "Gagal mendaftarkan akun",
       desc:
           "Nomor WhatsApp atau nama kecamatan sudah digunakan. Silahkan cek kembali !",
-      btnOkOnPress: () {},
-    ).show();
-  }
-
-  _AlertBerhasilRegis(context) {
-    AwesomeDialog(
-      context: context,
-      dialogType: DialogType.success,
-      animType: AnimType.topSlide,
-      showCloseIcon: true,
-      title: "Kode Verifikasi Terkirim",
-      desc: "Silahkan klik OK untuk memasukkan kode verifikasi",
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
     ).show();
   }
 
@@ -345,11 +357,13 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
                           return 'nomor melebihi 13 digit';
                         }
                       },
+                      maxLength: 13,
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
                         FilteringTextInputFormatter.digitsOnly
                       ],
                       decoration: InputDecoration(
+                        counterText: "",
                         hintText: "0821xxx",
                         hintStyle: TextStyle(
                           color: grey400,

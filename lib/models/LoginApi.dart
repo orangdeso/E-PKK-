@@ -33,6 +33,24 @@ class LoginApi {
     );
   }
 
+  static Future<LoginApi> kirimUlangOtp(
+    String no_whatsapp,
+    String kode_otp,
+  ) async {
+    Uri url = Uri.parse(ApiHelper.url + 'updateOtpRegis.php');
+    var response = await http.post(url, body: {
+      'no_whatsapp': no_whatsapp,
+      'kode_otp': kode_otp,
+    });
+
+    var body = json.decode(response.body);
+    return LoginApi(
+      kode: body['kode'],
+      pesan: body['pesan'],
+      data: body['data'],
+    );
+  }
+
   static Future<LoginApi> getPengguna(String no_whatsapp) async {
     Uri url = Uri.parse(ApiHelper.url + 'getPengguna.php');
     var response = await http.post(url, body: {

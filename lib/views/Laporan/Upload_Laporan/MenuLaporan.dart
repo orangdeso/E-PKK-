@@ -89,7 +89,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                               child: Container(
                                 width: 170,
                                 child: Text(
-                                  "Silakan pilih button sesuai dengan bidang yang ingin di lakukan upload laporan",
+                                  "Pilih button sesuai dengan program kerja yang ingin di lakukan upload laporan",
                                   style: TextStyle(
                                     color: Colors.white,
                                   ),
@@ -146,7 +146,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                     subtitle: Padding(
                       padding: EdgeInsets.only(top: 5),
                       child: Text(
-                        "Silahkan pilih bidang",
+                        "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
@@ -417,7 +417,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                     subtitle: Padding(
                       padding: EdgeInsets.only(top: 5),
                       child: Text(
-                        "Silahkan pilih bidang",
+                        "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
@@ -613,7 +613,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                     subtitle: Padding(
                       padding: EdgeInsets.only(top: 5),
                       child: Text(
-                        "Silahkan pilih bidang",
+                        "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                         ),
@@ -791,7 +791,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(250, 255, 191, 172),
+                                color: Color.fromARGB(250, 255, 193, 127),
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.grey.shade300,
@@ -823,13 +823,13 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                       ),
                                       child: ListTile(
                                         leading: Image.asset(
-                                          "assets/images/home_control.png",
+                                          "assets/images/sandang.png",
                                           width: 40,
                                           height: 40,
                                           fit: BoxFit.cover,
                                         ),
                                         title: Text(
-                                          "Idustri Rumah Tangga",
+                                          "Sandang",
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
@@ -902,7 +902,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           fit: BoxFit.cover,
                                         ),
                                         title: Text(
-                                          "Jumlah Rumah",
+                                          "Perumahan & Tata Laksana Rumah Tangga",
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
@@ -955,7 +955,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                     subtitle: Padding(
                       padding: EdgeInsets.only(top: 5),
                       child: Text(
-                        "Silahkan pilih bidang",
+                        "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                         ),

@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'dart:convert';
 import 'dart:math';
 import 'package:e_pkk/helpers/ApiHelper.dart';
@@ -18,6 +20,7 @@ class lupaPassword extends StatefulWidget {
 
 class _lupaPasswordState extends State<lupaPassword> {
   var _formkey = GlobalKey<FormState>();
+
   TextEditingController tWane = TextEditingController();
 
   @override
@@ -55,7 +58,22 @@ class _lupaPasswordState extends State<lupaPassword> {
 
   void btKirim(BuildContext context, String no_whatsapp) {
     LoginApi.getPengguna(no_whatsapp).then((value) async {
-      Future.delayed(Duration(seconds: 2), () {});
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Tidak bisa ditutup selama menunggu
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: ktextColor,
+              backgroundColor: Colors.grey.shade400,
+              semanticsLabel: 'Loading',
+            ),
+          );
+        },
+      );
+
+      await Future.delayed(Duration(seconds: 2));
+
       if (value.kode == 1) {
         print("Nomor Terdaftar");
         _kirimOTP();
@@ -88,6 +106,7 @@ class _lupaPasswordState extends State<lupaPassword> {
             ),
           ),
         );
+        Navigator.pop(context);
       }
     });
   }
@@ -161,11 +180,13 @@ class _lupaPasswordState extends State<lupaPassword> {
                       return 'minimal 12 digit nomor';
                     }
                   },
+                  maxLength: 13,
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: InputDecoration(
+                    counterText: "",
                     hintText: "0821xxx",
                     hintStyle: TextStyle(
                       color: grey400,

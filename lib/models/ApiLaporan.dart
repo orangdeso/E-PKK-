@@ -288,23 +288,13 @@ class GetApi {
       ..fields['jumlah_peserta_hukum'] = jumlah_peserta_hukum.toString()
       ..fields['id_user'] = userID.toString();
 
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadKesehatan();
@@ -313,7 +303,7 @@ class GetApi {
       );
     } else {
       print('Data gagal disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -321,7 +311,48 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
+    }
+  }
+
+  static Future<void> LaporanKader3(
+      {String? pangan,
+      String? sandang,
+      String? tata_laksana_rumah,
+      String? userID,
+      BuildContext? context}) async {
+    final url = Uri.parse(ApiHelper.url + 'insert_kader3.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['pangan'] = pangan.toString()
+      ..fields['sandang'] = sandang.toString()
+      ..fields['tata_laksana_rumah'] = tata_laksana_rumah.toString()
+      ..fields['id_user'] = userID.toString();
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      //Navigator.of(context).pop();
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
+    } else {
+      print('Data gagal disimpan!');
+      //Navigator.of(context).pop();
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
     }
   }
 
@@ -349,23 +380,13 @@ class GetApi {
       ..fields['tanaman_keras'] = tanaman_keras.toString()
       ..fields['id_user'] = userID.toString();
 
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadKesehatan();
@@ -374,7 +395,7 @@ class GetApi {
       );
     } else {
       print('Data gagal disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -382,7 +403,7 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
     }
   }
 
@@ -400,23 +421,13 @@ class GetApi {
       ..fields['jasa'] = jasa.toString()
       ..fields['id_user'] = userID.toString();
 
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadKesehatan();
@@ -425,7 +436,7 @@ class GetApi {
       );
     } else {
       print('Data gagal disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -433,7 +444,7 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
     }
   }
 
@@ -449,23 +460,13 @@ class GetApi {
       ..fields['tidak_layak'] = tidak_layak.toString()
       ..fields['id_user'] = userID.toString();
 
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadKesehatan();
@@ -474,7 +475,7 @@ class GetApi {
       );
     } else {
       print('Data gagal disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -482,35 +483,75 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
     }
   }
 
-  static Future<void> LaporanBidangKesehatan(
-      {File? fileBruh,
-      String? kategori,
-      String? jml_posyandu,
-      String? posIterasi,
-      String? jml_klp,
-      String? jml_anggota,
-      String? kartuFree,
+  static Future<void> LaporanKader4(
+      {String? posyandu,
+      String? gizi,
+      String? kesling,
+      String? penyuluhan,
+      String? PHBS,
+      String? KB,
       String? userID,
       BuildContext? context}) async {
+    final url = Uri.parse(ApiHelper.url + 'insert_kader4.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['posyandu'] = posyandu.toString()
+      ..fields['gizi'] = gizi.toString()
+      ..fields['kesling'] = kesling.toString()
+      ..fields['penyuluhan_narkoba'] = penyuluhan.toString()
+      ..fields['PHBS'] = PHBS.toString()
+      ..fields['KB'] = KB.toString()
+      ..fields['id_user'] = userID.toString();
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      //Navigator.of(context).pop();
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
+    } else {
+      print('Data gagal disimpan!');
+      //Navigator.of(context).pop();
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
+    }
+  }
+
+  static Future<void> LaporanBidangKesehatan({
+    String? jumlah_posyandu,
+    String? jumlah_posyandu_iterasi,
+    String? jumlah_klp,
+    String? jumlah_anggota,
+    String? jumlah_kartu_gratis,
+    String? userID,
+    BuildContext? context,
+  }) async {
     final url = Uri.parse(ApiHelper.url + 'insert_laporan_sehat.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['kategori'] = kategori.toString()
-      ..fields['jml_posyandu'] = jml_posyandu.toString()
-      ..fields['jml_posyandu_iterasi'] = posIterasi.toString()
-      ..fields['jml_klp'] = jml_klp.toString()
-      ..fields['jml_anggota'] = jml_anggota.toString()
-      ..fields['jml_kartu'] = kartuFree.toString()
-      ..fields['id_user'] = userID.toString()
-      ..files.add(http.MultipartFile.fromBytes(
-        'file',
-        fileBruh!.readAsBytesSync(),
-        filename: fileBruh.path.split('/').last,
-      ));
+      ..fields['jumlah_posyandu'] = jumlah_posyandu.toString()
+      ..fields['jumlah_posyandu_iterasi'] = jumlah_posyandu_iterasi.toString()
+      ..fields['jumlah_klp'] = jumlah_klp.toString()
+      ..fields['jumlah_anggota'] = jumlah_anggota.toString()
+      ..fields['jumlah_kartu_gratis'] = jumlah_kartu_gratis.toString()
+      ..fields['id_user'] = userID.toString();
 
     final response = await request.send();
 
@@ -538,8 +579,7 @@ class GetApi {
   }
 
   static Future<void> LaporanBidangLingkuhanHidup(
-      {File? fileBruh,
-      String? jamban,
+      {String? jamban,
       String? spal,
       String? tps,
       String? mck,
@@ -551,19 +591,20 @@ class GetApi {
     final url = Uri.parse(ApiHelper.url + 'insert_kelestarian_LH.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['jamban'] = jamban.toString()
-      ..fields['Spal'] = spal.toString()
-      ..fields['tps'] = tps.toString()
-      ..fields['Mck'] = mck.toString()
-      ..fields['Pdam'] = pdam.toString()
-      ..fields['Sumur'] = sumur.toString()
-      ..fields['dll'] = danlainlain.toString()
-      ..fields['id_user'] = IdUser.toString()
-      ..files.add(http.MultipartFile.fromBytes(
-        'file',
-        fileBruh!.readAsBytesSync(),
-        filename: fileBruh.path.split('/').last,
-      ));
+          ..fields['jamban'] = jamban.toString()
+          ..fields['spal'] = spal.toString()
+          ..fields['tps'] = tps.toString()
+          ..fields['mck'] = mck.toString()
+          ..fields['pdam'] = pdam.toString()
+          ..fields['sumur'] = sumur.toString()
+          ..fields['dll'] = danlainlain.toString()
+          ..fields['id_user'] = IdUser.toString()
+        // ..files.add(http.MultipartFile.fromBytes(
+        //   'file',
+        //   fileBruh!.readAsBytesSync(),
+        //   filename: fileBruh.path.split('/').last,
+        // ))
+        ;
 
     final response = await request.send();
 
@@ -591,7 +632,6 @@ class GetApi {
   }
 
   static Future<void> LaporanBidangPerencaanSehat({
-    File? fileBruh,
     String? PriaSubur,
     String? WanitaSubur,
     String? Kb_Pria,
@@ -603,36 +643,27 @@ class GetApi {
     final url = Uri.parse(ApiHelper.url + 'insert_laporan_Psehat.php');
 
     final request = http.MultipartRequest('POST', url)
-      ..fields['J_Psubur'] = PriaSubur.toString()
-      ..fields['J_Wsubur'] = WanitaSubur.toString()
-      ..fields['Kb_p'] = Kb_Pria.toString()
-      ..fields['Kb_w'] = Kb_Wanita.toString()
-      ..fields['Kk_tbg'] = Tabungan_Kk.toString()
-      ..fields['id_user'] = userID.toString()
-      ..files.add(http.MultipartFile.fromBytes(
-        'file',
-        fileBruh!.readAsBytesSync(),
-        filename: fileBruh.path.split('/').last,
-      ));
-
-    //Loading cirle
-    showDialog(
-      context: context!,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
+          ..fields['J_Psubur'] = PriaSubur.toString()
+          ..fields['J_Wsubur'] = WanitaSubur.toString()
+          ..fields['Kb_p'] = Kb_Pria.toString()
+          ..fields['Kb_w'] = Kb_Wanita.toString()
+          ..fields['Kk_tbg'] = Tabungan_Kk.toString()
+          ..fields['id_user'] = userID.toString()
+        // ..files.add(http.MultipartFile.fromBytes(
+        //   'file',
+        //   fileBruh!.readAsBytesSync(),
+        //   filename: fileBruh.path.split('/').last,
+        // ))
+        ;
 
     //Kirim data
     final response = await request.send();
 
     if (response.statusCode == 200) {
       print('Data berhasil disimpan!');
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       Navigator.push(
-        context,
+        context!,
         MaterialPageRoute(
           builder: (context) {
             return SuccesUploadPerencanaan();
@@ -640,7 +671,7 @@ class GetApi {
         ),
       );
     } else {
-      Navigator.of(context).pop();
+      //Navigator.of(context).pop();
       CherryToast.error(
         title: Text(
           "Gagal Upload. Silahkan Cek Kembali",
@@ -648,11 +679,80 @@ class GetApi {
             fontSize: 13,
           ),
         ),
-      ).show(context);
+      ).show(context!);
       print('Data gagal disimpan!');
     }
     // pop the loading circle
     //Navigator.of(context).pop();
+  }
+
+  static Future<void> LaporanUmum(
+      {String? dusun_lingkungan,
+      String? PKK_RW,
+      String? desa_wisma,
+      String? KRT,
+      String? KK,
+      String? jiwa_laki,
+      String? jiwa_perempuan,
+      String? anggota_laki,
+      String? anggota_perempuan,
+      String? umum_laki,
+      String? umum_perempuan,
+      String? khusus_laki,
+      String? khusus_perempuan,
+      String? honorer_laki,
+      String? honorer_perempuan,
+      String? bantuan_laki,
+      String? bantuan_perempuan,
+      String? userID,
+      BuildContext? context}) async {
+    final url = Uri.parse(ApiHelper.url + 'insert_lap_umum.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['dusun_lingkungan'] = dusun_lingkungan.toString()
+      ..fields['PKK_RW'] = PKK_RW.toString()
+      ..fields['desa_wisma'] = desa_wisma.toString()
+      ..fields['KRT'] = KRT.toString()
+      ..fields['KK'] = KK.toString()
+      ..fields['jiwa_laki'] = jiwa_laki.toString()
+      ..fields['jiwa_perempuan'] = jiwa_perempuan.toString()
+      ..fields['anggota_laki'] = anggota_laki.toString()
+      ..fields['anggota_perempuan'] = anggota_perempuan.toString()
+      ..fields['umum_laki'] = umum_laki.toString()
+      ..fields['umum_perempuan'] = umum_perempuan.toString()
+      ..fields['khusus_laki'] = khusus_laki.toString()
+      ..fields['khusus_perempuan'] = khusus_perempuan.toString()
+      ..fields['honorer_laki'] = honorer_laki.toString()
+      ..fields['honorer_perempuan'] = honorer_perempuan.toString()
+      ..fields['bantuan_laki'] = bantuan_laki.toString()
+      ..fields['bantuan_perempuan'] = bantuan_perempuan.toString()
+      ..fields['id_user'] = userID.toString();
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      //Navigator.of(context).pop();
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
+    } else {
+      print('Data gagal disimpan!');
+      //Navigator.of(context).pop();
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
+    }
   }
 
   static Future<void> DoubleuploadDataImage(
@@ -667,13 +767,24 @@ class GetApi {
     var request = http.MultipartRequest(
         'POST', Uri.parse(ApiHelper.url + 'multiImage.php'));
 
+    // var balap = 1;
+
     for (var i = 0; i < imageFiles!.length; i++) {
       var file = imageFiles[i];
+
+      // String p = "1.${balap}";
+      // print("Tes bruh ${p}");
+      // request.fields['detail_gambar'] = '1.${p}';
+
+      // Perubahan di bawah ini
+      // var detailGambarValue = "1.$balap";
+      // print("Tes bruh ${detailGambarValue}");
+      // request.fields['detail_gambar'] = detailGambarValue;
 
       request.files
           .add(await http.MultipartFile.fromPath('image[]', file.path));
 
-      request.fields['detail_gambar'] = 'gambar${i + 1}';
+      // balap += 1;
     }
 
     request.fields['deskripsi'] = deskripsi.toString();

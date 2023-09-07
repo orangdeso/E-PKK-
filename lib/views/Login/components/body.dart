@@ -1,8 +1,9 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/views/Login/components/LoginController.dart';
 import 'package:e_pkk/views/LupaPassword/lupa_password_screen.dart';
 import 'package:e_pkk/views/Login/components/background.dart';
-import 'package:e_pkk/views/Registrasi/components/atau_divider.dart';
 import 'package:e_pkk/views/Registrasi/registrasi_screen.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -308,7 +309,7 @@ class _BodyState extends State<Body> {
                       fontWeight: FontWeight.bold,
                       color: whiteColor,
                     ),
-                    pressEvent: () {
+                    pressEvent: () async {
                       if (_formKey.currentState!.validate()) {
                         controller.btLogin(
                           context,

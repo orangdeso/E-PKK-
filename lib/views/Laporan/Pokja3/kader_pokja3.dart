@@ -1,3 +1,6 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
+import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +29,9 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
     });
   }
 
-  TextEditingController getPKBN = TextEditingController();
-  TextEditingController getPKDRT = TextEditingController();
-  TextEditingController getPola = TextEditingController();
+  TextEditingController getPangan = TextEditingController();
+  TextEditingController getSandang = TextEditingController();
+  TextEditingController getTata = TextEditingController();
 
   void loadTampilan() {
     setState(() {
@@ -141,7 +144,7 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKBN,
+                                    controller: getPangan,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -190,7 +193,7 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKDRT,
+                                    controller: getSandang,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -239,7 +242,7 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPola,
+                                    controller: getTata,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -272,7 +275,40 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                               horizontal: 20, vertical: 20),
                           child: ElevatedButton(
                             onPressed: () async {
-                              print(idAkun);
+                              if (_formKey.currentState!.validate()) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Tidak bisa ditutup selama menunggu
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: ktextColor,
+                                        backgroundColor: Colors.grey.shade400,
+                                        semanticsLabel: 'Loading',
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                await Future.delayed(Duration(seconds: 2));
+
+                                print(idAkun);
+                                String pangan = getPangan.text.toString();
+                                String sandang = getSandang.text.toString();
+                                String tata = getTata.text.toString();
+                                GetApi.LaporanKader3(
+                                  context: context,
+                                  pangan: pangan,
+                                  sandang: sandang,
+                                  tata_laksana_rumah: tata,
+                                  userID: idAkun,
+                                ).then(
+                                  (value) => {
+                                    print("Berhasil"),
+                                  },
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

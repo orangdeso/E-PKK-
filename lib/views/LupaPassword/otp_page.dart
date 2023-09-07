@@ -1,6 +1,9 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'dart:convert';
 import 'dart:math';
 import 'package:e_pkk/helpers/ApiHelper.dart';
+import 'package:e_pkk/models/LoginApi.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -10,7 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class otpPage extends StatefulWidget {
-  String noHp, kodeOtp;
+  final String noHp, kodeOtp;
 
   // Passing Data
   otpPage({Key? key, required this.noHp, required this.kodeOtp})
@@ -22,19 +25,28 @@ class otpPage extends StatefulWidget {
 
 class _otpPageState extends State<otpPage> {
   var _formkey = GlobalKey<FormState>();
-  TextEditingController kodeotptxt = TextEditingController();
   late String otpRegister;
   late String noHp;
 
-  @override
-  void initState() {
-    super.initState();
-    otpRegister = widget.kodeOtp;
-    noHp = widget.noHp;
-    random();
-  }
+  TextEditingController kodeotptxt = TextEditingController();
 
-  void verifyCode() {
+  void verifyCode() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Tidak bisa ditutup selama menunggu
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(
+            color: ktextColor,
+            backgroundColor: Colors.grey.shade400,
+            semanticsLabel: 'Loading',
+          ),
+        );
+      },
+    );
+
+    await Future.delayed(Duration(seconds: 2));
+
     if (otpRegister.toString() == kodeotptxt.text) {
       Navigator.push(
         context,
@@ -46,6 +58,14 @@ class _otpPageState extends State<otpPage> {
       );
     } else if (randomNumber.toString() == kodeotptxt.text) {
       print("kondisi ke dua jalan");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return ResetPassword(noHp: noHp);
+          },
+        ),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -55,6 +75,7 @@ class _otpPageState extends State<otpPage> {
           ),
         ),
       );
+      Navigator.pop(context);
     }
   }
 
@@ -85,9 +106,31 @@ class _otpPageState extends State<otpPage> {
     }
   }
 
+  void updateOtp(
+    BuildContext context,
+    String no_whatsapp,
+    String kode_otp,
+  ) {
+    LoginApi.kirimUlangOtp(no_whatsapp, kode_otp).then((value) async {
+      if (value.kode == 1) {
+        print("Berhasil Masuk Database");
+      } else {
+        print(value);
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    otpRegister = widget.kodeOtp;
+    noHp = widget.noHp;
+    random();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -197,7 +240,13 @@ class _otpPageState extends State<otpPage> {
                   Text("Belum menerima kode ? "),
                   GestureDetector(
                     onTap: () {
+                      setState(() {});
                       _kirimUlangOTP();
+                      updateOtp(
+                        context,
+                        noHp,
+                        randomNumber.toString(),
+                      );
                     },
                     child: Text(
                       " Kirim ulang",

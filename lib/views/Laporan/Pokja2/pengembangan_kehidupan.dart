@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -690,6 +692,23 @@ class _PagePengembanganKehidupanState extends State<PagePengembanganKehidupan> {
                         onPressed: () async {
                           print(idAkun);
                           if (_formKey.currentState!.validate()) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Tidak bisa ditutup selama menunggu
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: ktextColor,
+                                    backgroundColor: Colors.grey.shade400,
+                                    semanticsLabel: 'Loading',
+                                  ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(Duration(seconds: 2));
+                            
                             String jumlah_kelompok_pemula =
                                 tKelompokPemula.text.toString();
                             String jumlah_peserta_pemula =

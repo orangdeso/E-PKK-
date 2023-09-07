@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.18.1
   shimmer: ^3.0.0
   awesome_notifications: ^0.6.19
+  conditional_builder_null_safety: ^0.0.6
   # flutter_native_splash: ^2.2.19
 
   # dropdown_button2: ^2.0.0

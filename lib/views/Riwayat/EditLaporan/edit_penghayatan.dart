@@ -1,10 +1,10 @@
+// ignore_for_file: body_might_complete_normally_nullable, unused_local_variable
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:e_pkk/models/ApiEditLaporan.dart';
-import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PageEditPenghayatan extends StatefulWidget {
   final String id;
@@ -705,24 +705,25 @@ class _PageEditPenghayatanState extends State<PageEditPenghayatan> {
                         children: [
                           ElevatedButton(
                             onPressed: () async {
-                              // Menampilkan Circular Progres Indicator
-                              showDialog(
-                                context: context,
-                                barrierDismissible:
-                                    false, // Tidak bisa ditutup selama menunggu
-                                builder: (BuildContext context) {
-                                  return Center(
-                                    child: CircularProgressIndicator(
-                                      color: ktextColor,
-                                      backgroundColor: Colors.grey.shade400,
-                                      semanticsLabel: 'Loading',
-                                    ),
-                                  );
-                                },
-                              );
-                              // Menunda eksekusi selama 3 detik
-                              await Future.delayed(Duration(seconds: 3));
                               if (_formKey.currentState!.validate()) {
+                                // Menampilkan Circular Progres Indicator
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Tidak bisa ditutup selama menunggu
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: ktextColor,
+                                        backgroundColor: Colors.grey.shade400,
+                                        semanticsLabel: 'Loading',
+                                      ),
+                                    );
+                                  },
+                                );
+                                // Menunda eksekusi selama 3 detik
+                                await Future.delayed(Duration(seconds: 3));
+
                                 String jumlah_kel_simulasi1 =
                                     getJmlSimulasi1.text.toString();
                                 String jumlah_anggota1 =

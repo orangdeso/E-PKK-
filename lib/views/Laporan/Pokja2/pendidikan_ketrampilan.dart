@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -1469,26 +1471,26 @@ class _PagePendidikanKetrampilanState extends State<PagePendidikanKetrampilan> {
                             padding: EdgeInsets.only(bottom: 30),
                             child: ElevatedButton(
                               onPressed: () async {
-                                // Menampilkan Circular Progres Indicator
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible:
-                                      false, // Tidak bisa ditutup selama menunggu
-                                  builder: (BuildContext context) {
-                                    return Center(
-                                      child: CircularProgressIndicator(
-                                        color: ktextColor,
-                                        backgroundColor: Colors.grey.shade400,
-                                        semanticsLabel: 'Loading',
-                                      ),
-                                    );
-                                  },
-                                );
-
-                                await Future.delayed(Duration(seconds: 3));
-
                                 print(idAkun);
                                 if (_formKey.currentState!.validate()) {
+                                  // Menampilkan Circular Progres Indicator
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        false, // Tidak bisa ditutup selama menunggu
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ktextColor,
+                                          backgroundColor: Colors.grey.shade400,
+                                          semanticsLabel: 'Loading',
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  await Future.delayed(Duration(seconds: 3));
+
                                   String warga_buta = tButa.text.toString();
                                   String kel_belajarA = tKelA.text.toString();
                                   String warga_belajarA =

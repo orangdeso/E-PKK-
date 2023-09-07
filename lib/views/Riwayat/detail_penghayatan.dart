@@ -1,10 +1,7 @@
-import 'package:cherry_toast/cherry_toast.dart';
 import 'package:e_pkk/models/ApiCancelLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/EditLaporan/edit_penghayatan.dart';
-import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class PageDetailPenghayatan extends StatefulWidget {
   const PageDetailPenghayatan({super.key});
@@ -24,11 +21,12 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
       setState(() => isButtonAktif = false);
       setState(() => isButtonBatalAktif = false);
       return Colors.red.shade400;
-    } else if (stts == "Review") {
+    } else if (stts == "Revisi") {
       setState(() => isButtonBatalAktif = false);
       return Colors.blue.shade400;
     } else {
       setState(() => isButtonAktif = false);
+      setState(() => isButtonBatalAktif = false);
       return Colors.green.shade500;
     }
   }
@@ -37,7 +35,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
 
   void loadTampilan() {
     setState(() {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(Duration(seconds: 2), () {
         setState(() {
           isLoading = false;
         });
@@ -84,8 +82,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => RiwayatPage()));
+            Navigator.pop(context);
           },
           icon: Icon(Icons.arrow_back),
         ),

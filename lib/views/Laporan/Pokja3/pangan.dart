@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -547,31 +549,33 @@ class _PagePanganState extends State<PagePangan> {
                       padding: EdgeInsets.only(bottom: 30),
                       child: ElevatedButton(
                         onPressed: () async {
-                          print(idAkun);
-                          String beras = tBeras.text.toString();
-                          String nonBeras = tNonBeras.text.toString();
-                          String peternakan = tPeternakan.text.toString();
-                          String perikanan = tPerikanan.text.toString();
-                          String warung = tWarung.text.toString();
-                          String lumbung = tLumbung.text.toString();
-                          String toga = tToga.text.toString();
-                          String tanaman = tTanaman.text.toString();
-                          GetApi.LaporanPangan(
-                            context: context,
-                            beras: beras,
-                            non_beras: nonBeras,
-                            peternakan: peternakan,
-                            perikanan: perikanan,
-                            warung_hidup: warung,
-                            lumbung_hidup: lumbung,
-                            toga: toga,
-                            tanaman_keras: tanaman,
-                            userID: idAkun,
-                          ).then(
-                            (value) => {
-                              print('Berhasil bro'),
-                            },
-                          );
+                          if (_formKey.currentState!.validate()) {
+                            print(idAkun);
+                            String beras = tBeras.text.toString();
+                            String nonBeras = tNonBeras.text.toString();
+                            String peternakan = tPeternakan.text.toString();
+                            String perikanan = tPerikanan.text.toString();
+                            String warung = tWarung.text.toString();
+                            String lumbung = tLumbung.text.toString();
+                            String toga = tToga.text.toString();
+                            String tanaman = tTanaman.text.toString();
+                            GetApi.LaporanPangan(
+                              context: context,
+                              beras: beras,
+                              non_beras: nonBeras,
+                              peternakan: peternakan,
+                              perikanan: perikanan,
+                              warung_hidup: warung,
+                              lumbung_hidup: lumbung,
+                              toga: toga,
+                              tanaman_keras: tanaman,
+                              userID: idAkun,
+                            ).then(
+                              (value) => {
+                                print('Berhasil bro'),
+                              },
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 55, 149, 183),

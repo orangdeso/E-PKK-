@@ -1,3 +1,6 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
+import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +29,12 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
     });
   }
 
-  TextEditingController getPKBN = TextEditingController();
-  TextEditingController getPKDRT = TextEditingController();
-  TextEditingController getPola = TextEditingController();
+  TextEditingController tPosyandu = TextEditingController();
+  TextEditingController tGizi = TextEditingController();
+  TextEditingController tKesling = TextEditingController();
+  TextEditingController tPenyuluhan = TextEditingController();
+  TextEditingController tPHBS = TextEditingController();
+  TextEditingController tKB = TextEditingController();
 
   void loadTampilan() {
     setState(() {
@@ -141,7 +147,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKDRT,
+                                    controller: tPosyandu,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -190,7 +196,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPola,
+                                    controller: tGizi,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -239,7 +245,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKBN,
+                                    controller: tKesling,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -288,7 +294,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKBN,
+                                    controller: tPenyuluhan,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -338,7 +344,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKBN,
+                                    controller: tPHBS,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -387,7 +393,7 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                                     ),
                                   ),
                                   child: TextFormField(
-                                    //controller: getPKBN,
+                                    controller: tKB,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Tidak boleh kosong';
@@ -419,7 +425,43 @@ class _PageKaderPokja4State extends State<PageKaderPokja4> {
                               horizontal: 20, vertical: 20),
                           child: ElevatedButton(
                             onPressed: () async {
-                              print(idAkun);
+                              if (_formKey.currentState!.validate()) {
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Tidak bisa ditutup selama menunggu
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: ktextColor,
+                                        backgroundColor: Colors.grey.shade400,
+                                        semanticsLabel: 'Loading',
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                await Future.delayed(Duration(seconds: 2));
+
+                                String pos = tPosyandu.text.toString();
+                                String gizi = tGizi.text.toString();
+                                String kes = tKesling.text.toString();
+                                String pen = tPenyuluhan.text.toString();
+                                String phbs = tPHBS.text.toString();
+                                String kb = tKB.text.toString();
+                                GetApi.LaporanKader4(
+                                  context: context,
+                                  posyandu: pos,
+                                  gizi: gizi,
+                                  kesling: kes,
+                                  penyuluhan: pen,
+                                  PHBS: phbs,
+                                  KB: kb,
+                                  userID: idAkun,
+                                ).then(
+                                  (value) => {},
+                                );
+                              }
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:

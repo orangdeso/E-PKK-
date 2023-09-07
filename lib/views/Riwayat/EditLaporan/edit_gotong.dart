@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:cherry_toast/cherry_toast.dart';
 import 'package:e_pkk/models/ApiEditLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -379,25 +381,25 @@ class _PageEditGotongState extends State<PageEditGotong> {
                         padding: EdgeInsets.only(bottom: 30),
                         child: ElevatedButton(
                           onPressed: () async {
-                            // Menampilkan Circular Progres Indicator
-                            showDialog(
-                              context: context,
-                              barrierDismissible:
-                                  false, // Tidak bisa ditutup selama menunggu
-                              builder: (BuildContext context) {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    color: ktextColor,
-                                    backgroundColor: Colors.grey.shade400,
-                                    semanticsLabel: 'Loading',
-                                  ),
-                                );
-                              },
-                            );
-
-                            await Future.delayed(Duration(seconds: 3));
-
                             if (_formKey.currentState!.validate()) {
+                              // Menampilkan Circular Progres Indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible:
+                                    false, // Tidak bisa ditutup selama menunggu
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      color: ktextColor,
+                                      backgroundColor: Colors.grey.shade400,
+                                      semanticsLabel: 'Loading',
+                                    ),
+                                  );
+                                },
+                              );
+
+                              await Future.delayed(Duration(seconds: 2));
+
                               print("Test Laporan Gotong Royong");
                               String kerja_bakti = tKerja.text.toString();
                               String rukun_kematian = tRukun.text.toString();

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:e_pkk/views/Home/detail_pengumuman.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,18 @@ class _PengumumanPageState extends State<PengumumanPage> {
     PengumumanModel.tampilPengumuman(context).then((value) {
       myData = value.data!;
       setState(() {});
+    });
+  }
+
+  var isLoading = true;
+
+  void loadTampilan() {
+    setState(() {
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          isLoading = false;
+        });
+      });
     });
   }
 

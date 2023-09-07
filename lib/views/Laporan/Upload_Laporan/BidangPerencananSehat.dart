@@ -1,7 +1,6 @@
-import 'dart:io';
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,8 +11,8 @@ class PagePerencaanSehat extends StatefulWidget {
 }
 
 class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
-  File? _file;
-  static String? namaFileInput;
+  //File? _file;
+  //static String? namaFileInput;
   final _formKey = GlobalKey<FormState>();
   String idAkun = '';
   late Future<DataAkun> futureAkun;
@@ -47,11 +46,16 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
       appBar: AppBar(
         title: Text(
           "Bidang Perencanaan Sehat",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
+          ),
         ),
         centerTitle: true,
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
+        elevation: 1,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -60,66 +64,66 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
           child: ListView(
             children: [
               SizedBox(
-                height: 20,
+                height: 50,
               ),
-              InkWell(
-                onTap: () async {
-                  print("dek");
-                  final FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['jpg', 'jpeg', 'png'],
-                  );
-                  if (result != null) {
-                    setState(() {
-                      _file = File(result.files.single.path!);
-                      PlatformFile namaFile = result.files.first;
-                      namaFileInput = namaFile.name.toString();
-                    });
-                  }
-                },
-                child: Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 217, 217, 217),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: _file == null || _file == ""
-                      ? Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "Upload Gambar",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 20,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              "Silakan Upload gambar di sini",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            )
-                          ],
-                        )
-                      : Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 217, 217, 217),
-                            image: DecorationImage(
-                                image: FileImage(_file!), fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
+              // InkWell(
+              //   onTap: () async {
+              //     print("dek");
+              //     final FilePickerResult? result =
+              //         await FilePicker.platform.pickFiles(
+              //       type: FileType.custom,
+              //       allowedExtensions: ['jpg', 'jpeg', 'png'],
+              //     );
+              //     if (result != null) {
+              //       setState(() {
+              //         _file = File(result.files.single.path!);
+              //         PlatformFile namaFile = result.files.first;
+              //         namaFileInput = namaFile.name.toString();
+              //       });
+              //     }
+              //   },
+              //   child: Container(
+              //     height: 200,
+              //     decoration: BoxDecoration(
+              //         color: Color.fromARGB(255, 217, 217, 217),
+              //         borderRadius: BorderRadius.circular(10)),
+              //     child: _file == null || _file == ""
+              //         ? Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             children: [
+              //               Text(
+              //                 "Upload Gambar",
+              //                 style: TextStyle(
+              //                   fontWeight: FontWeight.w600,
+              //                   fontSize: 20,
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 height: 20,
+              //               ),
+              //               Text(
+              //                 "Silakan Upload gambar di sini",
+              //                 style: TextStyle(
+              //                   color: Colors.grey,
+              //                   fontWeight: FontWeight.w500,
+              //                 ),
+              //               )
+              //             ],
+              //           )
+              //         : Container(
+              //             height: 200,
+              //             decoration: BoxDecoration(
+              //               color: Color.fromARGB(255, 217, 217, 217),
+              //               image: DecorationImage(
+              //                   image: FileImage(_file!), fit: BoxFit.cover),
+              //               borderRadius: BorderRadius.circular(10),
+              //             ),
+              //           ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 30,
+              // ),
               Text(
                 "Jumlah Pria Usia Subur (PUS)",
                 style: TextStyle(
@@ -393,20 +397,35 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Tidak bisa ditutup selama menunggu
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: ktextColor,
+                            backgroundColor: Colors.grey.shade400,
+                            semanticsLabel: 'Loading',
+                          ),
+                        );
+                      },
+                    );
+
+                    await Future.delayed(Duration(seconds: 2));
+
                     GetApi.LaporanBidangPerencaanSehat(
-                            fileBruh: _file,
-                            PriaSubur: PriaSubur!.text,
-                            WanitaSubur: WanitaSubur!.text,
-                            Kb_Pria: KbPria!.text,
-                            context: context,
-                            userID: idAkun,
-                            Kb_Wanita: KbWanita!.text,
-                            Tabungan_Kk: kkTabungan!.text)
-                        .then(
+                      PriaSubur: PriaSubur!.text,
+                      WanitaSubur: WanitaSubur!.text,
+                      Kb_Pria: KbPria!.text,
+                      context: context,
+                      userID: idAkun,
+                      Kb_Wanita: KbWanita!.text,
+                      Tabungan_Kk: kkTabungan!.text,
+                    ).then(
                       (value) => {
-                        print('pppppppp'),
                         print(idAkun),
                       },
                     );

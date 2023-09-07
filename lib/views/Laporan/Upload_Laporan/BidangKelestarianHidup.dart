@@ -1,7 +1,6 @@
-import 'dart:io';
-
+// ignore_for_file: body_might_complete_normally_nullable
 import 'package:e_pkk/models/DataAKun.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,8 +15,8 @@ class PageLingkunganHidup extends StatefulWidget {
 
 class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
   final _formKey = GlobalKey<FormState>();
-  File? _file;
-  static String? namaFileInput;
+  //File? _file;
+  //static String? namaFileInput;
   String idAkun = '';
   late Future<DataAkun> futureAkun;
 
@@ -55,6 +54,7 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
         ),
         centerTitle: true,
@@ -72,69 +72,69 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                 SizedBox(
                   height: 20,
                 ),
-                InkWell(
-                  onTap: () async {
-                    print("dek");
-                    final FilePickerResult? result =
-                        await FilePicker.platform.pickFiles(
-                      type: FileType.custom,
-                      allowedExtensions: ['jpg', 'jpeg', 'png'],
-                    );
-                    if (result != null) {
-                      setState(
-                        () {
-                          _file = File(result.files.single.path!);
-                          PlatformFile namaFile = result.files.first;
-                          namaFileInput = namaFile.name.toString();
-                        },
-                      );
-                    }
-                  },
-                  child: Container(
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 217, 217, 217),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: _file == null || _file == ""
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Upload Gambar",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Silakan Upload gambar di sini",
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )
-                            ],
-                          )
-                        : Container(
-                            height: 200,
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 217, 217, 217),
-                              image: DecorationImage(
-                                image: FileImage(_file!),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                  ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+                // InkWell(
+                //   onTap: () async {
+                //     print("dek");
+                //     final FilePickerResult? result =
+                //         await FilePicker.platform.pickFiles(
+                //       type: FileType.custom,
+                //       allowedExtensions: ['jpg', 'jpeg', 'png'],
+                //     );
+                //     if (result != null) {
+                //       setState(
+                //         () {
+                //           _file = File(result.files.single.path!);
+                //           PlatformFile namaFile = result.files.first;
+                //           namaFileInput = namaFile.name.toString();
+                //         },
+                //       );
+                //     }
+                //   },
+                //   child: Container(
+                //     height: 200,
+                //     decoration: BoxDecoration(
+                //       color: Color.fromARGB(255, 217, 217, 217),
+                //       borderRadius: BorderRadius.circular(8),
+                //     ),
+                //     child: _file == null || _file == ""
+                //         ? Column(
+                //             mainAxisAlignment: MainAxisAlignment.center,
+                //             children: [
+                //               Text(
+                //                 "Upload Gambar",
+                //                 style: TextStyle(
+                //                   fontWeight: FontWeight.bold,
+                //                   fontSize: 20,
+                //                 ),
+                //               ),
+                //               SizedBox(
+                //                 height: 20,
+                //               ),
+                //               Text(
+                //                 "Silakan Upload gambar di sini",
+                //                 style: TextStyle(
+                //                   color: Colors.grey,
+                //                   fontWeight: FontWeight.bold,
+                //                 ),
+                //               )
+                //             ],
+                //           )
+                //         : Container(
+                //             height: 200,
+                //             decoration: BoxDecoration(
+                //               color: Color.fromARGB(255, 217, 217, 217),
+                //               image: DecorationImage(
+                //                 image: FileImage(_file!),
+                //                 fit: BoxFit.cover,
+                //               ),
+                //               borderRadius: BorderRadius.circular(8),
+                //             ),
+                //           ),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 30,
+                // ),
                 Text(
                   "Upload Laporan",
                   style: TextStyle(
@@ -576,15 +576,30 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // Tidak bisa ditutup selama menunggu
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: CircularProgressIndicator(
+                                  color: ktextColor,
+                                  backgroundColor: Colors.grey.shade400,
+                                  semanticsLabel: 'Loading',
+                                ),
+                              );
+                            },
+                          );
+
+                          await Future.delayed(Duration(seconds: 2));
+                          
                           GetApi.LaporanBidangLingkuhanHidup(
-                            fileBruh: _file,
                             jamban: getJamban.text,
                             spal: getSpal.text,
                             mck: getMck.text,
                             tps: getTps.text,
-                            // IdUser: '5',
                             IdUser: idAkun,
                             context: context,
                             pdam: getPdam.text,

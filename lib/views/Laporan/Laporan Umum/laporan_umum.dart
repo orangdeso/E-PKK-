@@ -1,3 +1,6 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
+import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,24 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
       idAkun = idAkunValue;
     });
   }
+
+  TextEditingController tDusun = TextEditingController();
+  TextEditingController tPkk = TextEditingController();
+  TextEditingController tDesa = TextEditingController();
+  TextEditingController tKrt = TextEditingController();
+  TextEditingController tKk = TextEditingController();
+  TextEditingController tJiwaL = TextEditingController();
+  TextEditingController tJiwaP = TextEditingController();
+  TextEditingController tAngL = TextEditingController();
+  TextEditingController tAngP = TextEditingController();
+  TextEditingController tUmumL = TextEditingController();
+  TextEditingController tUmumP = TextEditingController();
+  TextEditingController tKhususL = TextEditingController();
+  TextEditingController tKhususP = TextEditingController();
+  TextEditingController tHonorerL = TextEditingController();
+  TextEditingController tHonorerP = TextEditingController();
+  TextEditingController tBantuanL = TextEditingController();
+  TextEditingController tBantuanP = TextEditingController();
 
   void loadTampilan() {
     setState(() {
@@ -153,7 +174,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tKelompokPemula,
+                                      controller: tDusun,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -203,7 +224,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tPesertaPemula,
+                                      controller: tPkk,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -252,7 +273,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tPesertaPemula,
+                                      controller: tDesa,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -328,7 +349,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tKelompokHukum,
+                                      controller: tKrt,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -377,7 +398,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tPesertaHukum,
+                                      controller: tKk,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -453,7 +474,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tKelompokHukum,
+                                      controller: tJiwaL,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -502,7 +523,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                       ),
                                     ),
                                     child: TextFormField(
-                                      //controller: tPesertaHukum,
+                                      controller: tJiwaP,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
                                           return 'Tidak boleh kosong';
@@ -592,7 +613,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tKelompokPemula,
+                                          controller: tAngL,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -645,7 +666,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tPesertaPemula,
+                                          controller: tAngP,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -714,7 +735,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tKelompokMadya,
+                                          controller: tUmumL,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -767,7 +788,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tPesertaMadya,
+                                          controller: tUmumP,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -836,7 +857,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tKelompokUtama,
+                                          controller: tKhususL,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -889,7 +910,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tPesertaUtama,
+                                          controller: tKhususP,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -984,7 +1005,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tKelompokPemula,
+                                          controller: tHonorerL,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -1037,7 +1058,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tPesertaPemula,
+                                          controller: tHonorerP,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -1106,7 +1127,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tKelompokMadya,
+                                          controller: tBantuanL,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -1159,7 +1180,7 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                                           ),
                                         ),
                                         child: TextFormField(
-                                          //controller: tPesertaMadya,
+                                          controller: tBantuanP,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
@@ -1195,6 +1216,46 @@ class _PageLaporanUmumState extends State<PageLaporanUmum> {
                             padding: EdgeInsets.only(bottom: 30),
                             child: ElevatedButton(
                               onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible:
+                                        false, // Tidak bisa ditutup selama menunggu
+                                    builder: (BuildContext context) {
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          color: ktextColor,
+                                          backgroundColor: Colors.grey.shade400,
+                                          semanticsLabel: 'Loading',
+                                        ),
+                                      );
+                                    },
+                                  );
+
+                                  await Future.delayed(Duration(seconds: 2));
+                                  GetApi.LaporanUmum(
+                                    context: context,
+                                    dusun_lingkungan: tDusun.text,
+                                    PKK_RW: tPkk.text,
+                                    desa_wisma: tDesa.text,
+                                    KRT: tKrt.text,
+                                    KK: tKk.text,
+                                    jiwa_laki: tJiwaL.text,
+                                    jiwa_perempuan: tJiwaP.text,
+                                    anggota_laki: tAngL.text,
+                                    anggota_perempuan: tAngP.text,
+                                    umum_laki: tUmumL.text,
+                                    umum_perempuan: tUmumP.text,
+                                    khusus_laki: tKhususL.text,
+                                    khusus_perempuan: tKhususP.text,
+                                    honorer_laki: tHonorerL.text,
+                                    honorer_perempuan: tHonorerP.text,
+                                    bantuan_laki: tBantuanL.text,
+                                    bantuan_perempuan: tBantuanP.text,
+                                    userID: idAkun,
+                                  ).then((value) => {});
+                                }
+
                                 print(idAkun);
                               },
                               style: ElevatedButton.styleFrom(

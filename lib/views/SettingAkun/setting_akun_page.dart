@@ -40,7 +40,6 @@ class _SettingAkunState extends State<SettingAkun> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     futureAkun = API_CONTROLLER.fetchData(idAkun);
     return Scaffold(
       appBar: AppBar(
@@ -50,6 +49,10 @@ class _SettingAkunState extends State<SettingAkun> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.black,
+        ),
+        elevation: 5,
         centerTitle: true,
         backgroundColor: ktextColor,
         automaticallyImplyLeading: false,
@@ -64,27 +67,22 @@ class _SettingAkunState extends State<SettingAkun> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 5),
               color: whiteColor,
-              height: size.height * 0.13,
+              height: size.height * 0.11,
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                  bottom: 5,
-                  right: 10,
-                ),
+                padding: EdgeInsets.only(left: 10, right: 10),
                 child: FutureBuilder<DataAkun>(
                   future: futureAkun,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              AssetImage("assets/icons/user64.png"),
-                        ),
+                        // leading: CircleAvatar(
+                        //   backgroundImage:
+                        //       AssetImage("assets/icons/user64.png"),
+                        // ),
                         title: Padding(
                           padding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                              EdgeInsets.symmetric(vertical: 6, horizontal: 5),
                           child: Text(
                             snapshot.data!.data!.namaPengguna.toString(),
                             maxLines: 1,

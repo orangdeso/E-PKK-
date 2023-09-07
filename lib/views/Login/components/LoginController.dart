@@ -25,7 +25,22 @@ class LoginController {
       prefs.setString("id_akun", value.id__akun.toString());
       print(prefs.getBool('no_whatsapp'));
 
-      Future.delayed(Duration(seconds: 2), () {});
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Tidak bisa ditutup selama menunggu
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: ktextColor,
+              backgroundColor: Colors.grey.shade400,
+              semanticsLabel: 'Loading',
+            ),
+          );
+        },
+      );
+
+      // await Future.delayed(Duration(seconds: 1));
+
       if (value.kode == 1) {
         _showAlertSukses(context);
       } else {
@@ -51,7 +66,7 @@ class LoginController {
       context: context,
       dialogType: DialogType.success,
       animType: AnimType.topSlide,
-      showCloseIcon: true,
+      showCloseIcon: false,
       title: "Berhasil",
       desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
       btnOkOnPress: () {
@@ -66,10 +81,12 @@ class LoginController {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
-      showCloseIcon: true,
+      showCloseIcon: false,
       title: "Gagal",
       desc: "Silahkan cek kembali No WhatsApp dan Password Anda",
-      btnOkOnPress: () {},
+      btnOkOnPress: () {
+        Navigator.pop(context);
+      },
     ).show();
   }
 }

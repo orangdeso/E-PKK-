@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable
+
 import 'package:e_pkk/models/ApiLaporan.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -271,6 +273,23 @@ class _PageSandangState extends State<PageSandang> {
                         onPressed: () async {
                           print(idAkun);
                           if (_formKey.currentState!.validate()) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Tidak bisa ditutup selama menunggu
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: ktextColor,
+                                    backgroundColor: Colors.grey.shade400,
+                                    semanticsLabel: 'Loading',
+                                  ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(Duration(seconds: 2));
+
                             String pangan = tPangan.text.toString();
                             String sandang = tSandang.text.toString();
                             String jasa = tJasa.text.toString();

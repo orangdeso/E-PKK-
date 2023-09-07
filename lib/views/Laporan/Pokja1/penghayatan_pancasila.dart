@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_nullable, unused_local_variable, unused_import
+
 import 'dart:io';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
@@ -780,6 +782,24 @@ class _PagePokja1State extends State<PagePokja1> {
                           ElevatedButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
+                                // Menampilkan Circular Progres Indicator
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // Tidak bisa ditutup selama menunggu
+                                  builder: (BuildContext context) {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        color: ktextColor,
+                                        backgroundColor: Colors.grey.shade400,
+                                        semanticsLabel: 'Loading',
+                                      ),
+                                    );
+                                  },
+                                );
+
+                                await Future.delayed(Duration(seconds: 3));
+
                                 print("Test Laporan Pengahayatan");
                                 String jumlah_kel_simulasi1 =
                                     getJmlSimulasi1.text.toString();

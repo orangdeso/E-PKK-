@@ -1,32 +1,36 @@
-// ignore_for_file: body_might_complete_normally_nullable, unused_field
-// import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:e_pkk/models/DataAKun.dart';
+// ignore_for_file: body_might_complete_normally_nullable
+
+import 'package:cherry_toast/cherry_toast.dart';
+import 'package:e_pkk/models/ApiEditLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../../../models/ApiLaporan.dart';
 
-class PageBidangKesehatan extends StatefulWidget {
-  static String route = '/laporanBidangKesehatan';
+class PageEditKesehatan extends StatefulWidget {
+  final String id;
+  final String posyandu;
+  final String terintegrasi;
+  final String klp;
+  final String anggota;
+  final String kartu;
+
+  PageEditKesehatan({
+    Key? key,
+    required this.id,
+    required this.posyandu,
+    required this.terintegrasi,
+    required this.klp,
+    required this.anggota,
+    required this.kartu,
+  }) : super(key: key);
+
   @override
-  State<PageBidangKesehatan> createState() => _PageBidangKesehatanState();
+  State<PageEditKesehatan> createState() => _PageEditKesehatanState();
 }
 
-class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
+class _PageEditKesehatanState extends State<PageEditKesehatan> {
   final _formKey = GlobalKey<FormState>();
-  static String? randomValueAsalPelapor = "Topik lainnya";
-  String idAkun = '';
-  late Future<DataAkun> futureAkun;
-
-  // Shared Preferences untuk pemanggilan ID pengguna
-  Future<void> getIdAkun() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String idAkunValue = prefs.getString("id_akun") ?? '';
-    setState(() {
-      idAkun = idAkunValue;
-    });
-  }
+  late String id_laporan;
 
   TextEditingController getJmlPosyandu = TextEditingController();
   TextEditingController getJmlPosyanduInterasi = TextEditingController();
@@ -34,28 +38,18 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
   TextEditingController getJmlAnggota = TextEditingController();
   TextEditingController getKartuBerobat = TextEditingController();
 
-  final List<String> ListPosyandu = [
-    'Posyandu Lansia',
-    'Posyandu Remaja',
-    'Posyandu Balita'
-  ];
-
-  // File? _file;
-  // static String? namaFileInput;
-
-  Succes() {
-    getJmlPosyandu.text = "";
-    getJmlPosyanduInterasi.text = "";
-    getJmlKLP.text = "";
-    getJmlAnggota.text = "";
-    getKartuBerobat.text = "";
-  }
-
   var isLoading = true;
 
   void loadTampilan() {
     setState(() {
       Future.delayed(Duration(seconds: 2), () {
+        CherryToast.info(
+          shadowColor: grey300,
+          toastDuration: Duration(seconds: 4),
+          title: Text(
+            "Silahkan edit data laporan Anda",
+          ),
+        ).show(context);
         setState(() {
           isLoading = false;
         });
@@ -66,8 +60,13 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
   @override
   void initState() {
     super.initState();
-    getIdAkun();
     loadTampilan();
+    getJmlPosyandu.text = widget.posyandu;
+    getJmlPosyanduInterasi.text = widget.terintegrasi;
+    getJmlKLP.text = widget.klp;
+    getJmlAnggota.text = widget.anggota;
+    getKartuBerobat.text = widget.kartu;
+    id_laporan = widget.id;
     setState(() {});
   }
 
@@ -78,7 +77,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
       backgroundColor: Color.fromARGB(255, 244, 244, 244),
       appBar: AppBar(
         title: Text(
-          "Kesehatan",
+          "Edit Laporan",
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -125,66 +124,6 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                       SizedBox(
                         height: 30,
                       ),
-                      // InkWell(
-                      //   onTap: () async {
-                      //     print("dek");
-                      //     final FilePickerResult? result =
-                      //         await FilePicker.platform.pickFiles(
-                      //       type: FileType.custom,
-                      //       allowedExtensions: ['jpg', 'jpeg', 'png'],
-                      //     );
-                      //     if (result != null) {
-                      //       setState(
-                      //         () {
-                      //           _file = File(result.files.single.path!);
-                      //           PlatformFile namaFile = result.files.first;
-                      //           namaFileInput = namaFile.name.toString();
-                      //         },
-                      //       );
-                      //     }
-                      //   },
-                      //   child: Container(
-                      //     height: 200,
-                      //     decoration: BoxDecoration(
-                      //       color: Color.fromARGB(255, 217, 217, 217),
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     child: _file == null || _file == ""
-                      //         ? Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             children: [
-                      //               Text(
-                      //                 "Upload Gambar",
-                      //                 style: TextStyle(
-                      //                   fontWeight: FontWeight.w600,
-                      //                   fontSize: 20,
-                      //                 ),
-                      //               ),
-                      //               SizedBox(
-                      //                 height: 20,
-                      //               ),
-                      //               Text(
-                      //                 "Silakan Upload gambar di sini",
-                      //                 style: TextStyle(
-                      //                   color: Colors.grey,
-                      //                   fontWeight: FontWeight.w500,
-                      //                 ),
-                      //               )
-                      //             ],
-                      //           )
-                      //         : Container(
-                      //             height: 200,
-                      //             decoration: BoxDecoration(
-                      //               color: Color.fromARGB(255, 217, 217, 217),
-                      //               image: DecorationImage(
-                      //                 image: FileImage(_file!),
-                      //                 fit: BoxFit.cover,
-                      //               ),
-                      //               borderRadius: BorderRadius.circular(10),
-                      //             ),
-                      //           ),
-                      //   ),
-                      // ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -693,7 +632,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                 String JumlahKartuGratis =
                                     getKartuBerobat.text.toString();
                                 //print("Tes Fileee :: ${_file}");
-                                GetApi.LaporanBidangKesehatan(
+                                EditApiLaporan.editLaporanKesehatan(
                                   jumlah_posyandu: JumlahPosyandu,
                                   jumlah_anggota: JumlahAnggota,
                                   jumlah_posyandu_iterasi:
@@ -701,13 +640,9 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                                   jumlah_klp: JumlahKLP,
                                   jumlah_kartu_gratis: JumlahKartuGratis,
                                   context: context,
-                                  userID: idAkun,
+                                  userID: id_laporan,
                                 ).then(
-                                  (value) => {
-                                    print("awikwok"),
-                                    print(idAkun),
-                                    Succes(),
-                                  },
+                                  (value) => {},
                                 );
                               }
                             },
@@ -740,108 +675,4 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
       ),
     );
   }
-
-  // Widget customDropDownLokasiAsalPelapor(
-  //     {List<String>? listItem,
-  //     String? namaLabel,
-  //     String? hintText,
-  //     String? randomlabel,
-  //     String? errorKosong}) {
-  //   return Column(
-  //     mainAxisAlignment: MainAxisAlignment.start,
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       SizedBox(
-  //         height: 10,
-  //       ),
-  //       Text(
-  //         "$namaLabel",
-  //         style: TextStyle(
-  //           fontWeight: FontWeight.w500,
-  //           fontSize: 15,
-  //         ),
-  //       ),
-  //       SizedBox(
-  //         height: 15,
-  //       ),
-  //       DropdownButtonFormField2(
-  //         decoration: InputDecoration(
-  //           filled: true,
-  //           fillColor: Color.fromARGB(255, 235, 235, 235),
-  //           isDense: true,
-  //           contentPadding: EdgeInsets.only(
-  //             bottom: 5.0,
-  //             top: 5.0,
-  //             right: 5.0,
-  //           ),
-  //           enabledBorder: OutlineInputBorder(
-  //             borderSide: BorderSide(
-  //                 width: 2, color: Color.fromARGB(255, 226, 226, 226)),
-  //             borderRadius: BorderRadius.all(
-  //               Radius.circular(8),
-  //             ),
-  //           ),
-  //           border: OutlineInputBorder(
-  //             borderSide: BorderSide(
-  //                 width: 2, color: Color.fromARGB(255, 226, 226, 226)),
-  //             borderRadius: BorderRadius.all(
-  //               Radius.circular(8),
-  //             ),
-  //           ),
-  //           focusedBorder: OutlineInputBorder(
-  //             borderSide: BorderSide(
-  //               width: 2,
-  //               color: Color.fromARGB(255, 226, 226, 226),
-  //             ),
-  //           ),
-  //         ),
-  //         isExpanded: true,
-  //         hint: Text(
-  //           '$hintText',
-  //           style: TextStyle(fontSize: 14),
-  //         ),
-  //         items: listItem
-  //             ?.map(
-  //               (item) => DropdownMenuItem<String>(
-  //                 value: item,
-  //                 child: Text(
-  //                   item,
-  //                   style: TextStyle(
-  //                     fontSize: 14,
-  //                   ),
-  //                 ),
-  //               ),
-  //             )
-  //             .toList(),
-  //         validator: (value) {
-  //           if (value == null) {
-  //             return 'Harap Memilih $errorKosong !.';
-  //           }
-  //           return null;
-  //         },
-  //         onChanged: (value) {
-  //           setState(() {
-  //             randomValueAsalPelapor = value;
-  //           });
-  //         },
-  //         buttonStyleData: ButtonStyleData(
-  //           height: 50,
-  //           padding: EdgeInsets.only(right: 10),
-  //         ),
-  //         iconStyleData: const IconStyleData(
-  //           icon: Icon(
-  //             Icons.keyboard_arrow_down,
-  //             color: Colors.black45,
-  //           ),
-  //           iconSize: 30,
-  //         ),
-  //         dropdownStyleData: DropdownStyleData(
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(15),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 }

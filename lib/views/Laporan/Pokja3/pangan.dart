@@ -89,7 +89,7 @@ class _PagePanganState extends State<PagePangan> {
                       height: 10,
                     ),
                     Divider(
-                      height: 2,
+                      thickness: 1,
                     )
                   ],
                 ),
@@ -550,6 +550,23 @@ class _PagePanganState extends State<PagePangan> {
                       child: ElevatedButton(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
+                            showDialog(
+                              context: context,
+                              barrierDismissible:
+                                  false, // Tidak bisa ditutup selama menunggu
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: ktextColor,
+                                    backgroundColor: Colors.grey.shade400,
+                                    semanticsLabel: 'Loading',
+                                  ),
+                                );
+                              },
+                            );
+
+                            await Future.delayed(Duration(seconds: 2));
+
                             print(idAkun);
                             String beras = tBeras.text.toString();
                             String nonBeras = tNonBeras.text.toString();

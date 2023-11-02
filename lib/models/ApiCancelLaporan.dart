@@ -326,4 +326,74 @@ class EditBatalkanLaporan {
       ).show(context!);
     }
   }
+
+  static Future<void> cancelLaporanKader4({
+    String? userID,
+    BuildContext? context,
+  }) async {
+    final url = Uri.parse(ApiHelper.url + 'editStatusKader4.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['id_kader_pokja4'] = userID.toString();
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      //Navigator.of(context).pop();
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
+    } else {
+      print('Data gagal disimpan!');
+      //Navigator.of(context).pop();
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
+    }
+  }
+
+  static Future<void> cancelLaporanKesehatan({
+    String? userID,
+    BuildContext? context,
+  }) async {
+    final url = Uri.parse(ApiHelper.url + 'editStatusKesehatan.php');
+
+    final request = http.MultipartRequest('POST', url)
+      ..fields['id_laporan_sehat'] = userID.toString();
+
+    final response = await request.send();
+
+    if (response.statusCode == 200) {
+      print('Data berhasil disimpan!');
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) {
+            return SuccesUploadKesehatan();
+          },
+        ),
+      );
+    } else {
+      print('Data gagal disimpan!');
+      CherryToast.error(
+        title: Text(
+          "Gagal Upload. Silahkan Cek Kembali",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+      ).show(context!);
+    }
+  }
 }

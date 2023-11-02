@@ -47,7 +47,7 @@ class _otpPageState extends State<otpPage> {
 
     await Future.delayed(Duration(seconds: 2));
 
-    if (otpRegister.toString() == kodeotptxt.text) {
+    if (otpRegister == kodeotptxt.text) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -106,6 +106,8 @@ class _otpPageState extends State<otpPage> {
     }
   }
 
+  //late String kodeOtpLuar;
+
   void updateOtp(
     BuildContext context,
     String no_whatsapp,
@@ -113,7 +115,23 @@ class _otpPageState extends State<otpPage> {
   ) {
     LoginApi.kirimUlangOtp(no_whatsapp, kode_otp).then((value) async {
       if (value.kode == 1) {
+        //kodeOtpLuar = kode_otp;
         print("Berhasil Masuk Database");
+      } else {
+        print(value);
+      }
+    });
+  }
+
+  late String otpDatabase;
+
+  void getOtp(
+    BuildContext context,
+    String kode_otp,
+  ) {
+    LoginApi.getOtp(kode_otp).then((value) async {
+      if (value.kode == 1) {
+        otpDatabase = kode_otp;
       } else {
         print(value);
       }

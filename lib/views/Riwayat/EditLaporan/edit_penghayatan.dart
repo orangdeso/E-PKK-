@@ -722,7 +722,7 @@ class _PageEditPenghayatanState extends State<PageEditPenghayatan> {
                                   },
                                 );
                                 // Menunda eksekusi selama 3 detik
-                                await Future.delayed(Duration(seconds: 3));
+                                await Future.delayed(Duration(seconds: 2));
 
                                 String jumlah_kel_simulasi1 =
                                     getJmlSimulasi1.text.toString();

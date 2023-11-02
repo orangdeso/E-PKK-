@@ -82,7 +82,9 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
         );
       },
     );
-    // await Future.delayed(Duration(seconds: 2));
+
+    await Future.delayed(Duration(seconds: 2));
+
     if (password != konfirm) {
       _alertPassword(context);
     } else {
@@ -121,6 +123,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       context: context,
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
+      dismissOnTouchOutside: false,
       showCloseIcon: false,
       title: "Gagal",
       desc: "Konfirmasi password yang Anda masukkan tidak sesuai",
@@ -136,6 +139,7 @@ class _RegistrasiScreenState extends State<RegistrasiScreen> {
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
       showCloseIcon: false,
+      dismissOnTouchOutside: false,
       title: "Gagal mendaftarkan akun",
       desc:
           "Nomor WhatsApp atau nama kecamatan sudah digunakan. Silahkan cek kembali !",

@@ -56,6 +56,23 @@ class _lupaPasswordState extends State<lupaPassword> {
     }
   }
 
+  // late String kodeOtpLuar;
+
+  void updateOtp(
+    BuildContext context,
+    String no_whatsapp,
+    String kode_otp,
+  ) {
+    LoginApi.kirimUlangOtp(no_whatsapp, kode_otp).then((value) async {
+      if (value.kode == 1) {
+        //kodeOtpLuar = kode_otp;
+        print("Berhasil Masuk Database");
+      } else {
+        print(value);
+      }
+    });
+  }
+
   void btKirim(BuildContext context, String no_whatsapp) {
     LoginApi.getPengguna(no_whatsapp).then((value) async {
       showDialog(
@@ -84,6 +101,11 @@ class _lupaPasswordState extends State<lupaPassword> {
               textAlign: TextAlign.center,
             ),
           ),
+        );
+        updateOtp(
+          context,
+          tWane.text,
+          randomNumber.toString(),
         );
         Navigator.push(
           context,

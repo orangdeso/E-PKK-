@@ -39,7 +39,7 @@ class LoginController {
         },
       );
 
-      // await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 2));
 
       if (value.kode == 1) {
         _showAlertSukses(context);
@@ -66,6 +66,7 @@ class LoginController {
       context: context,
       dialogType: DialogType.success,
       animType: AnimType.topSlide,
+      dismissOnTouchOutside: false,
       showCloseIcon: false,
       title: "Berhasil",
       desc: "Klik tombol ok untuk diarahkan kehalaman beranda",
@@ -82,6 +83,7 @@ class LoginController {
       dialogType: DialogType.error,
       animType: AnimType.topSlide,
       showCloseIcon: false,
+      dismissOnTouchOutside: false,
       title: "Gagal",
       desc: "Silahkan cek kembali No WhatsApp dan Password Anda",
       btnOkOnPress: () {

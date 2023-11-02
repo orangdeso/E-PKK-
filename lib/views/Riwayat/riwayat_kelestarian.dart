@@ -162,14 +162,15 @@ class _RiwayatKelestarianState extends State<RiwayatKelestarian> {
                           ),
                           child: ListTile(
                             onTap: () {
-                              Navigator.of(context, rootNavigator: true)
-                                  .push(
+                              Navigator.of(context, rootNavigator: true).push(
                                 MaterialPageRoute(
                                   builder: (context) {
                                     return PageDetailKlh();
                                   },
                                   settings: RouteSettings(
                                     arguments: {
+                                      "id_kelpangan": _dataKLH[index]
+                                          ['id_kelpangan'],
                                       "jamban": _dataKLH[index]['jamban'],
                                       "tanggal": _dataKLH[index]['tanggal'],
                                       "spal": _dataKLH[index]['spal'],
@@ -178,7 +179,7 @@ class _RiwayatKelestarianState extends State<RiwayatKelestarian> {
                                       "pdam": _dataKLH[index]['pdam'],
                                       "sumur": _dataKLH[index]['sumur'],
                                       "dll": _dataKLH[index]['dll'],
-                                      "stss": _dataKLH[index]['status'],
+                                      "status": _dataKLH[index]['status'],
                                       "waktu": _dataKLH[index]['waktu'],
                                       "catatan":
                                           _dataKLH[index]['catatan'] != null &&

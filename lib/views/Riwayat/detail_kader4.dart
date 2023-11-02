@@ -1,3 +1,4 @@
+import 'package:e_pkk/models/ApiCancelLaporan.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/EditLaporan/edit_kader4.dart';
 import 'package:flutter/material.dart';
@@ -637,17 +638,17 @@ class _PageDetailKader4State extends State<PageDetailKader4> {
                                                                       seconds:
                                                                           2));
 
-                                                              // EditBatalkanLaporan
-                                                              //     .cancelLaporanPangan(
-                                                              //   context:
-                                                              //       context,
-                                                              //   userID: id,
-                                                              // ).then(
-                                                              //   (value) => {
-                                                              //     print(
-                                                              //         "Berhasil")
-                                                              //   },
-                                                              // );
+                                                              EditBatalkanLaporan
+                                                                  .cancelLaporanKader4(
+                                                                context:
+                                                                    context,
+                                                                userID: id,
+                                                              ).then(
+                                                                (value) => {
+                                                                  print(
+                                                                      "Berhasil")
+                                                                },
+                                                              );
                                                               // CherryToast.info(
                                                               //   title: Text(
                                                               //     "Fitur masih tahap pengembangan",

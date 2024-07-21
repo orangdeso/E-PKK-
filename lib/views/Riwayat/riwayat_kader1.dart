@@ -86,8 +86,9 @@ class _RiwayatKader1State extends State<RiwayatKader1> {
         title: Text(
           "Kader Pokja I",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -132,7 +133,7 @@ class _RiwayatKader1State extends State<RiwayatKader1> {
                         Text(
                           "Belum ada laporan",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 16,
                             color: grey400,
                           ),
                         ),

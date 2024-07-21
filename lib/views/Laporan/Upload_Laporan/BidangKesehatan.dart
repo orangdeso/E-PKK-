@@ -717,7 +717,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               minimumSize: Size.fromHeight(50),
                               elevation: 5,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             child: Text(
@@ -725,6 +725,7 @@ class _PageBidangKesehatanState extends State<PageBidangKesehatan> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),

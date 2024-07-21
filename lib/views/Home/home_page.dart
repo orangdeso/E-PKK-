@@ -10,6 +10,7 @@ import 'package:e_pkk/views/Laporan/Upload%20_Gambar/UploadGaleri.dart';
 import 'package:e_pkk/views/Laporan/Upload_Laporan/MenuLaporan.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,24 +40,26 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> imgList = [
     Container(
-      width: 400,
-      height: 170,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
       child: Image.asset(
-        "assets/images/Banner.png",
+        "assets/images/Banner1.png",
         fit: BoxFit.cover,
       ),
     ),
     Container(
-      width: 400,
-      height: 170,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-      ),
       child: Image.asset(
-        "assets/images/po.png",
+        "assets/images/Banner2.png",
+        fit: BoxFit.cover,
+      ),
+    ),
+    Container(
+      child: Image.asset(
+        "assets/images/Banner3.png",
+        fit: BoxFit.cover,
+      ),
+    ),
+    Container(
+      child: Image.asset(
+        "assets/images/Banner4.png",
         fit: BoxFit.cover,
       ),
     ),
@@ -113,7 +116,7 @@ class _HomePageState extends State<HomePage> {
           shrinkWrap: true,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
               decoration: BoxDecoration(
                 color: ktextColor,
                 borderRadius: BorderRadius.only(
@@ -126,60 +129,74 @@ class _HomePageState extends State<HomePage> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListTile(
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      title: Row(
                         children: [
-                          // Text(
-                          //   "Hi ${snapshot.data!.data!.namaPengguna.toString()}",
-                          //   style: TextStyle(
-                          //     color: grey300,
-                          //     fontWeight: FontWeight.w500,
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 5,
-                          ),
                           Text(
-                            "${greeting} " +
-                                "${snapshot.data!.data!.namaPengguna.toString()}",
+                            "${greeting}",
                             style: TextStyle(
-                              fontSize: 25,
-                              color: whiteColor,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           SizedBox(
-                            height: 5,
+                            width: 6,
                           ),
+                          Text(
+                            "${snapshot.data!.data!.namaPengguna.toString()}",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     SizedBox(
+                          //       height: 5,
+                          //     ),
+                          //     Text(
+                          //       "${greeting} " +
+                          //           "${snapshot.data!.data!.namaPengguna.toString()}",
+                          //       style: TextStyle(
+                          //         fontSize: 20,
+                          //         color: whiteColor,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          //     ),
+                          //     SizedBox(
+                          //       height: 5,
+                          //     ),
+                          //   ],
+                          // ),
                         ],
                       ),
-                      subtitle: Text(
-                        // snapshot.data!.data!.namaKec.toString(),
-                        "${tanggalOtomatis}",
-                        style: TextStyle(
-                          color: grey300,
-                          fontWeight: FontWeight.w500,
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.location_pin,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              // tanggalOtomatis,
+                              "${snapshot.data!.data!.namaKec.toString()}",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      // leading: CircleAvatar(
-                      //   backgroundImage: AssetImage("assets/icons/user64.png"),
-                      // ),
-                      // trailing: IconButton(
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //       context,
-                      //       MaterialPageRoute(
-                      //         builder: (context) {
-                      //           return NotifikasiPage();
-                      //         },
-                      //       ),
-                      //     );
-                      //   },
-                      //   icon: Icon(Icons.notifications),
-                      //   iconSize: 32,
-                      //   color: whiteColor,
-                      //   padding: EdgeInsets.all(8.0),
-                      // ),
                     );
                   } else {
                     return CircularProgressIndicator();
@@ -190,10 +207,10 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: EdgeInsets.only(
                 top: 20,
-                left: 20,
-                right: 20,
+                left: 16,
+                right: 16,
               ),
-              child: Expanded(
+              child: Container(
                 child: CarouselSlider(
                   items: imgList,
                   carouselController: _controller,
@@ -239,12 +256,16 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: EdgeInsets.only(
                 top: 40,
-                left: 10,
-                right: 10,
+                left: 16,
+                right: 16,
               ),
               decoration: BoxDecoration(
                 color: Color(0xFFEDF6FF),
                 borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Color.fromARGB(255, 192, 224, 255),
+                  width: 1.2,
+                ),
               ),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
@@ -271,17 +292,23 @@ class _HomePageState extends State<HomePage> {
                   subtitle: Container(
                     margin: EdgeInsets.only(top: 7),
                     child: Text(
-                      "Upload Laporan PKK mu disini",
+                      "Upload Laporan PKK disini",
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                   ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        PageLaporanMenu.route.toString(),
+                      );
+                    },
                     icon: Icon(Icons.keyboard_arrow_right_outlined),
-                    iconSize: 32,
+                    iconSize: 24,
                     padding: EdgeInsets.all(8.0),
+                    color: grey500,
                   ),
                 ),
               ),
@@ -289,13 +316,16 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: EdgeInsets.only(
                 top: 15,
-                left: 10,
-                right: 10,
+                left: 16,
+                right: 16,
               ),
               decoration: BoxDecoration(
-                color: Color(0xFF25BFFA).withOpacity(0.4),
-                borderRadius: BorderRadius.circular(8),
-              ),
+                  color: Color.fromARGB(255, 183, 235, 255),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: Color.fromARGB(255, 108, 213, 255),
+                    width: 1.2,
+                  )),
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 5),
                 child: ListTile(
@@ -321,43 +351,59 @@ class _HomePageState extends State<HomePage> {
                   subtitle: Container(
                     margin: EdgeInsets.only(top: 7),
                     child: Text(
-                      "Upload Galeri kegiatan PKK mu",
+                      "Upload Galeri kegiatan PKK",
                       style: TextStyle(
                         fontSize: 14,
                       ),
                     ),
                   ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        PageGaleri.route.toString(),
+                      );
+                    },
                     icon: Icon(Icons.keyboard_arrow_right_outlined),
-                    iconSize: 32,
+                    iconSize: 24,
                     padding: EdgeInsets.all(8.0),
+                    color: grey500,
                   ),
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 40,
-                    left: 10,
+            Padding(
+              padding: EdgeInsets.only(
+                top: 32,
+                left: 16,
+                right: 16,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Pengumuman",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: grey800,
+                        ),
+                      ),
+                      Text(
+                        "Daftar pengumuman dari pusat",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          color: grey500,
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    "Pengumuman",
-                    style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 40,
-                    right: 10,
-                  ),
-                  child: GestureDetector(
+                  GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
@@ -368,59 +414,39 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     },
-                    child: Text(
-                      "Lihat semua",
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Lihat Semua",
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: ktextColor,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return PengumumanPage();
+                                },
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.keyboard_arrow_right_outlined),
+                          iconSize: 24,
+                          color: ktextColor,
+                        )
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(bottom: 20),
-            //   child: ListView.builder(
-            //     shrinkWrap: true,
-            //     itemCount: ListPengumuman.length,
-            //     itemBuilder: (context, index) {
-            //       return Padding(
-            //         padding: EdgeInsets.only(top: 8),
-            //         child: Container(
-            //           margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //           decoration: BoxDecoration(
-            //             color: grey200,
-            //             borderRadius: BorderRadius.circular(8),
-            //             boxShadow: [
-            //               BoxShadow(
-            //                 color: Colors.grey,
-            //                 spreadRadius: 1,
-            //                 blurRadius: 1.0,
-            //                 offset: Offset(0.0, 1.0),
-            //               ),
-            //             ],
-            //           ),
-            //           child: ListTile(
-            //             leading: Text(
-            //               '${ListPengumuman[index].tanggalPengumuman}',
-            //               //"10-11-2023",
-            //               style: TextStyle(
-            //                 fontSize: 15,
-            //               ),
-            //             ),
-            //             title: Text(
-            //               '${ListPengumuman[index].judulPengumuman}',
-            //               //"Program Kesehatan Imunisasi per desa di Kantor Balai Desa",
-            //               style: TextStyle(
-            //                 fontSize: 15,
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: EdgeInsets.only(bottom: 10),
               child: ConditionalBuilder(
@@ -440,7 +466,8 @@ class _HomePageState extends State<HomePage> {
                         Text(
                           'Tidak ada pengumuman',
                           style: TextStyle(
-                            color: grey400,
+                            color: Colors.grey.shade400,
+                            fontSize: 14,
                           ),
                         ),
                         SizedBox(
@@ -455,47 +482,67 @@ class _HomePageState extends State<HomePage> {
                     shrinkWrap: true,
                     itemCount: ListPengumuman.length,
                     itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(top: 8),
-                        child: Container(
-                          margin:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                            color: grey200,
-                            borderRadius: BorderRadius.circular(8),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey,
-                                spreadRadius: 1,
-                                blurRadius: 1.0,
-                                offset: Offset(0.0, 1.0),
-                              ),
-                            ],
+                      return Container(
+                        margin:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(
+                            color: Colors.grey.shade200,
+                            width: 1.2,
                           ),
-                          child: ListTile(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
-                                    return DetailPengumumanPage(
-                                      id: ListPengumuman[index].id.toString(),
-                                    );
-                                  },
-                                ),
-                              );
-                            },
-                            leading: Text(
-                              '${ListPengumuman[index].tanggalPengumuman}',
-                              style: TextStyle(
-                                fontSize: 15,
+                        ),
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return DetailPengumumanPage(
+                                    id: ListPengumuman[index].id.toString(),
+                                  );
+                                },
                               ),
+                            );
+                          },
+                          leading: Text(
+                            '${ListPengumuman[index].tanggalPengumuman}',
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: ktextColor,
+                              fontWeight: FontWeight.w500,
                             ),
-                            title: Text(
-                              '${ListPengumuman[index].judulPengumuman}',
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
+                          ),
+                          title: Text(
+                            '${ListPengumuman[index].judulPengumuman}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey.shade800,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.location_on_sharp,
+                                  size: 14,
+                                  color: Colors.grey.shade500,
+                                ),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  '${ListPengumuman[index].tempatPengumuman}',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

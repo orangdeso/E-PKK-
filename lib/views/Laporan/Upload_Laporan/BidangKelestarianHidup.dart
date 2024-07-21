@@ -636,7 +636,7 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                           minimumSize: Size.fromHeight(50),
                           elevation: 5,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Text(
@@ -644,6 +644,7 @@ class _PageLingkunganHidupState extends State<PageLingkunganHidup> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
                       ),

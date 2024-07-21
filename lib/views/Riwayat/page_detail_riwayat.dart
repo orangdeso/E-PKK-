@@ -1,4 +1,3 @@
-import 'package:e_pkk/views/Riwayat/riwayat_page.dart';
 import 'package:flutter/material.dart';
 
 import '../navbar_view.dart';
@@ -39,7 +38,7 @@ class _PageDetailRiwayatState extends State<PageDetailRiwayat> {
     String deskripsi = getData?['deskripsi'];
     String status = getData?['status'];
     String idKategori = getData?['idKategori'];
-    String idUser = getData?['idUser'];
+    //String idUser = getData?['idUser'];
     String imageee = getData?['image'];
 
     print("Title Detail == ${tittle}");

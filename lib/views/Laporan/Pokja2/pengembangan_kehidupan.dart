@@ -754,7 +754,7 @@ class _PagePengembanganKehidupanState extends State<PagePengembanganKehidupan> {
                           minimumSize: Size.fromHeight(50),
                           elevation: 5,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         child: Text(
@@ -762,6 +762,7 @@ class _PagePengembanganKehidupanState extends State<PagePengembanganKehidupan> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
+                            color: Colors.white,
                           ),
                         ),
                       ),

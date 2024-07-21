@@ -4,6 +4,7 @@ import 'package:e_pkk/helpers/ApiHelper.dart';
 import 'package:e_pkk/models/DataAKun.dart';
 import 'package:e_pkk/utils/constants.dart';
 import 'package:e_pkk/views/Riwayat/detail_kader1.dart';
+import 'package:e_pkk/views/Riwayat/detail_perencaanSehat.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -84,10 +85,11 @@ class _RiwayatPerencanaanState extends State<RiwayatPerencanaan> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Kader Pokja I",
+          "Perencanaan Sehat",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -99,10 +101,7 @@ class _RiwayatPerencanaanState extends State<RiwayatPerencanaan> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),
@@ -164,7 +163,7 @@ class _RiwayatPerencanaanState extends State<RiwayatPerencanaan> {
                               Navigator.of(context, rootNavigator: true).push(
                                 MaterialPageRoute(
                                   builder: (context) {
-                                    return PageDetailKader1();
+                                    return PageDetailPerencaanSehat();
                                   },
                                   settings: RouteSettings(
                                     arguments: {

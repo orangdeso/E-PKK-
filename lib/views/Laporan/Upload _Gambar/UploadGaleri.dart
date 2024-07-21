@@ -545,7 +545,7 @@ class _PageGaleriState extends State<PageGaleri> {
                             for (File file in kumpulanImage) {
                               print("fileterpilih == $file.path ");
                             }
-                            
+
                             if (_formKey.currentState!.validate()) {
                               showDialog(
                                 context: context,
@@ -587,7 +587,7 @@ class _PageGaleriState extends State<PageGaleri> {
                             backgroundColor: Color.fromARGB(255, 55, 149, 183),
                             minimumSize: Size.fromHeight(50),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                           ),
                           child: Text(
@@ -595,6 +595,7 @@ class _PageGaleriState extends State<PageGaleri> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
+                              color: Colors.white,
                             ),
                           ),
                         ),

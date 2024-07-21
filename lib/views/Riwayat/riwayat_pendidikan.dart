@@ -87,8 +87,9 @@ class _RiwayatPendidikanState extends State<RiwayatPendidikan> {
         title: Text(
           "Pendidikan Ketrampilan",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -100,10 +101,7 @@ class _RiwayatPendidikanState extends State<RiwayatPendidikan> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

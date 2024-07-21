@@ -87,8 +87,9 @@ class _RiwayatKelestarianState extends State<RiwayatKelestarian> {
         title: Text(
           "Kelestarian Lingkungan Hidup",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -100,10 +101,7 @@ class _RiwayatKelestarianState extends State<RiwayatKelestarian> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

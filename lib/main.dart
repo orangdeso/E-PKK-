@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      home: LoginScreen(),
       //initialRoute: '/splash',
       routes: {
         //'/splash': (context) => SplashScreen(),

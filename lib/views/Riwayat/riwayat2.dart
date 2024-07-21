@@ -16,14 +16,9 @@ import 'package:e_pkk/views/Riwayat/riwayat_perumahan.dart';
 import 'package:e_pkk/views/Riwayat/riwayat_sandang.dart';
 import 'package:flutter/material.dart';
 
-class PageRiwayat2 extends StatefulWidget {
+class PageRiwayat2 extends StatelessWidget {
   const PageRiwayat2({super.key});
 
-  @override
-  State<PageRiwayat2> createState() => _PageRiwayat2State();
-}
-
-class _PageRiwayat2State extends State<PageRiwayat2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +28,11 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
           "Riwayat",
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: whiteColor,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: grey800,
         ),
         elevation: 5,
         centerTitle: true,
@@ -65,7 +61,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
+                            color: grey800,
                           ),
                         ),
                         SizedBox(
@@ -73,6 +69,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,
@@ -192,7 +189,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Penghayatan & Pengamalan Pancasila",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -258,7 +255,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Gotong Royong",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -298,7 +295,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
+                            color: grey800,
                           ),
                         ),
                         SizedBox(
@@ -306,6 +303,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,
@@ -425,7 +423,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Pengembangan Kehidupan Berkoperasi",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -465,7 +463,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
+                            color: grey800,
                           ),
                         ),
                         SizedBox(
@@ -473,6 +471,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,
@@ -592,7 +591,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Pangan",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -658,7 +657,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Sandang",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -724,7 +723,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Perumahan & Tata Laksana Rumah Tangga",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -764,7 +763,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
-                            letterSpacing: 0.5,
+                            color: grey800,
                           ),
                         ),
                         SizedBox(
@@ -772,6 +771,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,
@@ -891,7 +891,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Kesehatan",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -957,7 +957,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Kelestarian Lingkungan Hidup",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -1023,7 +1023,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                                                       "Perencanaan Sehat",
                                                       textAlign:
                                                           TextAlign.center,
-                                                      maxLines: 3,
+                                                      maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: TextStyle(
@@ -1065,7 +1065,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
+                              color: grey800,
                             ),
                           ),
                         ),
@@ -1074,6 +1074,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,
@@ -1165,7 +1166,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
-                              letterSpacing: 0.5,
+                              color: grey800,
                             ),
                           ),
                         ),
@@ -1174,6 +1175,7 @@ class _PageRiwayat2State extends State<PageRiwayat2> {
                         ),
                         Divider(
                           thickness: 1,
+                          color: grey200,
                         ),
                         SizedBox(
                           height: 10,

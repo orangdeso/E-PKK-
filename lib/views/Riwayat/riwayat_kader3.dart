@@ -88,8 +88,9 @@ class _RiwayatKader3State extends State<RiwayatKader3> {
         title: Text(
           "Kader Pokja III",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -101,10 +102,8 @@ class _RiwayatKader3State extends State<RiwayatKader3> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

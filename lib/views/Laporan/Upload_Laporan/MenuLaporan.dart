@@ -30,101 +30,29 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
         title: Text(
           "Upload Laporan",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
-        leading: BackButton(
-          color: grey800,
-        ),
+        leading: BackButton(),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 1,
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: ktextColor,
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               children: [
                 SizedBox(
                   height: 20,
                 ),
                 Container(
-                  height: 200,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color.fromARGB(255, 54, 151, 186),
-                        Color.fromARGB(255, 149, 210, 232)
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 25,
-                      left: 15,
-                      right: 15,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Pokja I - IV",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 28,
-                                fontFamily: 'Times New Roman',
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              child: Container(
-                                width: 170,
-                                child: Text(
-                                  "Pilih button sesuai dengan program kerja yang ingin di lakukan upload laporan",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                child: Text(
-                                  "Pelajari Selengkapnya",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 58, 153, 188),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          width: 100,
-                          height: 200,
-                          child: Image(
-                            image: AssetImage("assets/images/ketua_pkk1.png"),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                          ),
-                        ),
-                      ],
-                    ),
+                  child: Image.asset(
+                    "assets/images/upload_laporan.png",
+                    fit: BoxFit.cover,
                   ),
                 ),
                 SizedBox(
@@ -141,6 +69,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                       style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 17,
+                        color: grey800,
                       ),
                     ),
                     subtitle: Padding(
@@ -149,6 +78,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                         "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
+                          color: grey500,
                         ),
                       ),
                     ),
@@ -223,22 +153,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -293,22 +223,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -368,22 +298,21 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
                                               fontSize: 12,
-                                            ),
-                                          ),
+                                              fontWeight: FontWeight.w400,
+                                              color: grey600),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -420,6 +349,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                         "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
+                          color: grey500,
                         ),
                       ),
                     ),
@@ -491,22 +421,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -564,22 +494,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -616,6 +546,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                         "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
+                          color: grey500,
                         ),
                       ),
                     ),
@@ -690,22 +621,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: grey600,
+                                            fontWeight: FontWeight.w400,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -760,22 +691,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -833,22 +764,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -906,22 +837,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -958,6 +889,7 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                         "Silahkan pilih program kerja",
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
+                          color: grey500,
                         ),
                       ),
                     ),
@@ -1028,22 +960,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -1091,22 +1023,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -1158,22 +1090,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -1224,22 +1156,22 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                           style: TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
+                                            color: grey800,
                                           ),
                                         ),
-                                        subtitle: Padding(
-                                          padding: EdgeInsets.only(top: 7),
-                                          child: Text(
-                                            "Klik untuk melanjutkan",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                            ),
+                                        subtitle: Text(
+                                          "Klik untuk melanjutkan",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: grey600,
                                           ),
                                         ),
                                         trailing: IconButton(
                                           onPressed: () {},
                                           icon: Icon(Icons
                                               .keyboard_arrow_right_outlined),
-                                          iconSize: 25,
+                                          iconSize: 24,
                                           padding: EdgeInsets.all(8.0),
                                         ),
                                       ),
@@ -1307,16 +1239,16 @@ class _PageLaporanMenuState extends State<PageLaporanMenu> {
                                 "Klik untuk melanjutkan",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
-                                  color: grey700,
+                                  color: grey500,
                                 ),
                               ),
                             ),
-                            trailing: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.keyboard_arrow_right_outlined),
-                              iconSize: 25,
-                              padding: EdgeInsets.only(left: 25),
-                            ),
+                            // trailing: IconButton(
+                            //   onPressed: () {},
+                            //   icon: Icon(Icons.keyboard_arrow_right_outlined),
+                            //   iconSize: 24,
+                            //   padding: EdgeInsets.only(left: 25),
+                            // ),
                           ),
                         ),
                       ),

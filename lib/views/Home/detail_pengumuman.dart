@@ -33,9 +33,19 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detail Pengumuman"),
+        title: Text(
+          "Detail Pengumuman",
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: ktextColor,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: ListView(
         shrinkWrap: true,
@@ -59,6 +69,7 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
+                            color: Colors.grey.shade800,
                           ),
                         ),
                       ),
@@ -69,46 +80,52 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
                           padding: EdgeInsets.only(top: 10),
                           child: Row(
                             children: [
-                              Icon(
-                                Icons.calendar_month_outlined,
-                                color: ktextColor,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Align(
-                                  alignment: FractionalOffset.topLeft,
-                                  child: Text(
-                                    '${listData[index].tanggalPengumuman}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.calendar_month_outlined,
+                                    color: ktextColor,
+                                    size: 24,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Text(
+                                      '${listData[index].tanggalPengumuman}',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: ktextColor,
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 5),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.place_outlined,
-                                color: ktextColor,
+                              SizedBox(
+                                width: 16,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Align(
-                                  alignment: FractionalOffset.topLeft,
-                                  child: Text(
-                                    '${listData[index].tempatPengumuman}',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.place_outlined,
+                                    size: 24,
+                                    color: ktextColor,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Align(
+                                      alignment: FractionalOffset.topLeft,
+                                      child: Text(
+                                        '${listData[index].tempatPengumuman}',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: ktextColor,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),
@@ -118,20 +135,12 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 20),
                       decoration: BoxDecoration(
-                        color: grey100,
+                        color: Colors.grey.shade50,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(
-                          color: grey300,
-                          width: 2.0,
+                          color: Colors.grey.shade200,
+                          width: 1.2,
                         ),
-                        // boxShadow: [
-                        //   BoxShadow(
-                        //     color: Colors.grey,
-                        //     spreadRadius: 2,
-                        //     blurRadius: 2.0,
-                        //     offset: Offset(0.0, 1.0),
-                        //   ),
-                        // ],
                       ),
                       child: Container(
                         margin: EdgeInsets.all(10),
@@ -142,8 +151,9 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
                               child: Text(
                                 "Deskripsi :",
                                 style: TextStyle(
-                                  fontSize: 17,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.w500,
+                                  color: Colors.grey.shade800,
                                 ),
                               ),
                             ),
@@ -154,8 +164,9 @@ class _DetailPengumumanPageState extends State<DetailPengumumanPage> {
                                 child: Text(
                                   '${listData[index].deskripsiPengumuman}',
                                   style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w400,
+                                    color: Colors.grey.shade700,
                                   ),
                                 ),
                               ),

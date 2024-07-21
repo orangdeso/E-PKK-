@@ -67,15 +67,16 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
         title: Text(
           "Jumlah Kader Pokja I",
           style: TextStyle(
-            color: Colors.black,
+            color: grey800,
             fontWeight: FontWeight.bold,
             fontSize: 17,
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: grey800),
         backgroundColor: Colors.white,
         elevation: 1,
+        shadowColor: Colors.grey.shade100,
       ),
       body: Center(
         child: isLoading
@@ -133,6 +134,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15,
+                                  color: grey800,
                                 ),
                               ),
                               SizedBox(
@@ -145,7 +147,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       horizontal: 20, vertical: 2),
                                   width: size.width * 0.9,
                                   decoration: BoxDecoration(
-                                    color: grey100,
+                                    color: Colors.grey.shade50,
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
                                       color: grey300,
@@ -167,6 +169,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       hintText: "Masukkan jumlah PKBN",
                                       hintStyle: TextStyle(
                                         color: grey400,
+                                        fontWeight: FontWeight.w400,
                                         fontSize: 15,
                                       ),
                                       border: InputBorder.none,
@@ -182,6 +185,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15,
+                                  color: grey800,
                                 ),
                               ),
                               SizedBox(
@@ -194,7 +198,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       horizontal: 20, vertical: 2),
                                   width: size.width * 0.9,
                                   decoration: BoxDecoration(
-                                    color: grey100,
+                                    color: Colors.grey.shade50,
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
                                       color: grey300,
@@ -217,6 +221,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       hintStyle: TextStyle(
                                         color: grey400,
                                         fontSize: 15,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                       border: InputBorder.none,
                                     ),
@@ -231,6 +236,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15,
+                                  color: grey800,
                                 ),
                               ),
                               SizedBox(
@@ -243,7 +249,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       horizontal: 20, vertical: 2),
                                   width: size.width * 0.9,
                                   decoration: BoxDecoration(
-                                    color: grey100,
+                                    color: Colors.grey.shade50,
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(
                                       color: grey300,
@@ -266,6 +272,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                                       hintStyle: TextStyle(
                                         color: grey400,
                                         fontSize: 15,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                       border: InputBorder.none,
                                     ),
@@ -325,7 +332,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                               minimumSize: Size.fromHeight(50),
                               elevation: 5,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             child: Text(
@@ -333,6 +340,7 @@ class _PageKaderPokja1State extends State<PageKaderPokja1> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
                             ),
                           ),

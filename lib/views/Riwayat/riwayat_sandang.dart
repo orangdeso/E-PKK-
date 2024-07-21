@@ -86,8 +86,9 @@ class _RiwayatSandangState extends State<RiwayatSandang> {
         title: Text(
           "Sandang",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -99,10 +100,7 @@ class _RiwayatSandangState extends State<RiwayatSandang> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

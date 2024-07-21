@@ -35,7 +35,11 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
         appBar: AppBar(
           title: Text(
             "Bidang Perencanaan Sehat",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.grey.shade800,
+              fontWeight: FontWeight.w600,
+              fontSize: 20,
+            ),
           ),
           leading: IconButton(
             onPressed: () {
@@ -49,9 +53,12 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
             icon: Icon(Icons.arrow_back),
           ),
           elevation: 1,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(
+            color: Colors.grey.shade800,
+          ),
           centerTitle: true,
           backgroundColor: Colors.white,
+          shadowColor: Colors.grey.shade200,
         ),
         body: Center(
             child: Padding(
@@ -75,7 +82,7 @@ class _PageDetailPerencaanSehatState extends State<PageDetailPerencaanSehat> {
                       color: Color.fromARGB(255, 217, 217, 217),
                       image: DecorationImage(
                           image: NetworkImage(
-                              "${ApiHelper.url}../public/frontend2/Bidang_Perencaan_Sehat/${gambar}"),
+                              "${ApiHelper.url}../frontend2/Bidang_Perencaan_Sehat/${gambar}"),
                           fit: BoxFit.cover),
                       borderRadius: BorderRadius.circular(20),
                     ),

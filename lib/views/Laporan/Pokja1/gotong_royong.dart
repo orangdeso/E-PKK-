@@ -72,15 +72,16 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
         title: Text(
           "Gotong Royong",
           style: TextStyle(
-            color: Colors.black,
+            color: grey800,
             fontWeight: FontWeight.bold,
             fontSize: 17,
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: grey800),
         backgroundColor: Colors.white,
         elevation: 1,
+        shadowColor: grey100,
       ),
       body: Center(
         child: isLoading
@@ -141,6 +142,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
+                                    color: grey800,
                                   ),
                                 ),
                                 SizedBox(
@@ -153,7 +155,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         horizontal: 20, vertical: 2),
                                     width: size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: grey100,
+                                      color: Colors.grey.shade50,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: grey300,
@@ -176,6 +178,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         hintStyle: TextStyle(
                                           color: grey400,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                         border: InputBorder.none,
                                       ),
@@ -190,6 +193,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
+                                    color: grey800,
                                   ),
                                 ),
                                 SizedBox(
@@ -202,7 +206,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         horizontal: 20, vertical: 2),
                                     width: size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: grey100,
+                                      color: Colors.grey.shade50,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: grey300,
@@ -226,6 +230,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         hintStyle: TextStyle(
                                           color: grey400,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                         border: InputBorder.none,
                                       ),
@@ -240,6 +245,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
+                                    color: grey800,
                                   ),
                                 ),
                                 SizedBox(
@@ -252,7 +258,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         horizontal: 20, vertical: 2),
                                     width: size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: grey100,
+                                      color: Colors.grey.shade50,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: grey300,
@@ -275,6 +281,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         hintStyle: TextStyle(
                                           color: grey400,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                         border: InputBorder.none,
                                       ),
@@ -289,6 +296,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
+                                    color: grey800,
                                   ),
                                 ),
                                 SizedBox(
@@ -301,7 +309,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         horizontal: 20, vertical: 2),
                                     width: size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: grey100,
+                                      color: Colors.grey.shade50,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: grey300,
@@ -324,6 +332,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         hintStyle: TextStyle(
                                           color: grey400,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                         border: InputBorder.none,
                                       ),
@@ -338,6 +347,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
+                                    color: grey800,
                                   ),
                                 ),
                                 SizedBox(
@@ -350,7 +360,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         horizontal: 20, vertical: 2),
                                     width: size.width * 0.9,
                                     decoration: BoxDecoration(
-                                      color: grey100,
+                                      color: Colors.grey.shade50,
                                       borderRadius: BorderRadius.circular(8),
                                       border: Border.all(
                                         color: grey300,
@@ -373,6 +383,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                         hintStyle: TextStyle(
                                           color: grey400,
                                           fontSize: 15,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                         border: InputBorder.none,
                                       ),
@@ -442,7 +453,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                 minimumSize: Size.fromHeight(50),
                                 elevation: 5,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                               child: Text(
@@ -450,6 +461,7 @@ class _PageGotongRoyongState extends State<PageGotongRoyong> {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),

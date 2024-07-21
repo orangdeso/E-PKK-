@@ -316,7 +316,7 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                               minimumSize: Size.fromHeight(50),
                               elevation: 5,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             child: Text(
@@ -324,6 +324,7 @@ class _PageKaderPokja3State extends State<PageKaderPokja3> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
                             ),
                           ),

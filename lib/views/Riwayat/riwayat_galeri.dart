@@ -86,8 +86,9 @@ class _RiwayatGaleriState extends State<RiwayatGaleri> {
         title: Text(
           "Galeri",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -100,7 +101,7 @@ class _RiwayatGaleriState extends State<RiwayatGaleri> {
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
         elevation: 5,
         centerTitle: true,
@@ -187,7 +188,7 @@ class _RiwayatGaleriState extends State<RiwayatGaleri> {
                               width: 80,
                               height: 80,
                               child: Image.network(
-                                "${ApiHelper.url}../public/frontend2/gallery2/${_gallery[index]['gambar']}",
+                                "${ApiHelper.url}../frontend2/gallery2/${_gallery[index]['gambar']}",
                                 fit: BoxFit.cover,
                               ),
                             ),

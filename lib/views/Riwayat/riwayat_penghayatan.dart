@@ -88,6 +88,7 @@ class _RiwayatPenghayatanState extends State<RiwayatPenghayatan> {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 17,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -96,13 +97,12 @@ class _RiwayatPenghayatanState extends State<RiwayatPenghayatan> {
           },
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.white,
           ),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

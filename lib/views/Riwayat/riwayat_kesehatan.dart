@@ -87,8 +87,9 @@ class _RiwayatKesehatanState extends State<RiwayatKesehatan> {
         title: Text(
           "Kesehatan",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -100,10 +101,7 @@ class _RiwayatKesehatanState extends State<RiwayatKesehatan> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),
@@ -173,14 +171,16 @@ class _RiwayatKesehatanState extends State<RiwayatKesehatan> {
                                           ['id_laporan_sehat'],
                                       "jumlah_posyandu": _dataKesehatan[index]
                                           ['jumlah_posyandu'],
-                                      "jumlah_posyandu_iterasi": _dataKesehatan[index]
-                                          ['jumlah_posyandu_iterasi'],
+                                      "jumlah_posyandu_iterasi":
+                                          _dataKesehatan[index]
+                                              ['jumlah_posyandu_iterasi'],
                                       "jumlah_klp": _dataKesehatan[index]
                                           ['jumlah_klp'],
                                       "jumlah_anggota": _dataKesehatan[index]
                                           ['jumlah_anggota'],
-                                      "jumlah_kartu_gratis": _dataKesehatan[index]
-                                          ['jumlah_kartu_gratis'],
+                                      "jumlah_kartu_gratis":
+                                          _dataKesehatan[index]
+                                              ['jumlah_kartu_gratis'],
                                       "catatan": _dataKesehatan[index]
                                                       ['catatan'] !=
                                                   null &&

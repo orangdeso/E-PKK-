@@ -86,8 +86,9 @@ class _RiwayatPerumahanState extends State<RiwayatPerumahan> {
         title: Text(
           "Perumahan & Tata Laksana Rumah Tangga",
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
             fontSize: 17,
+            color: Colors.white,
           ),
         ),
         leading: IconButton(
@@ -99,10 +100,7 @@ class _RiwayatPerumahanState extends State<RiwayatPerumahan> {
             color: Colors.white,
           ),
         ),
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        elevation: 5,
+        elevation: 1,
         centerTitle: true,
         backgroundColor: ktextColor,
       ),

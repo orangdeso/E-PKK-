@@ -56,8 +56,9 @@ class _DetailGalleryState extends State<DetailGallery> {
         title: Text(
           "Detail Galeri",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         leading: IconButton(
@@ -67,11 +68,11 @@ class _DetailGalleryState extends State<DetailGallery> {
           icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.white,
         ),
         centerTitle: true,
         elevation: 1,
-        backgroundColor: Colors.white,
+        backgroundColor: ktextColor,
       ),
       body: Center(
         child: isLoading
@@ -93,6 +94,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
+                        color: grey800,
                       ),
                     ),
                     SizedBox(
@@ -105,16 +107,17 @@ class _DetailGalleryState extends State<DetailGallery> {
                           children: [
                             Icon(
                               Icons.calendar_month,
-                              //color: grey500,
+                              color: Colors.grey.shade500,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(left: 12),
                               child: Text(
                                 "${tglll}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
-                                  letterSpacing: 1,
+                                  letterSpacing: 0.5,
+                                  color: Colors.grey.shade500,
                                 ),
                               ),
                             ),
@@ -124,16 +127,17 @@ class _DetailGalleryState extends State<DetailGallery> {
                           children: [
                             Icon(
                               Icons.access_time_rounded,
-                              //color: grey500,
+                              color: Colors.grey.shade500,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 15),
+                              padding: EdgeInsets.only(left: 12),
                               child: Text(
                                 "${waktu}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14,
                                   letterSpacing: 1,
+                                  color: Colors.grey.shade500,
                                 ),
                               ),
                             ),
@@ -142,7 +146,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                         Card(
                           //elevation: 8,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                           color: WarnaButton(stts: stss),
                           child: Padding(
@@ -153,10 +157,9 @@ class _DetailGalleryState extends State<DetailGallery> {
                             child: Text(
                               "${stss}",
                               style: TextStyle(
-                                color: Colors.white,
                                 fontWeight: FontWeight.w600,
                                 fontSize: 14,
-                                letterSpacing: 1,
+                                color: whiteColor,
                               ),
                             ),
                           ),
@@ -168,6 +171,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                     ),
                     Divider(
                       thickness: 1,
+                      color: Colors.grey.shade300,
                     ),
                     SizedBox(
                       height: 15,
@@ -185,6 +189,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                     ),
                     Divider(
                       thickness: 1,
+                      color: Colors.grey.shade300,
                     ),
                     SizedBox(
                       height: 15,
@@ -196,6 +201,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                           "Jenis Laporan",
                           style: TextStyle(
                             color: Colors.grey.shade500,
+                            fontSize: 14,
                           ),
                         ),
                         SizedBox(
@@ -207,6 +213,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade800,
                           ),
                         ),
                       ],
@@ -221,6 +228,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                           "Program Kerja",
                           style: TextStyle(
                             color: Colors.grey.shade500,
+                            fontSize: 14,
                           ),
                         ),
                         SizedBox(
@@ -232,6 +240,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
+                            color: Colors.grey.shade800,
                           ),
                         ),
                       ],
@@ -243,6 +252,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                       "Deskripsi",
                       style: TextStyle(
                         color: Colors.grey.shade500,
+                        fontSize: 14,
                       ),
                     ),
                     SizedBox(
@@ -254,6 +264,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
+                        color: Colors.grey.shade800,
                       ),
                     ),
                     SizedBox(
@@ -286,7 +297,7 @@ class _DetailGalleryState extends State<DetailGallery> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: Image.network(
-                                        "${ApiHelper.url}../public/frontend2/gallery2/${dataa[index].urlGambar}",
+                                        "${ApiHelper.url}../frontend2/gallery2/${dataa[index].urlGambar}",
                                         fit: BoxFit.cover,
                                       ),
                                     ),

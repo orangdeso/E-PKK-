@@ -436,7 +436,7 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                   minimumSize: Size.fromHeight(50),
                   elevation: 5,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 child: Text(
@@ -444,6 +444,7 @@ class _PagePerencaanSehatState extends State<PagePerencaanSehat> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),

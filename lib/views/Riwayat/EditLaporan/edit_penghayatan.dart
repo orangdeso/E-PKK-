@@ -91,15 +91,16 @@ class _PageEditPenghayatanState extends State<PageEditPenghayatan> {
         title: Text(
           "Edit Laporan",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.grey.shade800),
         backgroundColor: Colors.white,
         elevation: 1,
+        shadowColor: Colors.grey.shade200,
       ),
       body: Center(
         child: isLoading
@@ -765,7 +766,7 @@ class _PageEditPenghayatanState extends State<PageEditPenghayatan> {
                               minimumSize: Size.fromHeight(50),
                               elevation: 5,
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             child: Text(
@@ -773,6 +774,7 @@ class _PageEditPenghayatanState extends State<PageEditPenghayatan> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
                             ),
                           ),

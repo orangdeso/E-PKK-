@@ -94,8 +94,9 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
         title: Text(
           "Detail Laporan",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.grey.shade800,
             fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
         ),
         leading: IconButton(
@@ -105,7 +106,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
           icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.grey.shade800,
         ),
         centerTitle: true,
         elevation: 1,
@@ -236,6 +237,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
+                              color: Colors.grey.shade800,
                             ),
                           ),
                           SizedBox(
@@ -473,12 +475,20 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                             builder: (context) {
                                               return AlertDialog(
                                                 elevation: 10,
-                                                title: Text("Konfirmasi"),
-                                                content: Text(
-                                                  "Apakah Anda ingin membatalkan Upload Laporan ?",
+                                                title: Text(
+                                                  "Konfirmasi",
                                                   style: TextStyle(
-                                                    letterSpacing: 1,
+                                                    fontSize: 18,
+                                                    color: Colors.grey.shade800,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                content: Text(
+                                                  "Apakah Anda ingin membatalkan Upload Laporan?",
+                                                  style: TextStyle(
                                                     height: 1.5,
+                                                    fontSize: 14,
+                                                    color: Colors.grey.shade600,
                                                   ),
                                                 ),
                                                 actions: [
@@ -513,7 +523,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8),
+                                                                            30),
                                                               ),
                                                               side: BorderSide(
                                                                 width: 2,
@@ -528,8 +538,6 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                letterSpacing:
-                                                                    2,
                                                                 color:
                                                                     ktextColor,
                                                               ),
@@ -612,7 +620,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8),
+                                                                            30),
                                                               ),
                                                             ),
                                                             child: Text(
@@ -622,8 +630,8 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                letterSpacing:
-                                                                    2,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
@@ -643,10 +651,6 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
-                                    // side: BorderSide(
-                                    //   width: 2,
-                                    //   color: ktextColor,
-                                    // ),
                                   ),
                                   child: Text(
                                     "BATAL",
@@ -654,6 +658,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                       fontSize: 18,
                                       letterSpacing: 2,
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.white,
                                       //color: ktextColor,
                                     ),
                                   ),
@@ -1071,7 +1076,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                       shape:
                                                                           RoundedRectangleBorder(
                                                                         borderRadius:
-                                                                            BorderRadius.circular(10),
+                                                                            BorderRadius.circular(20),
                                                                       ),
                                                                     ),
                                                                     child: Text(
@@ -1084,6 +1089,8 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                                                             FontWeight.w600,
                                                                         letterSpacing:
                                                                             1,
+                                                                        color: Colors
+                                                                            .white,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1113,6 +1120,7 @@ class _PageDetailKader1State extends State<PageDetailKader1> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: 2,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),

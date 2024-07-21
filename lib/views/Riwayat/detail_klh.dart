@@ -69,8 +69,9 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
         title: Text(
           "Detail Laporan",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         leading: IconButton(
@@ -80,11 +81,12 @@ class _PageDetailKlhState extends State<PageDetailKlh> {
           icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.grey.shade800,
         ),
         centerTitle: true,
         elevation: 1,
         backgroundColor: Colors.white,
+        shadowColor: Colors.grey.shade200,
       ),
       body: Center(
         child: isLoading

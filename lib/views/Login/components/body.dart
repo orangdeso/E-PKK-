@@ -31,59 +31,6 @@ class _BodyState extends State<Body> {
     await prefs.setString('password', tPassword.text);
   }
 
-  // final Future<SharedPreferences> _sp = SharedPreferences.getInstance();
-
-  // void addUser() async {
-  //   SharedPreferences sp = await SharedPreferences.getInstance();
-  //   // await sp.setInt('kode', kode);
-  //   await sp.setString('no_whatsapp', tNo_whatsapp.text);
-  //   // await sp.setString('nama_user', nama_user);
-  // }
-
-  // void _tes() async {
-  //   SharedPreferences pref = await SharedPreferences.getInstance();
-  //   pref.setString("nowa", tNo_whatsapp.toString());
-  // }
-
-  // //Method untuk menyimpan teks yang dimasukkan pada form
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   no_whatsapp.dispose();
-  //   password.dispose();
-  // }
-
-  // //Method untuk mengatur pesan toast
-  // void show(String message) {
-  //   Fluttertoast.showToast(
-  //     msg: message,
-  //     toastLength: Toast.LENGTH_SHORT,
-  //     gravity: ToastGravity.BOTTOM,
-  //     timeInSecForIosWeb: 1,
-  //     backgroundColor: whiteColor,
-  //     textColor: textColor2,
-  //   );
-  // }
-
-  // //Method untuk navigasi button login
-  // void navigate(BuildContext context) {
-  //   if (no_whatsapp.text == null && password.text == null) {
-  //     show("Berhasil Login");
-  //     Navigator.of(context)
-  //         .push(MaterialPageRoute(builder: (context) => WelcomeScreen()));
-  //     // Navigator.push(
-  //     //   context,
-  //     //   MaterialPageRoute(
-  //     //     builder: (context) {
-  //     //       return WelcomeScreen();
-  //     //     },
-  //     //   ),
-  //     // );
-  //   } else {
-  //     show("no_whatsapp atau password anda salah");
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -303,7 +250,7 @@ class _BodyState extends State<Body> {
                   child: AnimatedButton(
                     text: "LOGIN",
                     color: ktextColor,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(20),
                     buttonTextStyle: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
@@ -321,52 +268,17 @@ class _BodyState extends State<Body> {
                   ),
                 ),
               ),
-              // OrDivider(),
-              // Padding(
-              //   padding: EdgeInsets.only(top: 5),
-              //   child: Container(
-              //     width: size.width * 0.9,
-              //     height: 47,
-              //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              //     child: ClipRRect(
-              //       borderRadius: BorderRadius.circular(8),
-              //       child: ElevatedButton(
-              //         style: ElevatedButton.styleFrom(
-              //           backgroundColor: grey100,
-              //           side: BorderSide(color: grey300),
-              //         ),
-              //         onPressed: () {},
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             Image.asset(
-              //               "assets/images/whatsapp5.png",
-              //             ),
-              //             SizedBox(width: 15),
-              //             Text(
-              //               "Login dengan WhatsApp",
-              //               style: TextStyle(
-              //                 color: grey700,
-              //                 fontSize: 16,
-              //                 fontWeight: FontWeight.w600,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Belum memiliki akun ? ",
+                      "Belum memiliki akun? ",
                       style: TextStyle(
                         color: grey500,
                         fontSize: 15,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     GestureDetector(
@@ -399,31 +311,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
-  // LoginApi? la;
-  // SharedPreferences? sp;
-
-  // void postLogin() async {
-  //   LoginApi.postData(no_whatsapp.text, password.text).then((value) {
-  //     la = value;
-  //     checkLoginCondition();
-  //   });
-  // }
-
-  // void checkLoginCondition() {
-  //   if (la != null) {
-  //     if (la!.kode == 1) {
-  //       Navigator.pushNamed(
-  //         context,
-  //         '/home',
-  //       );
-  //       simpanLogin().addUser(
-  //           la!.kode, la!.no_whatsapp.toString(), la!.nama_user.toString());
-  //     } else {
-  //       debugPrint('akun tidak ditemukan');
-  //     }
-  //   } else {
-  //     debugPrint('error');
-  //   }
-  // }
 }

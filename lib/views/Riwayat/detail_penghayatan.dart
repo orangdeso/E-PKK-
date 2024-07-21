@@ -76,8 +76,9 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
         title: Text(
           "Detail Laporan",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.w600,
           ),
         ),
         leading: IconButton(
@@ -87,11 +88,12 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
           icon: Icon(Icons.arrow_back),
         ),
         iconTheme: IconThemeData(
-          color: Colors.black,
+          color: Colors.grey.shade800,
         ),
         centerTitle: true,
         elevation: 1,
         backgroundColor: Colors.white,
+        shadowColor: Colors.grey.shade100,
       ),
       body: Center(
         child: isLoading
@@ -648,7 +650,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8),
+                                                                            30),
                                                               ),
                                                               side: BorderSide(
                                                                 width: 2,
@@ -663,8 +665,6 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                letterSpacing:
-                                                                    2,
                                                                 color:
                                                                     ktextColor,
                                                               ),
@@ -748,7 +748,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                                                 borderRadius:
                                                                     BorderRadius
                                                                         .circular(
-                                                                            8),
+                                                                            30),
                                                               ),
                                                             ),
                                                             child: Text(
@@ -758,8 +758,8 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                letterSpacing:
-                                                                    2,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
@@ -790,6 +790,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                       fontSize: 18,
                                       letterSpacing: 2,
                                       fontWeight: FontWeight.w600,
+                                      color: Colors.white,
                                       //color: ktextColor,
                                     ),
                                   ),
@@ -841,6 +842,7 @@ class _PageDetailPenghayatanState extends State<PageDetailPenghayatan> {
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                         letterSpacing: 2,
+                                        color: Colors.white,
                                       ),
                                     ),
                                   );

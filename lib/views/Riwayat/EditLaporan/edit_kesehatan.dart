@@ -79,14 +79,18 @@ class _PageEditKesehatanState extends State<PageEditKesehatan> {
         title: Text(
           "Edit Laporan",
           style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
+            color: Colors.grey.shade800,
+            fontWeight: FontWeight.w600,
+            fontSize: 20,
           ),
         ),
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(
+          color: Colors.grey.shade800,
+        ),
         backgroundColor: Colors.white,
         elevation: 1,
+        shadowColor: Colors.grey.shade200,
       ),
       body: Center(
         child: isLoading
